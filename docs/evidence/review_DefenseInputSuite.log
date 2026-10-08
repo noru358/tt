@@ -1,0 +1,26 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: dash next tick from IDLE
+PASS: dash next tick from RUN
+PASS: dash next tick from JUMP
+PASS: dash next tick from FALL
+PASS: dash next tick from ATTACK
+PASS: dash next tick from PARRY
+PASS: dash next tick from POTION
+PASS: dash next tick from HURT
+PASS: parry beats held attack from IDLE
+PASS: parry beats held attack from ATTACK
+PASS: parry beats held attack from DASH
+PASS: parry does not cancel dash movement
+PASS: parry beats held attack from POTION
+PASS: parry beats held attack from HURT
+PASS: same-tick keyboard dash and parry both activate
+PASS: pad X+B+LB honors both defenses
+PASS: between-tick parry tap is retained
+PASS: between-tick dash tap is retained
+PASS: near-ready cooldown consumes short defensive tap
+PASS: defensive tap survives wall time and expires in game time
+PASS: menu interruption clears defensive queue
+PASS: long cooldown is explained instead of silently swallowing or storing input
+PASS: disabled parry explains rejection
+DEFENSE_SUITE_RESULT checks=23 failures=0

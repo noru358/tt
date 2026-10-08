@@ -1,0 +1,140 @@
+extends "res://tests/ControlsRevisionSuite.gd"
+var boss: Node2D
+
+func _run() -> void:
+	var legacy: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/legacy_golem.json"))
+	DataRegistry.documents["bosses/golem.json"] = legacy
+	DataRegistry._indexes["bosses"]["golem"] = legacy
+	print("LEGACY_PRIMITIVE_FIXTURE: old shape boss; cutout gameplay is tested by GolemCutoutSuite")
+	check(DataRegistry.is_valid,"revised combat data valid")
+	arena = load("res://scenes/arena/BattleArena.tscn").instantiate()
+	add_child(arena)
+	player = arena.player
+	boss = arena.boss
+	await frames(55)
+	boss.set_physics_process(false)
+	boss.interrupt()
+	player.controls._notification(NOTIFICATION_APPLICATION_FOCUS_IN)
+	Feedback.invincible = false
+	Tuning.feedback["hitstop_on_hit"] = 0
+	await reset_player(900,912)
+	boss.position = Vector2(1200,810)
+	var hp: float = boss.hp
+	key(KEY_J,true)
+	await frames(7)
+	check(boss.hp < hp,"sword hits from a 96px body gap")
+	check(player.hp == player.p("max_hp"),"attacking from reach is safe without an enemy attack")
+	check(player.attack_running and is_instance_valid(player.active_box),"attack has a live hitbox")
+	key(KEY_A,true)
+	key(KEY_SHIFT,true)
+	await frames(1)
+	check(player.state == GatePlayer.State.DASH and not player.attack_running,"attack -> escape dash cancels attack and starts movement immediately")
+	check(not is_instance_valid(player.active_box) or player.active_box.is_queued_for_deletion(),"escape removes existing strike")
+	key(KEY_SHIFT,false)
+	key(KEY_A,false)
+	key(KEY_J,false)
+	await frames(15)
+	check(player.position.x < 700 and player.hp == player.p("max_hp"),"shorter escape travels away safely")
+	await reset_player(1120,912)
+	boss.position = Vector2(1200,810)
+	key(KEY_D,true)
+	key(KEY_SHIFT,true)
+	await frames(1)
+	key(KEY_D,false)
+	key(KEY_SHIFT,false)
+	await frames(12)
+	check(player.position.x-player.body_size.x/2 > boss.position.x+boss.body_size.x/2,"300px dash crosses nearby boss body when positioned for evade")
+	check(player.hp == player.p("max_hp"),"crossing does not cost HP")
+	# Real charge hitbox moving towards player; dodge through it.
+	await reset_player(1120,912)
+	boss.position = Vector2(1200,810)
+	boss.facing = -1
+	boss.runner.start([boss.data["patterns"]["charge"]["steps"][2]])
+	key(KEY_D,true)
+	key(KEY_SHIFT,true)
+	for tick: int in 18:
+		boss.runner.tick(1.0/60)
+		await frames(1)
+		if tick == 0:
+			key(KEY_D,false)
+			key(KEY_SHIFT,false)
+	check(player.hp == player.p("max_hp"),"real moving charge can be dashed through without damage")
+	boss.interrupt()
+	# Dash path and down-attack aim operate simultaneously.
+	await reset_player(800,530)
+	var gravity: float = player.p("gravity")
+	Tuning.player["gravity"] = 0
+	player.position = Vector2(800,530)
+	player.velocity = Vector2.ZERO
+	boss.position = Vector2(1200,810)
+	key(KEY_D,true)
+	key(KEY_SHIFT,true)
+	await frames(1)
+	key(KEY_D,false)
+	key(KEY_SHIFT,false)
+	key(KEY_S,true)
+	key(KEY_J,true)
+	await frames(5)
+	check(player.state == GatePlayer.State.DASH and player.attack_kind == "down_attack","horizontal dash accepts down attack")
+	check(player.dash_direction == Vector2.RIGHT and player.velocity.x > 0 and player.velocity.y == 0,"down aim does not steer captured dash trajectory")
+	check(player.active_box.position.y > 0 and player.active_box.position.x == 0,"visible down hitbox matches aim")
+	await snapshot("feel_dash_down")
+	await frames(3)
+	check(player.pogo_pending > 0 and player.dash_uses == 0,"down hit queues pogo without disrupting dash and restores air dash")
+	key(KEY_J,false)
+	key(KEY_S,false)
+	await frames(5)
+	check(player.velocity.y < 0,"pogo starts when dash trajectory completes")
+	Tuning.player["gravity"] = gravity
+	await reset_player(600,912)
+	key(KEY_J,true)
+	await frames(1)
+	key(KEY_W,true)
+	await frames(1)
+	check(player.attack_kind == "up_attack" and not player.attack_spawned,"startup aim follows current up input immediately")
+	check(player.attack_rect().get_center().y < 0,"startup outline is above player, matching future hitbox")
+	key(KEY_W,false)
+	var seen_combo: Dictionary = {}
+	for tick: int in 75:
+		await frames(1)
+		seen_combo[player.combo_index] = true
+	check(player.attack_running and seen_combo.size() == 4,"held attack cycles all combo hits without new clicks")
+	key(KEY_J,false)
+	await frames(50)
+	check(not player.attack_running,"release stops continuous attacks after current swing")
+	# Menu interruption cannot resurrect a held attack.
+	key(KEY_J,true)
+	await frames(1)
+	arena.debug_panel.toggle()
+	await get_tree().process_frame
+	arena.debug_panel.toggle()
+	await frames(30)
+	check(not player.attack_running,"held button across menu resume does not auto-fire")
+	key(KEY_J,false)
+	await frames(1)
+	key(KEY_J,true)
+	await frames(30)
+	check(player.attack_running,"new press after menu re-arms continuous attack")
+	key(KEY_J,false)
+	await reset_player(600,912)
+	for weapon: Dictionary in Tuning.weapons:
+		await click_button(arena.debug_panel.quick_weapons[weapon["id"]])
+		check(player.weapon["id"] == weapon["id"],"quick equip "+weapon["id"])
+		check(not player.attack_running,"equip clears old weapon strike")
+	check(arena.debug_panel.controls.has("player/attack_during_dash") and arena.debug_panel.controls.has("player/dash_attack_continues_after_dash"),"combined action policies are panel controls")
+	Tuning.storage_override = OS.get_environment("GATE1_TEST_TUNING")
+	check(not Tuning.storage_override.is_empty() and Tuning.save_values(),"save complete loadout to isolated override")
+	Tuning.set_value("practice","weapon_id","sword_basic")
+	check(Tuning.load_override() and player.weapon["id"] == "daggers_twin","selected future weapon restores")
+	player.position = boss.position
+	var health: float = player.hp
+	boss._contact()
+	check(player.hp == health,"ordinary golem body contact has no passive damage")
+	player.position = Vector2(700,912)
+	player.reset_physics_interpolation()
+	boss.position = Vector2(1300,810)
+	boss.reset_physics_interpolation()
+	await frames(2)
+	await snapshot("feel_weapon_select")
+	print("COMBAT_FEEL_RESULT checks=%d failures=%d" % [checks,failures])
+	get_tree().quit(0 if failures == 0 else 1)

@@ -1,0 +1,45 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: Step 2 complete data is valid
+PASS: intro blocks boss and player
+PASS: 0.8 second intro ends
+PASS: held front -> up chains at active end, without recovery gap
+PASS: held up -> front also chains
+PASS: release does not leave automatic follow-up
+PASS: startup may re-aim once, but release cannot enqueue another attack
+PASS: new direction respects minimum chain_at recovery
+PASS: new direction chains after chain_at
+PASS: air front -> up chains
+PASS: latest vertical direction wins and chains up -> down in air
+PASS: pad X + D-pad up uses the same directional chain contract
+PASS: direction chaining can be disabled from tuning
+PASS: new attack policy is exposed in the panel
+PASS: pattern finishes: slam
+PASS: pattern finishes: charge
+PASS: pattern finishes: rock_drop
+PASS: pattern finishes: punch
+PASS: pattern finishes: roar
+PASS: pattern finishes: double_slam
+PASS: repeat inserts opposite-side jump exactly once between two slams
+PASS: telegraph does not deal damage
+PASS: punch warning and hitbox align exactly
+PASS: warning is removed when attack activates
+PASS: range filter and previous-pattern exclusion
+PASS: single candidate may repeat
+PASS: no eligible pattern yields wait
+PASS: empty selection retries after data-driven 0.3 seconds
+PASS: half HP transitions to phase 2 with roar
+PASS: phase transition clears old warning
+PASS: phase entry runs once
+PASS: roar invulnerability applies
+PASS: invulnerable boss ignores damage
+PASS: four parries interrupt pattern into stagger
+PASS: stagger amplifies damage by 1.25
+PASS: heavy hit builds stagger
+PASS: generic projectile emits fan count
+PASS: only declared projectile indices can be parried
+PASS: reflected projectile applies configured damage and stagger
+PASS: JSON reordered punch begins with wait without code changes
+JSON_ORDER_PROOF /Users/lty/Documents/Codex/2026-10-08/w/work/release-tests/BossSuite-jswbtjmm/reorder.json first=wait
+PASS: victory opens result and stops combat
+BOSS_SUITE_RESULT checks=41 failures=0

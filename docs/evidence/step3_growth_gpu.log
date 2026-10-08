@@ -1,0 +1,52 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 560.94 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Ti
+
+PASS: isolated save path supplied
+PASS: fresh progress saved
+PASS: wing begins locked
+PASS: insufficient materials disables craft
+PASS: starting loadout uses basic sword
+PASS: boss death -> result -> reward 0
+PASS: duplicate victory cannot duplicate drops 0
+PASS: boss death -> result -> reward 1
+PASS: duplicate victory cannot duplicate drops 1
+PASS: boss death -> result -> reward 2
+PASS: duplicate victory cannot duplicate drops 2
+PASS: boss death -> result -> reward 3
+PASS: duplicate victory cannot duplicate drops 3
+PASS: four real wins grant 3-5 shards each
+PASS: guaranteed core reward
+PASS: kill count and wing unlock persist
+PASS: best time keeps the shortest completed run
+PASS: hub distinguishes unlocked wing from Step 4 gameplay
+PASS: actual UI crafting deducts exact recipe
+PASS: owned equipment cannot charge recipe twice
+PASS: craft armor and parry charm
+PASS: equip all three slots
+PASS: wrong slot rejected
+PASS: single stat boundary sums equipment multipliers
+PASS: parry window bonus applied
+PASS: parry-only recipe filtering is effect-type based
+PASS: save round-trip retains loadout
+PASS: new battle uses crafted equipment stats and weapon
+PASS: parry during attack triggers equipped heal
+PASS: potion_bonus effect supported
+PASS: perfect dodge triggers timed damage buff
+PASS: buff multiplies actual attack damage
+PASS: damage buff expires
+PASS: death preserves materials equipment and records
+PASS: failed persistence rolls back equip
+PASS: previous valid save survives write failure
+PASS: failed reward write keeps a pending transaction
+PASS: reward retry persists identical roll without rerolling
+PASS: retried reward cannot be claimed twice
+PASS: restore main isolated save after reward failure test
+PASS: invalid save blocks progression
+PASS: invalid original is not overwritten
+PASS: restore valid test save
+PASS: saved loadout slot validation
+PASS: negative saved resources rejected
+PASS: pad A activates focused crafting control
+PASS: actual hub fight button enters equipped progression battle
+PASS: result hub button returns to crafting screen
+GROWTH_SUITE_RESULT checks=48 failures=0

@@ -1,0 +1,24 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+LEGACY_PRIMITIVE_FIXTURE: old shape boss; cutout gameplay is tested by GolemCutoutSuite
+PASS: natural weighted selector reaches all six golem patterns
+NATURAL_PATTERNS ["punch", "slam", "charge", "rock_drop", "roar", "double_slam"]
+PASS: real boss hitbox damages player once
+PASS: same swing cannot hit twice
+PASS: real parry collision prevents damage and adds boss stagger
+PASS: 0.25 speed keeps 0.35-second warning active for over 1.3 real seconds
+PASS: slow-motion warning transitions into matching active hitbox
+PASS: Esc opens paused tuning and blocks input
+PASS: resume restores play
+PASS: death opens result screen
+PASS: one-button scene restart: R
+PASS: retry begins combat under one simulated second
+RETRY_WALL_MS 127
+PASS: retry resets both HP pools
+PASS: one-button scene restart: pad A
+PASS: retry begins combat under one simulated second
+RETRY_WALL_MS 125
+PASS: retry resets both HP pools
+PASS: boss death opens victory result
+PASS: abandon/result return to working training scene
+BATTLE_FLOW_RESULT checks=17 failures=0

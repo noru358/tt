@@ -1,0 +1,19 @@
+[
+  {
+    "id": "golem_shard",
+    "name": "골렘 파편"
+  },
+  {
+    "id": "golem_core",
+    "name": "골렘 핵"
+  },
+  {
+    "id": "golem_heart",
+    "name": "골렘 심장",
+    "rare": true
+  },
+  {
+    "id": "wing_feather",
+    "name": "날개 깃털"
+  }
+]

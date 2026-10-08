@@ -1,0 +1,6 @@
+.godot/
+.DS_Store
+*.tmp
+__pycache__/
+.test-results/
+.tools/

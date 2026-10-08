@@ -1,0 +1,479 @@
+{
+  "player": {
+    "move_speed": 520,
+    "ground_accel": 6000,
+    "air_accel": 3200,
+    "gravity": 3600,
+    "fall_gravity_mult": 1.5,
+    "max_fall_speed": 1600,
+    "jump_velocity": 1350,
+    "jump_cut_mult": 0.45,
+    "coyote_time": 0.1,
+    "jump_buffer": 0.12,
+    "dash_distance": 300,
+    "dash_duration": 0.18,
+    "dash_iframe": 0.2,
+    "dash_cooldown": 0.45,
+    "perfect_dodge_window": 0.12,
+    "parry_enabled": true,
+    "parry_window": 0.12,
+    "parry_whiff_recovery": 0.35,
+    "parry_cooldown": 0.4,
+    "hurt_iframe": 0.8,
+    "hurt_knockback": 420,
+    "max_hp": 100,
+    "potion_count": 3,
+    "potion_heal": 35,
+    "potion_channel": 0.8,
+    "hurt_recovery": 0.2,
+    "air_dash_count": 1,
+    "instant_move": true,
+    "ground_decel": 10000,
+    "air_decel": 6000,
+    "attack_move_mult": 0.4,
+    "attack_buffer": 0.18,
+    "attack_cancel_on_jump": true,
+    "attack_cancel_on_dash": true,
+    "attack_release_clears_buffer": false,
+    "attack_direction_chain": true,
+    "attack_during_dash": true,
+    "attack_hold_repeat": true,
+    "pogo_resets_air_dash": true,
+    "defense_buffer": 0.1,
+    "defense_cancel_hurt": true,
+    "min_vulnerable_gap": 0.2,
+    "parry_whiff_cancel": false,
+    "parry_whiff_dash_cancel": false,
+    "device_switch_axis": 0.6,
+    "dash_attack_continues_after_dash": true,
+    "dash_direction_grace": 0.05,
+    "bow_charge_time": 0.8,
+    "bow_cooldown": 1.2,
+    "bow_damage_min": 12.0,
+    "bow_damage_max": 48.0,
+    "bow_speed_min": 1100.0,
+    "bow_speed_max": 1900.0,
+    "bow_turn_rate": 9.0,
+    "bow_lock_range": 2400.0,
+    "bow_lifetime": 1.8,
+    "bow_hit_size": 18.0
+  },
+  "feedback": {
+    "hitstop_on_hit": 0.05,
+    "hitstop_on_parry": 0.12,
+    "hitstop_on_player_hurt": 0.08,
+    "shake_on_hit": 6,
+    "shake_on_parry": 14,
+    "shake_on_player_hurt": 12,
+    "shake_decay": 40,
+    "boss_hit_flash": 0.06,
+    "damage_numbers": true,
+    "hitstop_time_scale": 0.05
+  },
+  "weapons": [
+    {
+      "id": "sword_basic",
+      "name": "낡은 검",
+      "combo": [
+        {
+          "damage": 10,
+          "startup": 0.08,
+          "active": 0.08,
+          "recovery": 0.18,
+          "reach": 170,
+          "height": 70,
+          "knockback": 60,
+          "lunge": 30,
+          "chain_at": 0.108
+        },
+        {
+          "damage": 10,
+          "startup": 0.07,
+          "active": 0.08,
+          "recovery": 0.18,
+          "reach": 170,
+          "height": 70,
+          "knockback": 60,
+          "lunge": 30,
+          "chain_at": 0.108
+        },
+        {
+          "damage": 12.0,
+          "startup": 0.068,
+          "active": 0.08,
+          "recovery": 0.144,
+          "reach": 170,
+          "height": 80,
+          "knockback": 66.0,
+          "lunge": 30,
+          "chain_at": 0.0864
+        },
+        {
+          "damage": 18.0,
+          "startup": 0.088,
+          "active": 0.12,
+          "recovery": 0.207,
+          "reach": 170,
+          "height": 80,
+          "knockback": 132.0,
+          "lunge": 30,
+          "chain_at": 0.207
+        }
+      ],
+      "combo_window": 0.25,
+      "air_attack": {
+        "damage": 10,
+        "startup": 0.06,
+        "active": 0.1,
+        "recovery": 0.16,
+        "reach": 170,
+        "height": 70,
+        "chain_at": 0.096
+      },
+      "down_attack": {
+        "damage": 12,
+        "startup": 0.06,
+        "active": 0.14,
+        "recovery": 0.2,
+        "reach": 60,
+        "height": 110,
+        "pogo_velocity": 900,
+        "chain_at": 0.12
+      },
+      "up_attack": {
+        "damage": 10,
+        "startup": 0.08,
+        "active": 0.1,
+        "recovery": 0.2,
+        "reach": 60,
+        "height": 120,
+        "chain_at": 0.12
+      },
+      "flags": []
+    },
+    {
+      "id": "greatsword_slab",
+      "name": "석판 대검",
+      "combo": [
+        {
+          "damage": 22.0,
+          "startup": 0.16,
+          "active": 0.16,
+          "recovery": 0.36,
+          "reach": 210,
+          "height": 88,
+          "knockback": 132,
+          "lunge": 30,
+          "chain_at": 0.216
+        },
+        {
+          "damage": 22.0,
+          "startup": 0.14,
+          "active": 0.16,
+          "recovery": 0.36,
+          "reach": 210,
+          "height": 88,
+          "knockback": 132,
+          "lunge": 30,
+          "chain_at": 0.216
+        },
+        {
+          "damage": 26.4,
+          "startup": 0.136,
+          "active": 0.16,
+          "recovery": 0.288,
+          "reach": 210,
+          "height": 88,
+          "knockback": 145.2,
+          "lunge": 30,
+          "chain_at": 0.1728
+        },
+        {
+          "damage": 39.6,
+          "startup": 0.176,
+          "active": 0.24,
+          "recovery": 0.414,
+          "reach": 210,
+          "height": 88,
+          "knockback": 290.4,
+          "lunge": 30,
+          "chain_at": 0.414
+        }
+      ],
+      "combo_window": 0.25,
+      "air_attack": {
+        "damage": 22.0,
+        "startup": 0.12,
+        "active": 0.2,
+        "recovery": 0.32,
+        "reach": 210,
+        "height": 88,
+        "chain_at": 0.192
+      },
+      "down_attack": {
+        "damage": 26.4,
+        "startup": 0.12,
+        "active": 0.28,
+        "recovery": 0.4,
+        "reach": 75,
+        "height": 138,
+        "pogo_velocity": 900,
+        "chain_at": 0.24
+      },
+      "up_attack": {
+        "damage": 22.0,
+        "startup": 0.16,
+        "active": 0.2,
+        "recovery": 0.4,
+        "reach": 75,
+        "height": 150,
+        "chain_at": 0.24
+      },
+      "flags": []
+    },
+    {
+      "id": "daggers_twin",
+      "name": "쌍단검",
+      "combo": [
+        {
+          "damage": 6.0,
+          "startup": 0.048,
+          "active": 0.048,
+          "recovery": 0.108,
+          "reach": 135,
+          "height": 50,
+          "knockback": 36,
+          "lunge": 30,
+          "chain_at": 0.0648
+        },
+        {
+          "damage": 6.0,
+          "startup": 0.042,
+          "active": 0.048,
+          "recovery": 0.108,
+          "reach": 135,
+          "height": 50,
+          "knockback": 36,
+          "lunge": 30,
+          "chain_at": 0.0648
+        },
+        {
+          "damage": 7.2,
+          "startup": 0.041,
+          "active": 0.048,
+          "recovery": 0.086,
+          "reach": 135,
+          "height": 58,
+          "knockback": 39.6,
+          "lunge": 30,
+          "chain_at": 0.0516
+        },
+        {
+          "damage": 10.8,
+          "startup": 0.053,
+          "active": 0.072,
+          "recovery": 0.124,
+          "reach": 135,
+          "height": 58,
+          "knockback": 79.2,
+          "lunge": 30,
+          "chain_at": 0.124
+        }
+      ],
+      "combo_window": 0.25,
+      "air_attack": {
+        "damage": 6.0,
+        "startup": 0.036,
+        "active": 0.06,
+        "recovery": 0.096,
+        "reach": 135,
+        "height": 50,
+        "chain_at": 0.0576
+      },
+      "down_attack": {
+        "damage": 7.2,
+        "startup": 0.036,
+        "active": 0.084,
+        "recovery": 0.12,
+        "reach": 43,
+        "height": 79,
+        "pogo_velocity": 900,
+        "chain_at": 0.072
+      },
+      "up_attack": {
+        "damage": 6.0,
+        "startup": 0.048,
+        "active": 0.06,
+        "recovery": 0.12,
+        "reach": 43,
+        "height": 86,
+        "chain_at": 0.072
+      },
+      "flags": [
+        "dash_cancel"
+      ]
+    }
+  ],
+  "training": {
+    "arena": {
+      "floor_y": 960,
+      "left": 40,
+      "right": 1880,
+      "platform_thickness": 24,
+      "platforms": [
+        {
+          "x": 450,
+          "y": 720,
+          "w": 270
+        },
+        {
+          "x": 1010,
+          "y": 720,
+          "w": 270
+        }
+      ]
+    },
+    "player": {
+      "spawn": [
+        300,
+        900
+      ],
+      "size": [
+        48,
+        96
+      ],
+      "color": [
+        0.22,
+        0.83,
+        0.78,
+        1
+      ],
+      "weapon_id": "sword_basic"
+    },
+    "dummy": {
+      "position": [
+        1490,
+        850
+      ],
+      "size": [
+        110,
+        220
+      ],
+      "color": [
+        0.76,
+        0.62,
+        0.38,
+        1
+      ],
+      "attack_interval": 3,
+      "warning_time": 0.65,
+      "attack_cycle": [
+        "melee",
+        "projectile"
+      ],
+      "hitbox_size": [
+        250,
+        130
+      ],
+      "hitbox_offset_y": 55,
+      "hitbox_duration": 0.18,
+      "damage": 12,
+      "projectile_speed": 540,
+      "projectile_size": [
+        32,
+        32
+      ],
+      "projectile_lifetime": 6,
+      "parry_stagger": 25,
+      "enabled": true
+    },
+    "feedback": {
+      "message_duration": 0.9,
+      "number_duration": 0.7,
+      "number_rise_speed": 90,
+      "attack_color": [
+        1,
+        0.86,
+        0.4,
+        0.5
+      ],
+      "debug_speeds": [
+        0.25,
+        0.5,
+        1
+      ]
+    }
+  },
+  "golem": {
+    "scale": 0.7,
+    "body_x": -75.0,
+    "body_y": -210.0,
+    "body_width": 170.0,
+    "body_height": 260.0,
+    "weakpoint_enabled": false,
+    "weakpoint_size": 90.0,
+    "weakpoint_multiplier": 1.5,
+    "foot_zone": 150.0,
+    "foot_dwell": 1.5,
+    "idle_min": 0.6,
+    "idle_max": 1.2,
+    "phase2_windup": 0.45,
+    "phase2_shockwave": true,
+    "shockwave_speed": 360.0,
+    "shockwave_damage": 12.0,
+    "shockwave_height": 45.0,
+    "moves": {
+      "slam": {
+        "animation": "slam",
+        "source_windup": 0.6,
+        "windup": 0.6,
+        "active_start": 0.7,
+        "active_end": 0.8,
+        "punish_end": 1.1,
+        "duration": 1.4,
+        "hitbox_x": 140,
+        "hitbox_y": -60,
+        "hitbox_width": 160,
+        "hitbox_height": 60,
+        "damage": 25,
+        "knockback": 420,
+        "parriable": false,
+        "shake": 10.0
+      },
+      "sweep": {
+        "animation": "sweep",
+        "source_windup": 0.7,
+        "windup": 0.7,
+        "active_start": 0.76,
+        "active_end": 0.88,
+        "punish_end": 1.2,
+        "duration": 1.5,
+        "hitbox_x": 40,
+        "hitbox_y": -150,
+        "hitbox_width": 290,
+        "hitbox_height": 150,
+        "damage": 18,
+        "knockback": 420,
+        "parriable": false,
+        "shake": 10.0
+      },
+      "stomp": {
+        "animation": "stomp",
+        "source_windup": 0.55,
+        "windup": 0.55,
+        "active_start": 0.62,
+        "active_end": 0.7,
+        "punish_end": 1.0,
+        "duration": 1.3,
+        "hitbox_x": -150,
+        "hitbox_y": -50,
+        "hitbox_width": 410,
+        "hitbox_height": 50,
+        "damage": 20,
+        "knockback": 420,
+        "parriable": false,
+        "shake": 10.0
+      }
+    }
+  }
+}

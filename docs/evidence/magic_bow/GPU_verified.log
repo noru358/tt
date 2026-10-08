@@ -1,0 +1,46 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PASS: bow action registered
+PASS: bow has editable tuning controls
+PASS: tap auto-aims behind facing toward enemy
+PASS: tap damage uses configured minimum
+PASS: fast arrow lands exactly one hit
+PASS: charging keeps full movement speed
+PASS: dash preserves bow charge
+PASS: release fires during dash without cancelling movement
+PASS: arrow spawns at post-movement player position
+PASS: full charge waits for release
+PASS: full charge increases damage and speed
+PASS: future teleport relocation preserves charge and updates origin
+PASS: charged arrow hits only once
+PASS: air dash and charge coexist
+PASS: airborne arrow aims down at enemy automatically
+PASS: cooldown rejects repeated tap
+PASS: cooldown press does not become a delayed shot
+BOW_REPRESS shots=6 expected=6 cooldown=1.2 focused=true received=8
+PASS: fresh press after cooldown works
+PASS: menu boundary cancels charge without release shot
+PASS: focus boundary cancels charge without ghost shot
+PASS: hurt cancels charge without firing
+PASS: RB charges on gamepad
+PASS: RB release during pad dash fires
+PASS: guidance follows moving target
+PASS: guidance respects turn-rate limit
+PASS: no target falls back to facing direction
+PASS: missed arrow expires instead of orbiting forever
+PASS: sweep detects thin target crossed in one tick
+PASS: sweep rejects near miss
+GPU_TEST restoring synthetic input focus
+PASS: sword_basic supports the same auxiliary bow
+PASS: greatsword_slab supports the same auxiliary bow
+PASS: daggers_twin supports the same auxiliary bow
+PASS: bow tuning saves to isolated override
+PASS: bow tuning restores
+PASS: pre-bow override receives bow defaults
+PASS: progression loadout auto-locks boss
+PASS: bow damages actual boss in progression battle
+PASS: invulnerable boss is not marked as target
+PASS: dead target is released safely
+PASS: result transition cancels bow without firing
+MAGIC_BOW_RESULT checks=40 failures=0

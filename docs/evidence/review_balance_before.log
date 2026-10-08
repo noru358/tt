@@ -1,0 +1,6 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+REVIEW_BALANCE {"damage":{"daggers_twin":{"held":96.0,"rapid":199.2,"relative_difference":1.075},"greatsword_slab":{"held":110.0,"rapid":242.0,"relative_difference":1.2},"sword_basic":{"held":110.0,"rapid":210.0,"relative_difference":0.909090909090909}},"dash_displacement":0.0,"dash_immune_ratio":0.9}
+REVIEW_BALANCE_RESULT checks=0 failures=0
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)

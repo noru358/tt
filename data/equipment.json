@@ -1,0 +1,83 @@
+[
+  {
+    "id": "slab_greatsword",
+    "name": "석판 대검",
+    "slot": "weapon",
+    "weapon_id": "greatsword_slab",
+    "recipe": {
+      "golem_shard": 3,
+      "golem_core": 1
+    },
+    "modifiers": {
+      "move_speed": {
+        "mul": -0.08
+      }
+    },
+    "effects": []
+  },
+  {
+    "id": "twin_daggers",
+    "name": "쌍단검",
+    "slot": "weapon",
+    "weapon_id": "daggers_twin",
+    "recipe": {
+      "golem_shard": 4
+    },
+    "modifiers": {},
+    "effects": []
+  },
+  {
+    "id": "rock_mail",
+    "name": "바위 갑옷",
+    "slot": "armor",
+    "recipe": {
+      "golem_shard": 5
+    },
+    "modifiers": {
+      "max_hp": {
+        "add": 30
+      },
+      "move_speed": {
+        "mul": -0.05
+      }
+    },
+    "effects": []
+  },
+  {
+    "id": "core_ward",
+    "name": "핵 부적",
+    "slot": "charm",
+    "recipe": {
+      "golem_core": 1,
+      "golem_shard": 2
+    },
+    "modifiers": {},
+    "effects": [
+      {
+        "type": "parry_window_bonus",
+        "seconds": 0.05
+      },
+      {
+        "type": "on_parry_heal",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "heart_ring",
+    "name": "심장 반지",
+    "slot": "charm",
+    "recipe": {
+      "golem_heart": 1,
+      "golem_shard": 2
+    },
+    "modifiers": {},
+    "effects": [
+      {
+        "type": "on_perfect_dodge_damage_buff",
+        "mult": 1.5,
+        "duration": 2.0
+      }
+    ]
+  }
+]

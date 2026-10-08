@@ -1,0 +1,73 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: sword_basic active tap chains stage 1
+PASS: sword_basic queued tap runs exactly once
+PASS: sword_basic active tap chains stage 2
+PASS: sword_basic queued tap runs exactly once
+PASS: sword_basic active tap chains stage 3
+PASS: sword_basic queued tap runs exactly once
+PASS: sword_basic active tap chains stage 4
+PASS: sword_basic queued tap runs exactly once
+PASS: greatsword_slab active tap chains stage 1
+PASS: greatsword_slab queued tap runs exactly once
+PASS: greatsword_slab active tap chains stage 2
+PASS: greatsword_slab queued tap runs exactly once
+PASS: greatsword_slab active tap chains stage 3
+PASS: greatsword_slab queued tap runs exactly once
+PASS: greatsword_slab active tap chains stage 4
+PASS: greatsword_slab queued tap runs exactly once
+PASS: daggers_twin active tap chains stage 1
+PASS: daggers_twin queued tap runs exactly once
+PASS: daggers_twin active tap chains stage 2
+PASS: daggers_twin queued tap runs exactly once
+PASS: daggers_twin active tap chains stage 3
+PASS: daggers_twin queued tap runs exactly once
+PASS: daggers_twin active tap chains stage 4
+PASS: daggers_twin queued tap runs exactly once
+PASS: D held plus brief W+J preserves up hitbox
+PASS: D dash plus brief S+J preserves down hitbox
+PASS: Shift before W in one tick resolves current direction
+PASS: neutral dash accepts next-tick direction
+PASS: reaim locks after first explicit direction
+PASS: late direction cannot steer locked dash
+PASS: escape cancels slow attack startup
+PASS: escape ends in full-speed locomotion without recovery
+PASS: released landing-buffer jump is a short hop
+PASS: same-tick jump+dash consumes jump buffer
+PASS: special attack clears combo display
+PASS: normal attack after special starts at first hit
+PASS: parry+attack waits for success
+PASS: successful parry consumes one immediate counter
+PASS: successful counter does not repeat after tap
+PASS: failed parry drops simultaneous held attack
+PASS: focus resume seeds held key without new edge
+PASS: dash-origin attack continuation option true
+PASS: dash-origin attack continuation option false
+PASS: device switch does not synthesize held attack
+PASS: legacy tuning migrates option and fills grace
+PASS: obsolete edge lifetime is removed
+PASS: fresh isolated save written
+PASS: modern save load has no migration 0
+PASS: modern save load has no migration 1
+PASS: modern save load has no migration 2
+PASS: modern loads create no migration backup
+PASS: distinct save rotates backup
+PASS: unchanged hub save preserves previous state backup
+PASS: missing main recovers valid tmp before bak
+PASS: missing main recovers backup
+ERROR: Parse JSON failed. Error at line 0: Expected 'true', 'false', or 'null', got 'invalid'
+   at: parse_string (core/io/json.cpp:624)
+   GDScript backtrace (most recent call first):
+       [0] _recover_missing_save (res://autoload/GameState.gd:265)
+       [1] load_save (res://autoload/GameState.gd:73)
+       [2] _run (res://tests/IndependentReviewSuite.gd:206)
+       [3] reset_player (res://tests/PlayerSuite.gd:66)
+       [4] frames (res://tests/PlayerSuite.gd:22)
+PASS: invalid recovery blocks new-save overwrite
+PASS: canonical combat settings are unmodified
+PASS: pre-battle tuning marks run debug-used
+PASS: staggered airborne golem keeps falling
+PASS: result ignores immediate keys and waits for held pad release
+PASS: result arms after delay and all gameplay keys released
+PASS: fresh accept after arming activates retry once
+INDEPENDENT_REVIEW_RESULT checks=62 failures=0

@@ -1,0 +1,232 @@
+extends "res://tests/ControlsRevisionSuite.gd"
+
+func write_json(path: String, value: Variant) -> void:
+	var file: FileAccess = FileAccess.open(path,FileAccess.WRITE)
+	file.store_string(JSON.stringify(value))
+	file.close()
+
+func _run() -> void:
+	var legacy: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/legacy_golem.json"))
+	DataRegistry.documents["bosses/golem.json"] = legacy
+	DataRegistry._indexes["bosses"]["golem"] = legacy
+	print("LEGACY_PRIMITIVE_FIXTURE: old shape boss; cutout gameplay is tested by GolemCutoutSuite")
+	check(DataRegistry.is_valid,"review fix canonical registry valid")
+	var original_path: String = GameState.storage_path
+	for kind: String in ["material","removed","version"]:
+		var old: Dictionary = GameState.fresh()
+		if kind == "material": old["materials"].erase("wing_feather")
+		elif kind == "removed":
+			old["materials"]["old_dust"] = 7
+			old["owned"].append("removed_blade")
+			old["equipped"]["weapon"] = "removed_blade"
+			old["unlocked"].append("removed_boss")
+			old["records"]["removed_boss"] = {"kills":2,"best_time":12}
+		else: old["version"] = 2
+		GameState.storage_path = original_path+"."+kind
+		write_json(GameState.storage_path,old)
+		var raw: String = FileAccess.get_file_as_string(GameState.storage_path)
+		check(GameState.load_save() and not GameState.save_blocked,"compatible save loads: "+kind)
+		check(FileAccess.file_exists(GameState.storage_path+".pre-migrate.bak") and FileAccess.get_file_as_string(GameState.storage_path+".pre-migrate.bak") == raw,"exact pre-migrate backup: "+kind)
+		check(GameState.validate(GameState.state),"migrated save validates: "+kind)
+		if kind == "removed": check(GameState.state["owned"].is_empty() and GameState.state["equipped"]["weapon"] == "" and not GameState.state["records"].has("removed_boss"),"removed content is pruned and unequipped")
+	var bad: Dictionary = GameState.fresh()
+	bad["materials"]["wing_feather"] = "bad"
+	GameState.storage_path = original_path+".bad"
+	write_json(GameState.storage_path,bad)
+	check(not GameState.load_save() and GameState.save_blocked and not FileAccess.file_exists(GameState.storage_path+".pre-migrate.bak"),"malformed types block without overwriting or migrating")
+	GameState.storage_path = original_path
+	GameState.save_blocked = false
+	GameState.state = GameState.fresh()
+	# Generic recursive tuning defaults and weapon id merge.
+	var old_defaults: Dictionary = Tuning.defaults.duplicate(true)
+	var tuning_path: String = Tuning.storage_override
+	var added: Dictionary = old_defaults["weapons"][0].duplicate(true)
+	added["id"] = "review_weapon"
+	Tuning.defaults["weapons"].append(added)
+	Tuning.storage_override = tuning_path+".sparse"
+	write_json(Tuning.storage_override,{"player":{"move_speed":321},"feedback":{"hitstop_on_hit":0.07},"training":{"dummy":{"damage":23}},"weapons":[{"id":"sword_basic","combo":[{"damage":13}]}]})
+	check(Tuning.load_override(),"sparse override validates after generic merge")
+	check(Tuning.player["move_speed"] == 321 and Tuning.player["device_switch_axis"] == 0.6 and Tuning.training["dummy"]["damage"] == 23 and Tuning.feedback["hitstop_on_hit"] == 0.07,"recursive defaults preserve explicit override values")
+	check(Tuning.get_weapon("review_weapon")["id"] == "review_weapon" and Tuning.get_weapon("greatsword_slab")["combo"].size() == 4,"new/missing weapons merged by id")
+	check(Tuning.get_weapon("sword_basic")["combo"][0]["damage"] == 13 and Tuning.get_weapon("sword_basic")["combo"][0].has("chain_at"),"existing attack edit retained and new field filled")
+	Tuning.defaults = old_defaults
+	Tuning.storage_override = tuning_path
+	Tuning.reset_defaults()
+	arena = load("res://scenes/arena/Arena.tscn").instantiate()
+	add_child(arena)
+	player = arena.player
+	dummy = arena.dummy
+	Tuning.set_value("dummy","enabled",false)
+	await frames(10)
+	check(player.p("attack_move_mult") == 0.4 and player.p("dash_distance") == 300 and Tuning.feedback["hitstop_on_hit"] == 0.05,"requested feel defaults applied")
+	await reset_player(800,912)
+	key(KEY_J,true)
+	await frames(5)
+	key(KEY_J,false)
+	check(absf(player.position.x-800-30) < 1,"attack lunge integrates to 30px")
+	await reset_player(800,912)
+	key(KEY_D,true)
+	key(KEY_J,true)
+	await frames(7)
+	check(is_equal_approx(player.velocity.x,player.p("move_speed")*0.4),"attack movement uses 0.4 multiplier after startup lunge")
+	key(KEY_J,false)
+	key(KEY_D,false)
+	await reset_player(800,912)
+	player.facing = -1
+	key(KEY_S,true)
+	key(KEY_SHIFT,true)
+	await frames(1)
+	check(player.dash_direction == Vector2.LEFT and player.position.x < 800,"ground pure-down dash becomes facing horizontal evade")
+	await reset_player(800,500)
+	key(KEY_S,true)
+	key(KEY_SHIFT,true)
+	await frames(1)
+	check(player.dash_direction == Vector2.DOWN,"air down dash remains vertical")
+	Tuning.set_value("player","dash_cooldown",0.1)
+	check(not Tuning.balance_warning().is_empty() and arena.debug_panel.balance_warning.visible and DataRegistry.is_valid,"unsafe iframe gap warns red without blocking game")
+	arena.debug_panel.toggle()
+	await snapshot("review_dash_warning")
+	arena.debug_panel.toggle()
+	Tuning.set_value("player","dash_cooldown",0.45)
+	check(Tuning.balance_warning().is_empty(),"safe dash gap clears warning")
+	await reset_player()
+	key(KEY_K,true)
+	key(KEY_K,false)
+	await frames(9)
+	key(KEY_D,true)
+	key(KEY_J,true)
+	key(KEY_SPACE,true)
+	await frames(1)
+	check(player.state == GatePlayer.State.PARRY and not player.attack_running and player.velocity.x == 0 and player.velocity.y >= 0,"failed parry recovery blocks move attack jump")
+	key(KEY_SHIFT,true)
+	await frames(1)
+	check(player.state == GatePlayer.State.PARRY and player.defense_note == "헛패리 후딜","failed parry blocks dash by default")
+	Tuning.set_value("player","parry_whiff_dash_cancel",true)
+	key(KEY_SHIFT,false)
+	key(KEY_SHIFT,true)
+	await frames(1)
+	check(player.state == GatePlayer.State.DASH,"optional failed-parry dash cancel works")
+	Tuning.set_value("player","parry_whiff_dash_cancel",false)
+	await reset_player()
+	key(KEY_K,true)
+	await frames(1)
+	var box: CombatHitbox = CombatHitbox.new()
+	box.parriable = true
+	box.damage = 10
+	check(player.receive_hit(box) == "parried","parry success recognized")
+	box.free()
+	key(KEY_K,false)
+	key(KEY_J,true)
+	await frames(1)
+	check(player.attack_running,"successful parry allows immediate counterattack")
+	await reset_player()
+	Tuning.set_value("player","parry_whiff_cancel",true)
+	key(KEY_K,true)
+	await frames(9)
+	key(KEY_J,true)
+	await frames(1)
+	check(player.attack_running,"optional legacy whiff cancel preserved")
+	Tuning.set_value("player","parry_whiff_cancel",false)
+	await reset_player()
+	key(KEY_D,true)
+	await frames(1)
+	var motion: InputEventJoypadMotion = InputEventJoypadMotion.new()
+	motion.device = 0
+	motion.axis = JOY_AXIS_LEFT_X
+	motion.axis_value = 0.25
+	Input.parse_input_event(motion)
+	Input.flush_buffered_events()
+	await frames(1)
+	check(player.controls.device_id == -1 and player.velocity.x > 0,"stick drift cannot steal held keyboard input")
+	motion = motion.duplicate()
+	motion.axis_value = 0.9
+	Input.parse_input_event(motion)
+	Input.flush_buffered_events()
+	await frames(1)
+	check(player.controls.device_id == -1,"even deliberate axis cannot switch while keyboard held")
+	key(KEY_D,false)
+	Input.parse_input_event(motion)
+	Input.flush_buffered_events()
+	await frames(1)
+	check(player.controls.device_id == 0,"axis above threshold switches after keyboard release")
+	motion = motion.duplicate()
+	motion.axis_value = 0
+	Input.parse_input_event(motion)
+	Input.flush_buffered_events()
+	await reset_player(800,500)
+	key(KEY_J,true)
+	await frames(1)
+	key(KEY_J,false)
+	key(KEY_SPACE,true)
+	await frames(1)
+	check(player.attack_running and player.attack_kind == "air_attack","unavailable aerial jump cannot cancel attack")
+	# Game clocks do not age in OS stalls, but do age in physics.
+	await reset_player()
+	key(KEY_J,true)
+	key(KEY_J,false)
+	await frames(2)
+	key(KEY_J,true)
+	key(KEY_J,false)
+	await frames(1)
+	var deadline: float = player.attack_queued_until
+	OS.delay_msec(220)
+	check(player.attack_queued_until == deadline and player.input_clock < deadline,"attack buffer survives wall-clock stall")
+	await reset_player()
+	player.dash_cooldown = 0.06
+	key(KEY_SHIFT,true)
+	key(KEY_SHIFT,false)
+	await frames(1)
+	OS.delay_msec(150)
+	await frames(5)
+	check(player.state == GatePlayer.State.DASH,"defense buffer survives wall-clock stall")
+	await reset_player()
+	key(KEY_J,true)
+	key(KEY_J,false)
+	OS.delay_msec(180)
+	await frames(1)
+	check(player.attack_running,"input edge survives wall-clock stall before physics")
+	await reset_player()
+	Feedback.set_speed(0.25)
+	var clock_before: float = player.input_clock
+	key(KEY_J,true)
+	key(KEY_J,false)
+	await frames(4)
+	check(player.input_clock-clock_before < 0.03 and player.attack_running,"slow motion ages input in scaled physics time")
+	Feedback.set_speed(1,false)
+	Feedback.clear_transients()
+	# Pattern primitive timeout, not boss-specific code.
+	var boss: Node2D = load("res://scenes/boss/Boss.tscn").instantiate()
+	boss.data = DataRegistry.get_boss("golem")
+	boss.position = Vector2(300,810)
+	add_child(boss)
+	boss.set_physics_process(false)
+	var step: RefCounted = load("res://scripts/boss/steps/move_to.gd").new()
+	step.setup(boss,{"target":"arena_right","speed":180,"max_duration":1.5})
+	step.begin()
+	check(not step.tick(1.4) and step.tick(0.1) and boss.position.x < 1000,"move_to advances after max_duration without reaching destination")
+	boss.queue_free()
+	# Debug rewards count kills and materials but never improve best time.
+	GameState.state = GameState.fresh()
+	check(not GameState.award_win(DataRegistry.get_boss("golem"),20,"review-normal").is_empty(),"normal victory stores reward")
+	var best: float = GameState.state["records"]["golem"]["best_time"]
+	check(not GameState.award_win(DataRegistry.get_boss("golem"),1,"review-debug",true).is_empty() and GameState.state["records"]["golem"]["best_time"] == best and GameState.state["records"]["golem"]["kills"] == 2,"debug victory grants rewards without best-time update")
+	arena.queue_free()
+	await frames(3)
+	var hub: Control = load("res://scenes/hub/Hub.tscn").instantiate()
+	get_tree().root.add_child(hub)
+	get_tree().current_scene = hub
+	await frames(3)
+	check(not hub.boss_buttons["wing"].disabled,"every unlocked boss button can start battle")
+	await snapshot("review_hub")
+	hub.start_battle("wing")
+	await frames(45)
+	arena = get_tree().current_scene
+	check(arena.boss.data["id"] == "wing" and arena.player.use_loadout,"generic start supports unlocked noninitial boss")
+	Tuning.set_value("player","move_speed",519)
+	arena.elapsed = 0.5
+	arena.finish(true)
+	await frames(2)
+	check(arena.debug_used and arena.result_screen.details.text.contains("디버그 사용") and GameState.state["records"]["wing"]["best_time"] == 0,"tuning edit marks result and excludes first debug record")
+	await snapshot("review_debug_result")
+	print("REVIEW_FIX_RESULT checks=%d failures=%d" % [checks,failures])
+	get_tree().quit(0 if failures == 0 else 1)

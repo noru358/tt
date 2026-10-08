@@ -1,0 +1,82 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 560.94 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4060 Ti
+
+PASS: review fix canonical registry valid
+WARNING: Save migration: 새 재료 0으로 추가: wing_feather
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+PASS: compatible save loads: material
+PASS: exact pre-migrate backup: material
+PASS: migrated save validates: material
+WARNING: Save migration: 삭제 재료 제거: old_dust
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+WARNING: Save migration: 삭제 장비 제거: removed_blade
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+WARNING: Save migration: 삭제 장비 장착 해제: removed_blade
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+WARNING: Save migration: 삭제 보스 해금 제거: removed_boss
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+WARNING: Save migration: 삭제 보스 기록 제거: removed_boss
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+PASS: compatible save loads: removed
+PASS: exact pre-migrate backup: removed
+PASS: migrated save validates: removed
+PASS: removed content is pruned and unequipped
+WARNING: Save migration: 구조 호환 저장 version 2.0 → 1
+   at: push_warning (core/variant/variant_utility.cpp:1034)
+   GDScript backtrace (most recent call first):
+       [0] load_save (res://autoload/GameState.gd:88)
+       [1] _run (res://tests/ReviewFixSuite.gd:24)
+PASS: compatible save loads: version
+PASS: exact pre-migrate backup: version
+PASS: migrated save validates: version
+PASS: malformed types block without overwriting or migrating
+PASS: sparse override validates after generic merge
+PASS: recursive defaults preserve explicit override values
+PASS: new/missing weapons merged by id
+PASS: existing attack edit retained and new field filled
+PASS: requested feel defaults applied
+PASS: attack lunge integrates to 30px
+PASS: attack movement uses 0.4 multiplier after startup lunge
+PASS: ground pure-down dash becomes facing horizontal evade
+PASS: air down dash remains vertical
+PASS: unsafe iframe gap warns red without blocking game
+PASS: safe dash gap clears warning
+PASS: failed parry recovery blocks move attack jump
+PASS: failed parry blocks dash by default
+PASS: optional failed-parry dash cancel works
+PASS: parry success recognized
+PASS: successful parry allows immediate counterattack
+PASS: optional legacy whiff cancel preserved
+PASS: stick drift cannot steal held keyboard input
+PASS: even deliberate axis cannot switch while keyboard held
+PASS: axis above threshold switches after keyboard release
+PASS: unavailable aerial jump cannot cancel attack
+PASS: attack buffer survives wall-clock stall
+PASS: defense buffer survives wall-clock stall
+PASS: input edge survives wall-clock stall before physics
+PASS: slow motion ages input in scaled physics time
+PASS: move_to advances after max_duration without reaching destination
+PASS: normal victory stores reward
+PASS: debug victory grants rewards without best-time update
+PASS: every unlocked boss button can start battle
+PASS: generic start supports unlocked noninitial boss
+PASS: tuning edit marks result and excludes first debug record
+REVIEW_FIX_RESULT checks=43 failures=0

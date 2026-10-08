@@ -1,0 +1,18 @@
+{
+  "boss_id": "golem",
+  "player_spawn": [
+    300,
+    900
+  ],
+  "boss_spawn": [
+    1400,
+    810
+  ],
+  "intro_duration": 0.8,
+  "selection_retry": 0.3,
+  "projectile_lifetime": 8,
+  "shockwave_width": 64,
+  "fall_warning_height": 900,
+  "platform_thickness": 24,
+  "result_input_delay": 0.5
+}

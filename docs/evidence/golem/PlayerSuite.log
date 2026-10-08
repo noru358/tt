@@ -1,0 +1,60 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: data valid
+CONNECTED_JOYPADS []
+PASS: player lands on floor
+PASS: keyboard movement + acceleration
+PASS: variable jump height (held vs released)
+PASS: jump through and land on one-way platform
+PASS: air dash starts
+PASS: dash distance follows tuning
+PASS: second airborne dash blocked
+PASS: sword hits once per active hitbox
+PASS: combo second stage
+PASS: combo third stage from array
+PASS: downward hit produces pogo bounce
+PASS: upper attack geometry
+PASS: melee parry negates damage and adds stagger
+PASS: failed parry locks attack during whiff recovery
+PASS: whiff recovery ends
+PASS: parry disabled: input + HUD hidden
+PASS: parry sliders hidden while disabled
+PASS: parry feedback controls hidden while disabled
+PASS: projectile parry reverses direction/team
+PASS: reflected projectile damages dummy
+PASS: dash iframe + single perfect dodge event
+PASS: hit damage and hurt state
+PASS: hurt invulnerability prevents duplicate damage
+PASS: potion completes channel and consumes one
+PASS: F5 invulnerability behavior
+PASS: F1 slider changes live player value
+PASS: isolated persistence path supplied
+PASS: save runtime override
+PASS: reload saved override
+PASS: restore factory defaults
+PASS: hitstop uses configured scale
+PASS: longest hitstop restores selected slow motion
+PASS: gamepad event routes device + movement
+PASS: gamepad jump
+PASS: gamepad dash
+PASS: gamepad attack
+PASS: gamepad parry
+PASS: gamepad potion
+PASS: gamepad potion completes
+PASS: gamepad down attack
+PASS: gamepad upper attack
+PASS: other device cannot control assigned player
+PASS: jump buffer fires on landing
+PASS: coyote jump after leaving platform
+PASS: hit interrupts potion without consuming it
+PASS: dagger recovery dash cancel flag
+PASS: mouse-accessible hit/hurt/parry overlays
+PASS: mouse-accessible invulnerability and debug marker
+PASS: quarter speed button
+PASS: half speed button
+PASS: normal speed button
+PASS: Tab opens panel and pauses training
+PASS: Tab closes panel and resumes
+PASS: zero duration slider safely uses one physics tick
+PASS: death stops player and shows retry
+PLAYER_SUITE_RESULT checks=56 failures=0

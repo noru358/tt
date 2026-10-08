@@ -1,0 +1,12 @@
+{
+  "boss_hit_flash": 0.06,
+  "damage_numbers": true,
+  "hitstop_on_hit": 0.05,
+  "hitstop_on_parry": 0.12,
+  "hitstop_on_player_hurt": 0.08,
+  "hitstop_time_scale": 0.05,
+  "shake_decay": 40.0,
+  "shake_on_hit": 6.0,
+  "shake_on_parry": 14.0,
+  "shake_on_player_hurt": 12.0
+}

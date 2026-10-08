@@ -1,0 +1,10 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+REVIEW_BALANCE {"damage":{"daggers_twin":{"held":109.2,"rapid":120.0,"relative_difference":0.0989010989010984},"greatsword_slab":{"held":132.0,"rapid":132.0,"relative_difference":0.0},"sword_basic":{"held":120.0,"rapid":120.0,"relative_difference":0.0}},"dash_displacement":1055.92578125,"dash_immune_ratio":0.5}
+PASS: dash spam immune ratio <= 50 percent
+PASS: sword_basic hold/rapid damage difference <=10 percent
+PASS: greatsword_slab hold/rapid damage difference <=10 percent
+PASS: daggers_twin hold/rapid damage difference <=10 percent
+REVIEW_BALANCE_RESULT checks=4 failures=0
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)

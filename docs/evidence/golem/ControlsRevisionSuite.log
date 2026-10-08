@@ -1,0 +1,55 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: revised data valid
+PASS: current input reaches speed on the next tick
+PASS: last direction wins even while old direction is held
+PASS: release stops without residual drift
+PASS: dash end cannot leak high speed into movement
+PASS: dash direction (0.0, -1.0)
+PASS: diagonal has no extra speed (0.0, -1.0)
+PASS: dash direction (0.0, 1.0)
+PASS: diagonal has no extra speed (0.0, 1.0)
+PASS: dash direction (-1.0, 0.0)
+PASS: diagonal has no extra speed (-1.0, 0.0)
+PASS: dash direction (1.0, 0.0)
+PASS: diagonal has no extra speed (1.0, 0.0)
+PASS: dash direction (-0.707107, -0.707107)
+PASS: diagonal has no extra speed (-0.707107, -0.707107)
+PASS: dash direction (0.707107, -0.707107)
+PASS: diagonal has no extra speed (0.707107, -0.707107)
+PASS: dash direction (-0.707107, 0.707107)
+PASS: diagonal has no extra speed (-0.707107, 0.707107)
+PASS: dash direction (0.707107, 0.707107)
+PASS: diagonal has no extra speed (0.707107, 0.707107)
+PASS: standing attack advances configured30px
+PASS: attack movement follows configured multiplier
+PASS: release stops movement during attack
+PASS: jump interrupts attack immediately
+PASS: vertical dash cancels sword startup
+PASS: buffer disabled: early released press cannot resurrect as a delayed combo
+PASS: optional queued attack survives current attack and chains once
+PASS: press+release between physics ticks is not lost
+PASS: short input survives wall-clock stall before physics
+PASS: panel editing cannot leak stale gameplay actions
+PASS: nine tuning tabs including magic bow and golem
+PASS: all player fields have controls
+PASS: all feedback fields have controls
+PASS: all attacks editable: sword_basic
+PASS: all attacks editable: greatsword_slab
+PASS: all attacks editable: daggers_twin
+PASS: numeric entry updates active weapon immediately
+PASS: lunge remains adjustable
+PASS: dummy interval updates from panel
+PASS: dummy hitbox geometry updates from panel
+PASS: weapon selector changes practice weapon
+PASS: no F1 dependency
+PASS: no F2 dependency
+PASS: no F3 dependency
+PASS: no F4 dependency
+PASS: no F5 dependency
+PASS: no F6 dependency
+PASS: full panel settings save
+PASS: weapon + dummy + player settings restore together
+PASS: mouse opens panel through GUI hit testing
+PASS: mouse closes panel through GUI hit testing
+CONTROLS_SUITE_RESULT checks=52 failures=0

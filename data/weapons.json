@@ -1,0 +1,244 @@
+[
+  {
+    "air_attack": {
+      "active": 0.1,
+      "damage": 10.0,
+      "height": 70.0,
+      "reach": 170.0,
+      "recovery": 0.16,
+      "startup": 0.06,
+      "chain_at": 0.096
+    },
+    "combo": [
+      {
+        "active": 0.08,
+        "damage": 10.0,
+        "height": 70.0,
+        "knockback": 60.0,
+        "lunge": 30,
+        "reach": 170.0,
+        "recovery": 0.18,
+        "startup": 0.08,
+        "chain_at": 0.108
+      },
+      {
+        "active": 0.08,
+        "damage": 10.0,
+        "height": 70.0,
+        "knockback": 60.0,
+        "lunge": 30,
+        "reach": 170.0,
+        "recovery": 0.18,
+        "startup": 0.07,
+        "chain_at": 0.108
+      },
+      {
+        "active": 0.08,
+        "damage": 12.0,
+        "height": 80.0,
+        "knockback": 66.0,
+        "lunge": 30,
+        "reach": 170.0,
+        "recovery": 0.144,
+        "startup": 0.068,
+        "chain_at": 0.0864
+      },
+      {
+        "active": 0.12,
+        "damage": 18.0,
+        "height": 80.0,
+        "knockback": 132.0,
+        "lunge": 30,
+        "reach": 170.0,
+        "recovery": 0.207,
+        "startup": 0.088,
+        "chain_at": 0.207
+      }
+    ],
+    "combo_window": 0.25,
+    "down_attack": {
+      "active": 0.14,
+      "damage": 12.0,
+      "height": 110.0,
+      "pogo_velocity": 900.0,
+      "reach": 60.0,
+      "recovery": 0.2,
+      "startup": 0.06,
+      "chain_at": 0.12
+    },
+    "flags": [],
+    "id": "sword_basic",
+    "name": "낡은 검",
+    "up_attack": {
+      "active": 0.1,
+      "damage": 10.0,
+      "height": 120.0,
+      "reach": 60.0,
+      "recovery": 0.2,
+      "startup": 0.08,
+      "chain_at": 0.12
+    }
+  },
+  {
+    "air_attack": {
+      "active": 0.2,
+      "damage": 22.0,
+      "height": 88.0,
+      "reach": 210.0,
+      "recovery": 0.32,
+      "startup": 0.12,
+      "chain_at": 0.192
+    },
+    "combo": [
+      {
+        "active": 0.16,
+        "damage": 22.0,
+        "height": 88.0,
+        "knockback": 132.0,
+        "lunge": 30,
+        "reach": 210.0,
+        "recovery": 0.36,
+        "startup": 0.16,
+        "chain_at": 0.216
+      },
+      {
+        "active": 0.16,
+        "damage": 22.0,
+        "height": 88.0,
+        "knockback": 132.0,
+        "lunge": 30,
+        "reach": 210.0,
+        "recovery": 0.36,
+        "startup": 0.14,
+        "chain_at": 0.216
+      },
+      {
+        "active": 0.16,
+        "damage": 26.4,
+        "height": 88.0,
+        "knockback": 145.2,
+        "lunge": 30,
+        "reach": 210.0,
+        "recovery": 0.288,
+        "startup": 0.136,
+        "chain_at": 0.1728
+      },
+      {
+        "active": 0.24,
+        "damage": 39.6,
+        "height": 88.0,
+        "knockback": 290.4,
+        "lunge": 30,
+        "reach": 210.0,
+        "recovery": 0.414,
+        "startup": 0.176,
+        "chain_at": 0.414
+      }
+    ],
+    "combo_window": 0.25,
+    "down_attack": {
+      "active": 0.28,
+      "damage": 26.4,
+      "height": 138.0,
+      "pogo_velocity": 900.0,
+      "reach": 75.0,
+      "recovery": 0.4,
+      "startup": 0.12,
+      "chain_at": 0.24
+    },
+    "flags": [],
+    "id": "greatsword_slab",
+    "name": "석판 대검",
+    "up_attack": {
+      "active": 0.2,
+      "damage": 22.0,
+      "height": 150.0,
+      "reach": 75.0,
+      "recovery": 0.4,
+      "startup": 0.16,
+      "chain_at": 0.24
+    }
+  },
+  {
+    "air_attack": {
+      "active": 0.06,
+      "damage": 6.0,
+      "height": 50.0,
+      "reach": 135.0,
+      "recovery": 0.096,
+      "startup": 0.036,
+      "chain_at": 0.0576
+    },
+    "combo": [
+      {
+        "active": 0.048,
+        "damage": 6.0,
+        "height": 50.0,
+        "knockback": 36.0,
+        "lunge": 30,
+        "reach": 135.0,
+        "recovery": 0.108,
+        "startup": 0.048,
+        "chain_at": 0.0648
+      },
+      {
+        "active": 0.048,
+        "damage": 6.0,
+        "height": 50.0,
+        "knockback": 36.0,
+        "lunge": 30,
+        "reach": 135.0,
+        "recovery": 0.108,
+        "startup": 0.042,
+        "chain_at": 0.0648
+      },
+      {
+        "active": 0.048,
+        "damage": 7.2,
+        "height": 58.0,
+        "knockback": 39.6,
+        "lunge": 30,
+        "reach": 135.0,
+        "recovery": 0.086,
+        "startup": 0.041,
+        "chain_at": 0.0516
+      },
+      {
+        "active": 0.072,
+        "damage": 10.8,
+        "height": 58.0,
+        "knockback": 79.2,
+        "lunge": 30,
+        "reach": 135.0,
+        "recovery": 0.124,
+        "startup": 0.053,
+        "chain_at": 0.124
+      }
+    ],
+    "combo_window": 0.25,
+    "down_attack": {
+      "active": 0.084,
+      "damage": 7.2,
+      "height": 79.0,
+      "pogo_velocity": 900.0,
+      "reach": 43.0,
+      "recovery": 0.12,
+      "startup": 0.036,
+      "chain_at": 0.072
+    },
+    "flags": [
+      "dash_cancel"
+    ],
+    "id": "daggers_twin",
+    "name": "쌍단검",
+    "up_attack": {
+      "active": 0.06,
+      "damage": 6.0,
+      "height": 86.0,
+      "reach": 43.0,
+      "recovery": 0.12,
+      "startup": 0.048,
+      "chain_at": 0.072
+    }
+  }
+]

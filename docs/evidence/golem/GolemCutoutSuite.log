@@ -1,0 +1,55 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: cutout registry validates
+PASS: production golem instantiates cutout adapter
+PASS: three production animations exist
+PASS: Torso joint remains texture-free
+PASS: forearm draw order preserved
+PASS: painted rig uses linear filtering
+PASS: unsupported legacy attacks absent from production
+PASS: weak point defaults off
+LANDING facing=-1 edge_a=(886.72, 960.0004) edge_b=(806.3447, 960.0004) rect=[P: (790.0, 918.0), S: (112.0, 42.0)]
+PASS: slam fist edge meets ground facing -1
+PASS: ground hitbox covers fist edge facing -1
+PASS: hitbox mirrors with visual facing -1
+PASS: slam active at .7 facing -1
+LANDING facing=1 edge_a=(1113.28, 960.0004) edge_b=(1193.655, 960.0004) rect=[P: (1098.0, 918.0), S: (112.0, 42.0)]
+PASS: slam fist edge meets ground facing 1
+PASS: ground hitbox covers fist edge facing 1
+PASS: hitbox mirrors with visual facing 1
+PASS: slam active at .7 facing 1
+WINDOW slam active_ticks=6
+PASS: slam hitbox only active inside data interval
+PASS: slam emits exactly one impact
+PASS: slam interrupt clears active hitbox
+WINDOW sweep active_ticks=7
+PASS: sweep hitbox only active inside data interval
+PASS: sweep emits exactly one impact
+PASS: sweep interrupt clears active hitbox
+WINDOW stomp active_ticks=4
+PASS: stomp hitbox only active inside data interval
+PASS: stomp emits exactly one impact
+PASS: stomp interrupt clears active hitbox
+PASS: no damage before slam window facing -1
+PASS: live slam hits player once facing -1
+PASS: no late damage after window facing -1
+PASS: no damage before slam window facing 1
+PASS: live slam hits player once facing 1
+PASS: no late damage after window facing 1
+PASS: invalid timing edit is rejected instead of saved
+PASS: windup slider shifts active window with motion
+PASS: windup slider shifts animation length
+PASS: longer windup does not retain old impact time
+PASS: retimed impact aligns at 1.0
+PASS: phase two slam uses .45 windup and .55 impact
+PASS: phase two stomp emits two shockwaves at impact
+PASS: same pattern cannot occur three times in a row
+PASS: foot dwell selects stomp
+PASS: real AI runner advances cutout telegraph
+PASS: new golem stays stationary without fake walk animation
+PASS: optional weak point activates in punish window
+PASS: body plus weakpoint overlap deals one amplified hit
+PASS: weak point closes after punish window
+PASS: golem tuning persists to isolated override
+PASS: golem override restores saved scale
+GOLEM_CUTOUT_RESULT checks=47 failures=0

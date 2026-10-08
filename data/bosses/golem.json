@@ -1,0 +1,221 @@
+{
+  "id": "golem",
+  "name": "골렘",
+  "max_hp": 900,
+  "body": {
+    "shape": "rect",
+    "size": [
+      360,
+      300
+    ],
+    "color": [
+      0.57,
+      0.6,
+      0.65,
+      1
+    ]
+  },
+  "contact_damage": 0,
+  "gravity": 3600,
+  "arena": {
+    "floor_y": 960,
+    "left": 80,
+    "right": 1840,
+    "platforms": [
+      {
+        "x": 500,
+        "y": 710,
+        "w": 260
+      },
+      {
+        "x": 1160,
+        "y": 710,
+        "w": 260
+      }
+    ]
+  },
+  "stagger": {
+    "threshold": 100,
+    "duration": 2,
+    "decay_per_sec": 8,
+    "parry_gain": 25,
+    "heavy_hit_gain": 18,
+    "heavy_damage_threshold": 20,
+    "damage_mult": 1.25
+  },
+  "phases": [
+    {
+      "hp_above": 0.5,
+      "speed_mult": 1,
+      "patterns": [
+        {
+          "id": "slam",
+          "weight": 1
+        },
+        {
+          "id": "sweep",
+          "weight": 1
+        },
+        {
+          "id": "stomp",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "hp_above": 0,
+      "speed_mult": 1,
+      "patterns": [
+        {
+          "id": "slam",
+          "weight": 1
+        },
+        {
+          "id": "sweep",
+          "weight": 1
+        },
+        {
+          "id": "stomp",
+          "weight": 1
+        }
+      ]
+    }
+  ],
+  "patterns": {
+    "slam": {
+      "cooldown": 0,
+      "min_distance": 0,
+      "max_distance": 2400,
+      "steps": [
+        {
+          "type": "face_target"
+        },
+        {
+          "type": "cutout_attack",
+          "move": "slam"
+        }
+      ]
+    },
+    "sweep": {
+      "cooldown": 0,
+      "min_distance": 0,
+      "max_distance": 2400,
+      "steps": [
+        {
+          "type": "face_target"
+        },
+        {
+          "type": "cutout_attack",
+          "move": "sweep"
+        }
+      ]
+    },
+    "stomp": {
+      "cooldown": 0,
+      "min_distance": 0,
+      "max_distance": 2400,
+      "steps": [
+        {
+          "type": "face_target"
+        },
+        {
+          "type": "cutout_attack",
+          "move": "stomp"
+        }
+      ]
+    }
+  },
+  "drops": [
+    {
+      "id": "golem_shard",
+      "min": 3,
+      "max": 5
+    },
+    {
+      "id": "golem_core",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "id": "golem_heart",
+      "chance": 0.25
+    }
+  ],
+  "unlocks": [
+    "wing"
+  ],
+  "initially_unlocked": true,
+  "order": 0,
+  "cutout": {
+    "scale": 0.7,
+    "body_x": -75.0,
+    "body_y": -210.0,
+    "body_width": 170.0,
+    "body_height": 260.0,
+    "weakpoint_enabled": false,
+    "weakpoint_size": 90.0,
+    "weakpoint_multiplier": 1.5,
+    "foot_zone": 150.0,
+    "foot_dwell": 1.5,
+    "idle_min": 0.6,
+    "idle_max": 1.2,
+    "phase2_windup": 0.45,
+    "phase2_shockwave": true,
+    "shockwave_speed": 360.0,
+    "shockwave_damage": 12.0,
+    "shockwave_height": 45.0,
+    "moves": {
+      "slam": {
+        "animation": "slam",
+        "source_windup": 0.6,
+        "windup": 0.6,
+        "active_start": 0.7,
+        "active_end": 0.8,
+        "punish_end": 1.1,
+        "duration": 1.4,
+        "hitbox_x": 140,
+        "hitbox_y": -60,
+        "hitbox_width": 160,
+        "hitbox_height": 60,
+        "damage": 25,
+        "knockback": 420,
+        "parriable": false,
+        "shake": 10.0
+      },
+      "sweep": {
+        "animation": "sweep",
+        "source_windup": 0.7,
+        "windup": 0.7,
+        "active_start": 0.76,
+        "active_end": 0.88,
+        "punish_end": 1.2,
+        "duration": 1.5,
+        "hitbox_x": 40,
+        "hitbox_y": -150,
+        "hitbox_width": 290,
+        "hitbox_height": 150,
+        "damage": 18,
+        "knockback": 420,
+        "parriable": false,
+        "shake": 10.0
+      },
+      "stomp": {
+        "animation": "stomp",
+        "source_windup": 0.55,
+        "windup": 0.55,
+        "active_start": 0.62,
+        "active_end": 0.7,
+        "punish_end": 1.0,
+        "duration": 1.3,
+        "hitbox_x": -150,
+        "hitbox_y": -50,
+        "hitbox_width": 410,
+        "hitbox_height": 50,
+        "damage": 20,
+        "knockback": 420,
+        "parriable": false,
+        "shake": 10.0
+      }
+    }
+  }
+}

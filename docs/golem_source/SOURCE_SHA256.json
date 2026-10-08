@@ -1,0 +1,10 @@
+{
+  "assets/parts/arm_lower.png": "5085eaf7d20d7b14874b0eb45253dd25626146d6e4178822a065d390089a1543",
+  "assets/parts/arm_upper.png": "3b4ef5a4a1056daea21dccbc4310371123dfe728248b0d83f1dc10b898354ba0",
+  "assets/parts/fist.png": "67bfc29582530ce366c3020fa3b1e70fcd0f455edb715e7d086bebdc861d5107",
+  "assets/parts/head.png": "cc1975906cd33acac7b23421db1968731e229f099e9cd757bbfebee3d02b700e",
+  "assets/parts/leg_lower.png": "19d03bb91dceef63826e65f621b609d75fe1bda3b57e8ec57037d7c4d632dbb4",
+  "assets/parts/leg_upper.png": "e22b9eaaccde72c4bcf475af6c0b451552bfc0a33c8a22c7a835121c3e78ad44",
+  "assets/parts/torso.png": "ea96d975d5d597531e3fc4f10c9afd4a3e18fa99e97900f1e55dd772ddb1e785",
+  "scenes/golem.tscn": "c7a695c534c94fa586faf272546f9132d66b19ae48079cb50f908782c42094e5"
+}

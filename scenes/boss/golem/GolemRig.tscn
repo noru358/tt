@@ -1,0 +1,527 @@
+[gd_scene load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/torso.png" id="torso"]
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/head.png" id="head"]
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/arm_upper.png" id="arm_upper"]
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/arm_lower.png" id="arm_lower"]
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/fist.png" id="fist"]
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/leg_upper.png" id="leg_upper"]
+[ext_resource type="Texture2D" path="res://assets/bosses/golem/parts/leg_lower.png" id="leg_lower"]
+
+[sub_resource type="Animation" id="slam"]
+resource_name = "slam"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(0.000, -265.544), Vector2(3.588, -266.687), Vector2(-75.654, -242.931), Vector2(-75.654, -242.931), Vector2(-75.654, -242.931), Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.20000, 0.85892, 0.85892, 0.85892, 0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.080, 0.920), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.10000, -0.75000, -0.75000, -0.75000, 0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 0.9, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.12000, -2.45000, -0.84582, -0.84582, -0.84582, -0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.30000, -0.50447, -0.50447, -0.50447, -0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 0.60000, 0.51088, 0.51088, 0.51088, 1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 0.9, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.22000, -2.30000, -1.05245, -1.05245, -1.05245, 0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.35000, -0.00005, -0.00005, -0.00005, -0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 0.60000, 0.21439, 0.21439, 0.21439, 1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.19368, -1.59578, -1.59578, -1.59578, 0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.01978, 0.75000, 0.75000, 0.75000, 0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.23669, -1.38537, -1.38537, -1.38537, 0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.05000, 0.50200, 0.50200, 0.50200, 0.00000]}
+
+[sub_resource type="Animation" id="slam_heavy"]
+resource_name = "slam_heavy"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(0.000, -265.544), Vector2(3.588, -266.687), Vector2(-75.654, -242.931), Vector2(-75.654, -242.931), Vector2(-75.654, -242.931), Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.20000, 0.85892, 0.85892, 0.85892, 0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.080, 0.920), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.10000, -0.75000, -0.75000, -0.75000, 0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 0.9, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.12000, -2.45000, -0.84582, -0.84582, -0.84582, -0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.30000, -0.50447, -0.50447, -0.50447, -0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 0.60000, 0.51088, 0.51088, 0.51088, 1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 0.9, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.22000, -2.30000, -1.05245, -1.05245, -1.05245, 0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.35000, -0.00005, -0.00005, -0.00005, -0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 0.60000, 0.21439, 0.21439, 0.21439, 1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.19368, -1.59578, -1.59578, -1.59578, 0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.01978, 0.75000, 0.75000, 0.75000, 0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.23669, -1.38537, -1.38537, -1.38537, 0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0, 0.8, 0.9, 1.0, 1.3, 1.6), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.05000, 0.50200, 0.50200, 0.50200, 0.00000]}
+
+[sub_resource type="Animation" id="slam_high"]
+resource_name = "slam_high"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(0.000, -265.544), Vector2(3.588, -266.687), Vector2(-75.654, -242.931), Vector2(-75.654, -242.931), Vector2(-75.654, -242.931), Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.20000, 0.85892, 0.85892, 0.85892, 0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.080, 0.920), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.10000, -0.75000, -0.75000, -0.75000, 0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 0.9, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.12000, -2.65000, -0.84582, -0.84582, -0.84582, -0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.30000, -0.50447, -0.50447, -0.50447, -0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 0.60000, 0.51088, 0.51088, 0.51088, 1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 0.9, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.22000, -2.50000, -1.05245, -1.05245, -1.05245, 0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.35000, -0.00005, -0.00005, -0.00005, -0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.25, 3.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 0.60000, 0.21439, 0.21439, 0.21439, 1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.19368, -1.59578, -1.59578, -1.59578, 0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.01978, 0.75000, 0.75000, 0.75000, 0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.23669, -1.38537, -1.38537, -1.38537, 0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 1.1, 1.4), "transitions": PackedFloat32Array(0.5, 2.0, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.05000, 0.50200, 0.50200, 0.50200, 0.00000]}
+
+[sub_resource type="Animation" id="idle"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(0.000, -265.544), Vector2(0.000, -269.544), Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.00000, 0.00000, 0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.00000, 0.03000, 0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [-0.12000, -0.12000, -0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [-0.30000, -0.30000, -0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [1.45000, 1.45000, 1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.22000, 0.22000, 0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [-0.30000, -0.30000, -0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [1.45000, 1.45000, 1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.00000, 0.00000, 0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.00000, 0.00000, 0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.00000, 0.00000, 0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0, 0.6, 1.2), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [0.00000, 0.00000, 0.00000]}
+
+[sub_resource type="Animation" id="RESET"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [-0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [-0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [-0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.00000]}
+
+[sub_resource type="Animation" id="sweep"]
+resource_name = "sweep"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(0.000, -265.544), Vector2(-61.849, -246.630), Vector2(-1.058, -264.331), Vector2(-6.610, -263.169), Vector2(-6.610, -263.169), Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.22000, 0.33957, 0.38000, 0.38000, 0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.08000, -0.05000, -0.30000, -0.30000, 0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [-0.12000, 1.05000, -0.65464, -1.95000, -1.95000, -0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -0.35000, -0.15000, -0.35000, -0.35000, -0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 1.35000, 1.30000, 0.40000, 0.40000, 1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.22000, 0.35000, 0.20000, 0.55000, 0.55000, 0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -0.30000, -0.40000, -0.30000, -0.30000, -0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 1.40000, 1.20000, 1.30000, 1.30000, 1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.35946, -0.30426, -0.36288, -0.36288, 0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.56709, -0.05000, -0.05000, -0.05000, 0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.42613, -0.34314, -0.41821, -0.41821, 0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0, 0.7, 0.82, 0.92, 1.2, 1.5), "transitions": PackedFloat32Array(0.5, 2.0, 0.6, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.66023, 0.02557, 0.05450, 0.05450, 0.00000]}
+
+[sub_resource type="Animation" id="stomp"]
+resource_name = "stomp"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Torso:position")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(0.000, -265.544), Vector2(-75.960, -241.263), Vector2(-2.871, -263.073), Vector2(-2.871, -263.073), Vector2(-2.871, -263.073), Vector2(0.000, -265.544)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Torso:rotation")
+tracks/1/interp = 1
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.18000, 0.18000, 0.18000, 0.18000, 0.00000]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Torso/TorsoSkin:scale")
+tracks/2/interp = 1
+tracks/2/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.100, 0.900), Vector2(1.000, 1.000), Vector2(1.000, 1.000), Vector2(1.000, 1.000)]}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Torso/Head:rotation")
+tracks/3/interp = 1
+tracks/3/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.05000, -0.12000, -0.12000, -0.12000, 0.00000]}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Torso/ArmFront_Upper:rotation")
+tracks/4/interp = 1
+tracks/4/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.12000, 0.45000, -0.35000, -0.35000, -0.35000, -0.12000]}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower:rotation")
+tracks/5/interp = 1
+tracks/5/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -1.10000, -0.45000, -0.45000, -0.45000, -0.30000]}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Torso/ArmFront_Upper/ArmFront_Lower/FistFront:rotation")
+tracks/6/interp = 1
+tracks/6/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 1.00000, 1.30000, 1.30000, 1.30000, 1.45000]}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Torso/ArmBack_Upper:rotation")
+tracks/7/interp = 1
+tracks/7/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.22000, 0.75000, 0.35000, 0.35000, 0.35000, 0.22000]}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower:rotation")
+tracks/8/interp = 1
+tracks/8/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [-0.30000, -0.50000, -0.45000, -0.45000, -0.45000, -0.30000]}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Torso/ArmBack_Upper/ArmBack_Lower/FistBack:rotation")
+tracks/9/interp = 1
+tracks/9/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [1.45000, 1.40000, 1.30000, 1.30000, 1.30000, 1.45000]}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Torso/LegFront_Upper:rotation")
+tracks/10/interp = 1
+tracks/10/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -1.62543, -0.15448, -0.15448, -0.15448, 0.00000]}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Torso/LegFront_Upper/LegFront_Lower:rotation")
+tracks/11/interp = 1
+tracks/11/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 1.80000, -0.05000, -0.05000, -0.05000, 0.00000]}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Torso/LegBack_Upper:rotation")
+tracks/12/interp = 1
+tracks/12/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, -0.53595, -0.18959, -0.18959, -0.18959, 0.00000]}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Torso/LegBack_Upper/LegBack_Lower:rotation")
+tracks/13/interp = 1
+tracks/13/keys = {"times": PackedFloat32Array(0, 0.55, 0.62, 0.72, 1.0, 1.3), "transitions": PackedFloat32Array(0.5, 2.2, 1.0, 1.0, 1.0, 1.0), "update": 0, "values": [0.00000, 0.69804, 0.01111, 0.01111, 0.01111, 0.00000]}
+
+[sub_resource type="AnimationLibrary" id="library"]
+_data = {"RESET": SubResource("RESET"), "idle": SubResource("idle"), "slam": SubResource("slam"), "slam_heavy": SubResource("slam_heavy"), "slam_high": SubResource("slam_high"), "sweep": SubResource("sweep"), "stomp": SubResource("stomp")}
+
+[node name="Golem" type="Node2D"]
+
+[node name="Torso" type="Node2D" parent="."]
+position = Vector2(0.000, -265.544)
+
+[node name="ArmBack_Upper" type="Sprite2D" parent="Torso"]
+position = Vector2(1.000, -180.000)
+texture = ExtResource("arm_upper")
+centered = false
+offset = Vector2(-99.000, -64.000)
+rotation = 0.22000
+modulate = Color(0.7, 0.7, 0.7, 1)
+
+[node name="ArmBack_Lower" type="Sprite2D" parent="Torso/ArmBack_Upper"]
+position = Vector2(0.000, 129.403)
+texture = ExtResource("arm_lower")
+centered = false
+offset = Vector2(-73.000, -58.000)
+rotation = -0.30000
+modulate = Color(0.7, 0.7, 0.7, 1)
+show_behind_parent = true
+
+[node name="FistBack" type="Sprite2D" parent="Torso/ArmBack_Upper/ArmBack_Lower"]
+position = Vector2(0.000, 168.177)
+texture = ExtResource("fist")
+centered = false
+offset = Vector2(-34.000, -82.000)
+rotation = 1.45000
+modulate = Color(0.7, 0.7, 0.7, 1)
+
+[node name="LegBack_Upper" type="Sprite2D" parent="Torso"]
+position = Vector2(-16.000, -10.000)
+texture = ExtResource("leg_upper")
+centered = false
+offset = Vector2(-53.000, -38.000)
+modulate = Color(0.7, 0.7, 0.7, 1)
+
+[node name="LegBack_Lower" type="Sprite2D" parent="Torso/LegBack_Upper"]
+position = Vector2(0.000, 111.424)
+texture = ExtResource("leg_lower")
+centered = false
+offset = Vector2(-37.000, -30.000)
+modulate = Color(0.7, 0.7, 0.7, 1)
+
+[node name="TorsoSkin" type="Sprite2D" parent="Torso"]
+position = Vector2(0.000, 0.000)
+texture = ExtResource("torso")
+centered = false
+offset = Vector2(-99.000, -240.000)
+
+[node name="Head" type="Sprite2D" parent="Torso"]
+position = Vector2(72.000, -150.000)
+texture = ExtResource("head")
+centered = false
+offset = Vector2(-28.000, -86.000)
+rotation = 0.00000
+
+[node name="LegFront_Upper" type="Sprite2D" parent="Torso"]
+position = Vector2(6.000, -10.000)
+texture = ExtResource("leg_upper")
+centered = false
+offset = Vector2(-53.000, -38.000)
+
+[node name="LegFront_Lower" type="Sprite2D" parent="Torso/LegFront_Upper"]
+position = Vector2(0.000, 111.424)
+texture = ExtResource("leg_lower")
+centered = false
+offset = Vector2(-37.000, -30.000)
+
+[node name="ArmFront_Upper" type="Sprite2D" parent="Torso"]
+position = Vector2(15.000, -174.000)
+texture = ExtResource("arm_upper")
+centered = false
+offset = Vector2(-99.000, -64.000)
+rotation = -0.12000
+
+[node name="ArmFront_Lower" type="Sprite2D" parent="Torso/ArmFront_Upper"]
+position = Vector2(0.000, 129.403)
+texture = ExtResource("arm_lower")
+centered = false
+offset = Vector2(-73.000, -58.000)
+rotation = -0.30000
+show_behind_parent = true
+
+[node name="FistFront" type="Sprite2D" parent="Torso/ArmFront_Upper/ArmFront_Lower"]
+position = Vector2(0.000, 168.177)
+texture = ExtResource("fist")
+centered = false
+offset = Vector2(-34.000, -82.000)
+rotation = 1.45000
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("library")}

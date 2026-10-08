@@ -1,0 +1,209 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: canonical startup
+PASS: boss lookup
+PASS: weapon lookup
+PASS: equipment lookup
+PASS: material lookup
+PASS: all equipment
+PASS: query returns isolated deep copy
+PASS: tuning bootstrap
+PASS: keyboard + pad bindings: move_left
+PASS: keyboard + pad bindings: move_right
+PASS: keyboard + pad bindings: aim_up
+PASS: keyboard + pad bindings: aim_down
+PASS: keyboard + pad bindings: jump
+PASS: keyboard + pad bindings: dash
+PASS: keyboard + pad bindings: attack
+PASS: keyboard + pad bindings: parry
+PASS: keyboard + pad bindings: potion
+PASS: keyboard + pad bindings: pause
+PASS: keyboard + pad bindings: retry
+PASS: exact standard pad binding: jump
+PASS: exact standard pad binding: dash
+PASS: exact standard pad binding: attack
+PASS: exact standard pad binding: parry
+PASS: exact standard pad binding: potion
+PASS: exact standard pad binding: pause
+PASS: F1 debug binding removed
+PASS: F2 debug binding removed
+PASS: F3 debug binding removed
+PASS: F4 debug binding removed
+PASS: F5 debug binding removed
+PASS: F6 debug binding removed
+PASS: logical resolution
+PASS: stretch contract
+PASS: fixture manifest supplied
+PASS: valid: validity
+PASS: recipe_typo: validity
+PASS: recipe_typo: equipment.json:$[0].recipe.golem_shrad:존재하지 않는 materials id: golem_shrad
+PASS: recipe_typo: access blocked
+EXPECTED_ERRORS equipment.json:$[0].recipe.golem_shrad:존재하지 않는 materials id: golem_shrad
+PASS: weapon_reference: validity
+PASS: weapon_reference: equipment.json:$[0].weapon_id:
+PASS: weapon_reference: access blocked
+EXPECTED_ERRORS equipment.json:$[0].weapon_id:존재하지 않는 weapons id: missing
+PASS: drop_reference: validity
+PASS: drop_reference: bosses/golem.json:$.drops[0].id:
+PASS: drop_reference: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.drops[0].id:존재하지 않는 materials id: missing
+PASS: unlock_reference: validity
+PASS: unlock_reference: bosses/golem.json:$.unlocks[0]:
+PASS: unlock_reference: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.unlocks[0]:존재하지 않는 bosses id: missing
+PASS: phase_pattern_reference: validity
+PASS: phase_pattern_reference: bosses/golem.json:$.phases[0].patterns[0].id:
+PASS: phase_pattern_reference: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.phases[0].patterns[0].id:존재하지 않는 pattern id: missing
+PASS: entry_pattern_reference: validity
+PASS: entry_pattern_reference: bosses/wing.json:$.phases[2].enter_pattern:
+PASS: entry_pattern_reference: access blocked
+EXPECTED_ERRORS bosses/wing.json:$.phases[2].enter_pattern:존재하지 않는 pattern id: missing
+PASS: missing_field: validity
+PASS: missing_field: tuning/player.json:$.move_speed:필수 필드 누락
+PASS: missing_field: access blocked
+EXPECTED_ERRORS tuning/player.json:$.move_speed:필수 필드 누락
+PASS: wrong_type: validity
+PASS: wrong_type: tuning/player.json:$.move_speed:
+PASS: wrong_type: tuning/player.json:$.parry_enabled:
+PASS: wrong_type: access blocked
+EXPECTED_ERRORS tuning/player.json:$.move_speed:nonnegative 필요; 실제 String (fast) | tuning/player.json:$.parry_enabled:bool 필요; 실제 float (1.0)
+PASS: negative_value: validity
+PASS: negative_value: tuning/player.json:$.dash_duration:
+PASS: negative_value: access blocked
+EXPECTED_ERRORS tuning/player.json:$.dash_duration:nonnegative 필요; 실제 float (-1.0)
+PASS: fractional_integer: validity
+PASS: fractional_integer: tuning/player.json:$.potion_count:
+PASS: fractional_integer: access blocked
+EXPECTED_ERRORS tuning/player.json:$.potion_count:nonnegative_int 필요; 실제 float (2.5)
+PASS: unknown_field: validity
+PASS: unknown_field: tuning/feedback.json:$.shake_on_hitt:
+PASS: unknown_field: access blocked
+EXPECTED_ERRORS tuning/feedback.json:$.shake_on_hitt:알 수 없는 필드
+PASS: unknown_effect: validity
+PASS: unknown_effect: equipment.json:$[3].effects[0].type:
+PASS: unknown_effect: access blocked
+EXPECTED_ERRORS equipment.json:$[3].effects[0].type:알 수 없는 effect: magic
+PASS: unknown_step: validity
+PASS: unknown_step: bosses/golem.json:$.patterns.slam.steps[0].type:
+PASS: unknown_step: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.patterns.slam.steps[0].type:알 수 없는 step: magic
+PASS: nested_repeat_invalid: validity
+PASS: nested_repeat_invalid: bosses/golem.json:$.patterns.double_slam.steps[0].steps[0].type:
+PASS: nested_repeat_invalid: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.patterns.double_slam.steps[0].steps[0].type:알 수 없는 step: bad_nested
+PASS: between_repeat_invalid: validity
+PASS: between_repeat_invalid: bosses/golem.json:$.patterns.double_slam.steps[0].between_steps[0].duration:
+PASS: between_repeat_invalid: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.patterns.double_slam.steps[0].between_steps[0].duration:positive 필요; 실제 String (fast)
+PASS: duplicate_id: validity
+PASS: duplicate_id: materials.json:$[4].id:중복 id:
+PASS: duplicate_id: access blocked
+EXPECTED_ERRORS materials.json:$[4].id:중복 id: golem_shard
+PASS: phase_order: validity
+PASS: phase_order: bosses/wing.json:$.phases[1].hp_above:
+PASS: phase_order: access blocked
+EXPECTED_ERRORS bosses/wing.json:$.phases[1].hp_above:1 미만에서 엄격한 내림차순 필요
+PASS: phase_zero_missing: validity
+PASS: phase_zero_missing: bosses/wing.json:$.phases:마지막
+PASS: phase_zero_missing: access blocked
+EXPECTED_ERRORS bosses/wing.json:$.phases:마지막 hp_above=0 필요
+PASS: drop_range: validity
+PASS: drop_range: bosses/golem.json:$.drops[0]:min <= max
+PASS: drop_range: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.drops[0]:min <= max 필요
+PASS: drop_partial: validity
+PASS: drop_partial: bosses/golem.json:$.drops[0]:min/max
+PASS: drop_partial: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.drops[0]:min/max는 함께 필요
+PASS: projectile_index: validity
+PASS: projectile_index: bosses/wing.json:$.patterns.fan_shot.steps[3].parriable_indices[0]:
+PASS: projectile_index: access blocked
+EXPECTED_ERRORS bosses/wing.json:$.patterns.fan_shot.steps[3].parriable_indices[0]:중복 또는 투사체 count 범위 초과
+PASS: missing_file: validity
+PASS: missing_file: materials.json:$:필수 파일 누락
+PASS: missing_file: access blocked
+EXPECTED_ERRORS materials.json:$:필수 파일 누락 | equipment.json:$[0].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[0].recipe.golem_core:존재하지 않는 materials id: golem_core | equipment.json:$[1].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[2].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[3].recipe.golem_core:존재하지 않는 materials id: golem_core | equipment.json:$[3].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[4].recipe.golem_heart:존재하지 않는 materials id: golem_heart | equipment.json:$[4].recipe.golem_shard:존재하지 않는 materials id: golem_shard | bosses/golem.json:$.drops[0].id:존재하지 않는 materials id: golem_shard | bosses/golem.json:$.drops[1].id:존재하지 않는 materials id: golem_core | bosses/golem.json:$.drops[2].id:존재하지 않는 materials id: golem_heart | bosses/wing.json:$.drops[0].id:존재하지 않는 materials id: wing_feather
+ERROR: Parse JSON failed. Error at line 0: Expected '}'
+   at: parse_string (core/io/json.cpp:624)
+   GDScript backtrace (most recent call first):
+       [0] load_all (res://autoload/DataRegistry.gd:34)
+       [1] _ready (res://tests/RegistrySuite.gd:48)
+PASS: malformed_json: validity
+PASS: malformed_json: materials.json:$:JSON 구문 오류
+PASS: malformed_json: access blocked
+EXPECTED_ERRORS materials.json:$:JSON 구문 오류 또는 null 루트 (line 0): Expected '}' | equipment.json:$[0].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[0].recipe.golem_core:존재하지 않는 materials id: golem_core | equipment.json:$[1].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[2].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[3].recipe.golem_core:존재하지 않는 materials id: golem_core | equipment.json:$[3].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[4].recipe.golem_heart:존재하지 않는 materials id: golem_heart | equipment.json:$[4].recipe.golem_shard:존재하지 않는 materials id: golem_shard | bosses/golem.json:$.drops[0].id:존재하지 않는 materials id: golem_shard | bosses/golem.json:$.drops[1].id:존재하지 않는 materials id: golem_core | bosses/golem.json:$.drops[2].id:존재하지 않는 materials id: golem_heart | bosses/wing.json:$.drops[0].id:존재하지 않는 materials id: wing_feather
+PASS: null_root: validity
+PASS: null_root: materials.json:$:JSON 구문 오류 또는 null 루트
+PASS: null_root: access blocked
+EXPECTED_ERRORS materials.json:$:JSON 구문 오류 또는 null 루트 (line 0):  | equipment.json:$[0].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[0].recipe.golem_core:존재하지 않는 materials id: golem_core | equipment.json:$[1].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[2].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[3].recipe.golem_core:존재하지 않는 materials id: golem_core | equipment.json:$[3].recipe.golem_shard:존재하지 않는 materials id: golem_shard | equipment.json:$[4].recipe.golem_heart:존재하지 않는 materials id: golem_heart | equipment.json:$[4].recipe.golem_shard:존재하지 않는 materials id: golem_shard | bosses/golem.json:$.drops[0].id:존재하지 않는 materials id: golem_shard | bosses/golem.json:$.drops[1].id:존재하지 않는 materials id: golem_core | bosses/golem.json:$.drops[2].id:존재하지 않는 materials id: golem_heart | bosses/wing.json:$.drops[0].id:존재하지 않는 materials id: wing_feather
+PASS: root_type: validity
+PASS: root_type: equipment.json:$:array 필요
+PASS: root_type: access blocked
+EXPECTED_ERRORS equipment.json:$:array 필요
+PASS: unsupported_file: validity
+PASS: unsupported_file: unknown.json:$:지원하지 않는 데이터 파일
+PASS: unsupported_file: access blocked
+EXPECTED_ERRORS unknown.json:$:지원하지 않는 데이터 파일; 검증 스키마 필요
+PASS: multiple_files: validity
+PASS: multiple_files: tuning/player.json:$.gravity:
+PASS: multiple_files: tuning/feedback.json:$.shake_on_hit:
+PASS: multiple_files: equipment.json:$[0].recipe.typo:
+PASS: multiple_files: access blocked
+EXPECTED_ERRORS tuning/feedback.json:$.shake_on_hit:nonnegative 필요; 실제 bool (false) | tuning/player.json:$.gravity:필수 필드 누락 | equipment.json:$[0].recipe.typo:존재하지 않는 materials id: typo
+PASS: no_weapon_id: validity
+PASS: no_weapon_id: equipment.json:$[0].weapon_id:
+PASS: no_weapon_id: access blocked
+EXPECTED_ERRORS equipment.json:$[0].weapon_id:weapon 슬롯에 필수
+PASS: unknown_stat: validity
+PASS: unknown_stat: equipment.json:$[0].modifiers.luck:
+PASS: unknown_stat: access blocked
+EXPECTED_ERRORS equipment.json:$[0].modifiers.luck:알 수 없는 스탯
+PASS: bad_flag: validity
+PASS: bad_flag: weapons.json:$[0].flags[0]:
+PASS: bad_flag: access blocked
+EXPECTED_ERRORS weapons.json:$[0].flags[0]:허용값 ["dash_cancel"]; 실제 magic
+PASS: negative_recipe: validity
+PASS: negative_recipe: equipment.json:$[0].recipe.golem_shard:
+PASS: negative_recipe: access blocked
+EXPECTED_ERRORS equipment.json:$[0].recipe.golem_shard:positive_int 필요; 실제 float (-1.0)
+PASS: telegraph_ambiguous: validity
+PASS: telegraph_ambiguous: bosses/golem.json:$.patterns.slam.steps[2]:
+PASS: telegraph_ambiguous: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.patterns.slam.steps[2]:target 또는 offset 중 정확히 하나 필요
+PASS: bad_distance: validity
+PASS: bad_distance: bosses/golem.json:$.patterns.slam:
+PASS: bad_distance: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.patterns.slam:min_distance <= max_distance 필요
+PASS: bad_color: validity
+PASS: bad_color: bosses/golem.json:$.body.color[0]:
+PASS: bad_color: access blocked
+EXPECTED_ERRORS bosses/golem.json:$.body.color[0]:ratio 필요; 실제 float (2.0)
+PASS: empty_combo: validity
+PASS: empty_combo: weapons.json:$[0].combo:
+PASS: empty_combo: access blocked
+EXPECTED_ERRORS weapons.json:$[0].combo:항목 최소 1개 필요
+PASS: mixed_same_file: validity
+PASS: mixed_same_file: equipment.json:$[0].name:
+PASS: mixed_same_file: equipment.json:$[0].recipe.missing:
+PASS: mixed_same_file: access blocked
+EXPECTED_ERRORS equipment.json:$[0].name:text 필요; 실제 float (5.0) | equipment.json:$[0].recipe.missing:존재하지 않는 materials id: missing
+PASS: mixed_boss_file: validity
+PASS: mixed_boss_file: bosses/wing.json:$.body.size:
+PASS: mixed_boss_file: bosses/wing.json:$.phases[0].enter_pattern:
+PASS: mixed_boss_file: access blocked
+EXPECTED_ERRORS bosses/wing.json:$.body.size:size: 숫자 배열 길이 2 필요 | bosses/wing.json:$.phases[0].enter_pattern:존재하지 않는 pattern id: missing
+PASS: practice_weapon_ref: validity
+PASS: practice_weapon_ref: training.json:$.player.weapon_id:
+PASS: practice_weapon_ref: access blocked
+EXPECTED_ERRORS training.json:$.player.weapon_id:존재하지 않는 weapons id: missing
+PASS: defaults_weapon_ref: validity
+PASS: defaults_weapon_ref: tuning_defaults.json:$.training.player.weapon_id:
+PASS: defaults_weapon_ref: access blocked
+EXPECTED_ERRORS tuning_defaults.json:$.training.player.weapon_id:존재하지 않는 기본 weapon id
+PASS: defaults_duplicate_weapon: validity
+PASS: defaults_duplicate_weapon: tuning_defaults.json:$.weapons[1].id:
+PASS: defaults_duplicate_weapon: access blocked
+EXPECTED_ERRORS tuning_defaults.json:$.weapons[1].id:중복 weapon id
+PASS: restored canonical registry
+SUITE_RESULT checks=161 failures=0

@@ -1,0 +1,34 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: revised combat data valid
+PASS: sword hits from a 96px body gap
+PASS: attacking from reach is safe without an enemy attack
+PASS: attack has a live hitbox
+PASS: attack -> escape dash keeps attack and starts movement immediately
+PASS: backward escape preserves existing forward strike direction
+PASS: escape travels away with no forced lunge or damage
+PASS: dash crosses full boss width plus player width
+PASS: crossing does not cost HP
+PASS: real moving charge can be dashed through without damage
+PASS: horizontal dash accepts down attack
+PASS: down aim does not steer captured dash trajectory
+PASS: visible down hitbox matches aim
+PASS: down hit queues pogo without disrupting dash and restores air dash
+PASS: pogo starts when dash trajectory completes
+PASS: startup aim follows current up input immediately
+PASS: startup outline is above player, matching future hitbox
+PASS: held attack cycles all combo hits without new clicks
+PASS: release stops continuous attacks after current swing
+PASS: held button across menu resume does not auto-fire
+PASS: new press after menu re-arms continuous attack
+PASS: quick equip sword_basic
+PASS: equip clears old weapon strike
+PASS: quick equip greatsword_slab
+PASS: equip clears old weapon strike
+PASS: quick equip daggers_twin
+PASS: equip clears old weapon strike
+PASS: combined action policies are panel controls
+PASS: save complete loadout to isolated override
+PASS: selected future weapon restores
+PASS: ordinary golem body contact has no passive damage
+COMBAT_FEEL_RESULT checks=31 failures=0

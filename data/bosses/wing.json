@@ -1,0 +1,419 @@
+{
+  "id": "wing",
+  "name": "날개",
+  "max_hp": 1400,
+  "body": {
+    "shape": "triangle",
+    "size": [
+      300,
+      220
+    ],
+    "color": [
+      0.64,
+      0.45,
+      0.85,
+      1
+    ]
+  },
+  "contact_damage": 15,
+  "gravity": 0,
+  "arena": {
+    "floor_y": 960,
+    "left": 80,
+    "right": 1840,
+    "platforms": [
+      {
+        "x": 500,
+        "y": 710,
+        "w": 260
+      },
+      {
+        "x": 1160,
+        "y": 710,
+        "w": 260
+      }
+    ]
+  },
+  "stagger": {
+    "threshold": 100,
+    "duration": 2,
+    "decay_per_sec": 8,
+    "parry_gain": 25,
+    "heavy_hit_gain": 18,
+    "heavy_damage_threshold": 20,
+    "damage_mult": 1.25
+  },
+  "phases": [
+    {
+      "hp_above": 0.6,
+      "speed_mult": 1,
+      "patterns": [
+        {
+          "id": "fan_shot",
+          "weight": 1
+        },
+        {
+          "id": "dive",
+          "weight": 1
+        },
+        {
+          "id": "sweep",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "hp_above": 0.25,
+      "speed_mult": 1.15,
+      "patterns": [
+        {
+          "id": "fan_shot_seven",
+          "weight": 1
+        },
+        {
+          "id": "dive",
+          "weight": 1
+        },
+        {
+          "id": "sweep",
+          "weight": 1
+        },
+        {
+          "id": "feather_rain",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "hp_above": 0,
+      "speed_mult": 1.3,
+      "patterns": [
+        {
+          "id": "fan_shot_seven",
+          "weight": 1
+        },
+        {
+          "id": "dive",
+          "weight": 1
+        },
+        {
+          "id": "sweep",
+          "weight": 1
+        },
+        {
+          "id": "feather_rain",
+          "weight": 1
+        }
+      ],
+      "enter_pattern": "reflection_orb"
+    }
+  ],
+  "patterns": {
+    "fan_shot": {
+      "cooldown": 2.5,
+      "min_distance": 0,
+      "max_distance": 1920,
+      "steps": [
+        {
+          "type": "move_to",
+          "target": "arena_center",
+          "speed": 420,
+          "offset_y": -540
+        },
+        {
+          "type": "face_target"
+        },
+        {
+          "type": "telegraph",
+          "shape": "rect",
+          "size": [
+            300,
+            220
+          ],
+          "duration": 0.4,
+          "color": [
+            1,
+            0.35,
+            0.12,
+            0.5
+          ],
+          "target": "self"
+        },
+        {
+          "type": "projectile",
+          "count": 5,
+          "spread_deg": 50,
+          "aim": "target",
+          "speed": 520,
+          "size": [
+            32,
+            32
+          ],
+          "damage": 12,
+          "parriable": true,
+          "parriable_indices": [
+            2
+          ]
+        },
+        {
+          "type": "wait",
+          "duration": 0.6
+        }
+      ]
+    },
+    "fan_shot_seven": {
+      "cooldown": 2.5,
+      "min_distance": 0,
+      "max_distance": 1920,
+      "steps": [
+        {
+          "type": "move_to",
+          "target": "arena_center",
+          "speed": 420,
+          "offset_y": -540
+        },
+        {
+          "type": "face_target"
+        },
+        {
+          "type": "telegraph",
+          "shape": "rect",
+          "size": [
+            300,
+            220
+          ],
+          "duration": 0.4,
+          "color": [
+            1,
+            0.35,
+            0.12,
+            0.5
+          ],
+          "target": "self"
+        },
+        {
+          "type": "projectile",
+          "count": 7,
+          "spread_deg": 50,
+          "aim": "target",
+          "speed": 520,
+          "size": [
+            32,
+            32
+          ],
+          "damage": 12,
+          "parriable": true,
+          "parriable_indices": [
+            3
+          ]
+        },
+        {
+          "type": "wait",
+          "duration": 0.6
+        }
+      ]
+    },
+    "dive": {
+      "cooldown": 4,
+      "min_distance": 0,
+      "max_distance": 1920,
+      "steps": [
+        {
+          "type": "move_to",
+          "target": "above_player",
+          "speed": 500,
+          "offset_y": -520
+        },
+        {
+          "type": "telegraph",
+          "shape": "rect",
+          "size": [
+            300,
+            220
+          ],
+          "duration": 0.5,
+          "color": [
+            1,
+            0.35,
+            0.12,
+            0.5
+          ],
+          "target": "player_x"
+        },
+        {
+          "type": "dash",
+          "direction": "to_target",
+          "speed": 1450,
+          "distance": 520,
+          "hitbox": {
+            "offset": [
+              0,
+              0
+            ],
+            "size": [
+              280,
+              200
+            ],
+            "damage": 22,
+            "knockback": 480,
+            "parriable": false
+          }
+        },
+        {
+          "type": "wait",
+          "duration": 1.2
+        },
+        {
+          "type": "move_to",
+          "target": "arena_center",
+          "speed": 500,
+          "offset_y": -540
+        }
+      ]
+    },
+    "sweep": {
+      "cooldown": 4,
+      "min_distance": 0,
+      "max_distance": 1920,
+      "steps": [
+        {
+          "type": "move_to",
+          "target": "arena_left",
+          "speed": 650,
+          "offset_y": -150
+        },
+        {
+          "type": "face_target"
+        },
+        {
+          "type": "telegraph",
+          "shape": "rect",
+          "size": [
+            300,
+            220
+          ],
+          "duration": 0.45,
+          "color": [
+            1,
+            0.35,
+            0.12,
+            0.5
+          ],
+          "target": "self"
+        },
+        {
+          "type": "dash",
+          "direction": "facing",
+          "speed": 1000,
+          "distance": 1680,
+          "hitbox": {
+            "offset": [
+              0,
+              0
+            ],
+            "size": [
+              280,
+              190
+            ],
+            "damage": 18,
+            "knockback": 420,
+            "parriable": false
+          }
+        },
+        {
+          "type": "wait",
+          "duration": 0.65
+        },
+        {
+          "type": "move_to",
+          "target": "arena_center",
+          "speed": 500,
+          "offset_y": -540
+        }
+      ]
+    },
+    "feather_rain": {
+      "cooldown": 4.5,
+      "min_distance": 0,
+      "max_distance": 1920,
+      "steps": [
+        {
+          "type": "falling",
+          "count": 8,
+          "x_mode": "random",
+          "spread": 1600,
+          "warn_time": 0.7,
+          "size": [
+            45,
+            100
+          ],
+          "damage": 16,
+          "fall_speed": 1050,
+          "spawn_y": -120
+        },
+        {
+          "type": "wait",
+          "duration": 0.7
+        }
+      ]
+    },
+    "reflection_orb": {
+      "cooldown": 0,
+      "min_distance": 0,
+      "max_distance": 1920,
+      "steps": [
+        {
+          "type": "move_to",
+          "target": "arena_center",
+          "speed": 500,
+          "offset_y": -540
+        },
+        {
+          "type": "telegraph",
+          "shape": "rect",
+          "size": [
+            300,
+            220
+          ],
+          "duration": 0.8,
+          "color": [
+            1,
+            0.35,
+            0.12,
+            0.5
+          ],
+          "target": "self"
+        },
+        {
+          "type": "projectile",
+          "count": 1,
+          "spread_deg": 0,
+          "aim": "target",
+          "speed": 380,
+          "size": [
+            100,
+            100
+          ],
+          "damage": 25,
+          "parriable": true,
+          "reflect_damage": 80,
+          "reflect_stagger": 80
+        },
+        {
+          "type": "wait",
+          "duration": 1
+        }
+      ]
+    }
+  },
+  "drops": [
+    {
+      "id": "wing_feather",
+      "min": 1,
+      "max": 2
+    }
+  ],
+  "unlocks": [],
+  "initially_unlocked": false,
+  "order": 1
+}
