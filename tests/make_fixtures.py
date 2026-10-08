@@ -82,6 +82,8 @@ case('bow_wrong_charge_type',lambda d:d['tuning/player.json'].update(bow_charge_
 case('cutout_bad_window',lambda d:d.update({'bosses/golem.json':dict(canonical_golem,cutout=dict(canonical_golem['cutout'],moves=dict(canonical_golem['cutout']['moves'],slam=dict(canonical_golem['cutout']['moves']['slam'],active_end=.5))))}),['$.moves.slam:'])
 case('cutout_unknown_clip',lambda d:d.update({'bosses/golem.json':dict(canonical_golem,cutout=dict(canonical_golem['cutout'],moves=dict(canonical_golem['cutout']['moves'],slam=dict(canonical_golem['cutout']['moves']['slam'],animation='walk'))))}),['.animation:'])
 case('cutout_negative_scale',lambda d:d.update({'bosses/golem.json':dict(canonical_golem,cutout=dict(canonical_golem['cutout'],scale=-1))}),['.scale:'])
+case('cutout_zero_walk_speed',lambda d:d.update({'bosses/golem.json':dict(canonical_golem,cutout=dict(canonical_golem['cutout'],walk_speed=0))}),['.walk_speed:'])
+case('cutout_zero_contact_interval',lambda d:d.update({'bosses/golem.json':dict(canonical_golem,cutout=dict(canonical_golem['cutout'],contact_interval=0))}),['.contact_interval:'])
 destination.mkdir(parents=True,exist_ok=True)
 (destination/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 print(f'{len(manifest)} fixtures: {destination / "manifest.json"}')

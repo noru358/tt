@@ -25,4 +25,4 @@ GitHub Actions는 Ubuntu에서 같은 headless 검사를 실행하고 로그를 
 
 ## 기획 ↔ 구현 인계
 
-Claude 검수 시작점은 루트 `CLAUDE.md`와 `REVIEW_FOR_CLAUDE.md`. 최신 범위·부족한 모션은 `docs/GOLEM_PORT_REPORT.md`, 전투 입력은 `docs/INDEPENDENT_REVIEW_FIX_REPORT.md`, 활은 `docs/MAGIC_BOW.md`다. 다음 지시를 이슈/문서로 남기면 변경 근거와 검증 결과를 `docs/WORK_LOG.md`에 누적한다. 과거 문서를 새 지시로 간주하지 않는다.
+Claude 검수 시작점은 루트 `CLAUDE.md`와 `REVIEW_FOR_CLAUDE.md`. 최신 변경은 `docs/GOLEM_MOBILITY_WETLAND.md`, 최초 이식·부족한 모션은 `docs/GOLEM_PORT_REPORT.md`, 전투 입력은 `docs/INDEPENDENT_REVIEW_FIX_REPORT.md`, 활은 `docs/MAGIC_BOW.md`다. 다음 지시를 이슈/문서로 남기면 변경 근거와 검증 결과를 `docs/WORK_LOG.md`에 누적한다. 과거 문서를 새 지시로 간주하지 않는다.

@@ -22,6 +22,7 @@ var quick_weapons: Dictionary = {}
 var live_readout: Label
 var input_counter: Label
 const LABELS: Dictionary = {
+	"bow_input_buffer":"활 쿨다운 직전 입력 유예", "walk_enabled":"골렘 추적 이동", "walk_speed":"걷기 속도", "walk_stop_distance":"접근 정지 거리", "walk_stride":"걷기 보폭 (리그 단위)", "walk_lift":"발 들기 높이", "contact_damage":"몸박 피해", "contact_interval":"몸박 재타격 간격",
 	"move_speed":"이동 속도", "ground_accel":"지상 가속", "air_accel":"공중 가속", "gravity":"중력", "fall_gravity_mult":"낙하 중력 배율", "max_fall_speed":"최대 낙하 속도", "jump_velocity":"점프 속도", "jump_cut_mult":"점프 떼기 배율", "coyote_time":"코요테 타임", "jump_buffer":"점프 입력 버퍼", "dash_distance":"대시 거리", "dash_duration":"대시 시간", "dash_iframe":"대시 무적", "dash_cooldown":"대시 쿨다운", "perfect_dodge_window":"완벽 회피 판정", "parry_enabled":"패리 사용", "parry_window":"패리 판정 시간", "parry_whiff_recovery":"헛패리 후딜", "parry_cooldown":"패리 쿨다운", "hurt_iframe":"피격 무적", "hurt_knockback":"피격 넉백", "max_hp":"최대 HP", "potion_count":"포션 수", "potion_heal":"포션 회복", "potion_channel":"포션 사용 시간", "hurt_recovery":"피격 경직", "air_dash_count":"공중 대시 횟수",
 	"hitstop_on_hit":"타격 히트스톱", "hitstop_on_parry":"패리 히트스톱", "hitstop_on_player_hurt":"피격 히트스톱", "shake_on_hit":"타격 흔들림", "shake_on_parry":"패리 흔들림", "shake_on_player_hurt":"피격 흔들림", "shake_decay":"흔들림 감쇠", "boss_hit_flash":"타깃 피격 섬광", "damage_numbers":"피해 숫자", "hitstop_time_scale":"히트스톱 속도"
 }
@@ -302,7 +303,7 @@ func _add_control(section: String, key: String, baseline: Variant) -> void:
 		if key in ["hitbox_offset_y","hitbox_x","hitbox_y","body_x","body_y"]:
 			slider.max_value = maxf(absf(float(baseline))*3,500)
 			slider.min_value = -slider.max_value
-		if section.begins_with("golem") and key in ["scale","hitbox_width","hitbox_height","body_width","body_height","duration","foot_dwell","weakpoint_size","weakpoint_multiplier","phase2_windup","shockwave_speed","shockwave_damage","shockwave_height","idle_min","idle_max","foot_zone"]: slider.min_value = 0.001
+		if section.begins_with("golem") and key in ["walk_speed","walk_stop_distance","walk_stride","contact_interval","scale","hitbox_width","hitbox_height","body_width","body_height","duration","foot_dwell","weakpoint_size","weakpoint_multiplier","phase2_windup","shockwave_speed","shockwave_damage","shockwave_height","idle_min","idle_max","foot_zone"]: slider.min_value = 0.001
 		var integer: bool = key in ["max_hp","potion_count","air_dash_count","potion_heal","hurt_knockback","move_speed","ground_accel","air_accel","gravity","max_fall_speed","jump_velocity","dash_distance","shake_on_hit","shake_on_parry","shake_on_player_hurt","shake_decay"]
 		slider.step = 1 if integer else 0.001
 		row.add_child(slider)

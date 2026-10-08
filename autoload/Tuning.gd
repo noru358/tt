@@ -36,6 +36,8 @@ func load_override() -> bool:
 		for section: String in ["player","feedback","training","golem"]:
 			if not data.has(section): data[section] = defaults[section].duplicate(true)
 			elif data[section] is Dictionary: _fill_missing(data[section],defaults[section])
+		if data.get("golem") is Dictionary:
+			for obsolete: String in ["body_x","body_y","body_width","body_height"]: data["golem"].erase(obsolete)
 		if not data.has("weapons"): data["weapons"] = defaults["weapons"].duplicate(true)
 		if data.get("weapons") is Array:
 			for base: Dictionary in defaults["weapons"]:

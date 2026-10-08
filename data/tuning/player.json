@@ -55,5 +55,6 @@
   "bow_turn_rate": 9.0,
   "bow_lock_range": 2400.0,
   "bow_lifetime": 1.8,
-  "bow_hit_size": 18.0
+  "bow_hit_size": 18.0,
+  "bow_input_buffer": 0.15
 }

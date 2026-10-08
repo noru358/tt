@@ -21,7 +21,7 @@ static func player_schema() -> Dictionary:
 	fields.merge({"defense_buffer":"nonnegative", "defense_cancel_hurt":"bool", "min_vulnerable_gap":"nonnegative", "parry_whiff_cancel":"bool", "parry_whiff_dash_cancel":"bool", "device_switch_axis":"ratio"})
 	fields.merge({"attack_during_dash":"bool", "dash_attack_continues_after_dash":"bool", "dash_direction_grace":"nonnegative", "attack_hold_repeat":"bool", "pogo_resets_air_dash":"bool"})
 	fields.merge({"instant_move":"bool", "ground_decel":"nonnegative", "air_decel":"nonnegative", "attack_move_mult":"nonnegative", "attack_direction_chain":"bool", "attack_buffer":"nonnegative", "attack_cancel_on_jump":"bool", "attack_cancel_on_dash":"bool", "attack_release_clears_buffer":"bool"})
-	for key: String in ["bow_charge_time", "bow_cooldown", "bow_damage_min", "bow_damage_max", "bow_speed_min", "bow_speed_max", "bow_turn_rate", "bow_lock_range", "bow_lifetime", "bow_hit_size"]: fields[key] = "nonnegative"
+	for key: String in ["bow_input_buffer", "bow_charge_time", "bow_cooldown", "bow_damage_min", "bow_damage_max", "bow_speed_min", "bow_speed_max", "bow_turn_rate", "bow_lock_range", "bow_lifetime", "bow_hit_size"]: fields[key] = "nonnegative"
 	for key: String in ["bow_charge_time","bow_speed_min","bow_speed_max","bow_lifetime","bow_hit_size","bow_lock_range"]: fields[key] = "positive"
 	return obj(fields)
 
@@ -104,6 +104,7 @@ static func step_schema(kind: String) -> Dictionary:
 
 static func golem_schema() -> Dictionary:
 	var attack: Dictionary = obj({"animation": "text", "source_windup": "nonnegative", "windup": "nonnegative", "active_start": "nonnegative", "active_end": "nonnegative", "punish_end": "nonnegative", "duration": "positive", "hitbox_x": "number", "hitbox_y": "number", "hitbox_width": "positive", "hitbox_height": "positive", "damage": "positive", "knockback": "nonnegative", "parriable": "bool", "shake": "nonnegative"})
-	var fields: Dictionary = {"scale": "positive", "body_x": "number", "body_y": "number", "body_width": "positive", "body_height": "positive", "weakpoint_enabled": "bool", "weakpoint_size": "positive", "weakpoint_multiplier": "positive", "foot_zone": "positive", "foot_dwell": "positive", "idle_min": "positive", "idle_max": "positive", "phase2_windup": "positive", "phase2_shockwave": "bool", "shockwave_speed": "positive", "shockwave_damage": "positive", "shockwave_height": "positive"}
+	var fields: Dictionary = {"scale": "positive", "weakpoint_enabled": "bool", "weakpoint_size": "positive", "weakpoint_multiplier": "positive", "foot_zone": "positive", "foot_dwell": "positive", "idle_min": "positive", "idle_max": "positive", "phase2_windup": "positive", "phase2_shockwave": "bool", "shockwave_speed": "positive", "shockwave_damage": "positive", "shockwave_height": "positive"}
+	fields.merge({"walk_enabled":"bool","walk_speed":"positive","walk_stop_distance":"positive","walk_stride":"positive","walk_lift":"nonnegative","contact_damage":"nonnegative","contact_interval":"positive"})
 	fields["moves"] = obj({"slam":attack,"sweep":attack,"stomp":attack})
 	return obj(fields)

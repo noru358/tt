@@ -117,6 +117,7 @@ func _run() -> void:
 	check(player.attack_running,"new press after menu re-arms continuous attack")
 	key(KEY_J,false)
 	await reset_player(600,912)
+	await click_button(arena.detail_button)
 	for weapon: Dictionary in Tuning.weapons:
 		await click_button(arena.debug_panel.quick_weapons[weapon["id"]])
 		check(player.weapon["id"] == weapon["id"],"quick equip "+weapon["id"])

@@ -1,4 +1,9 @@
 extends "res://scripts/arena/TrainingArena.gd"
+var detail_labels: Array[Label] = []
+var details_visible: bool = false
+var hud_backdrop: ColorRect
+var detail_button: Button
+var background: Texture2D = preload("res://assets/backgrounds/temple_wetland.png")
 var boss: Node2D
 var rules: Dictionary
 var intro: float
@@ -7,6 +12,8 @@ var ended: bool = false
 var boss_hp: ProgressBar
 var stagger_bar: ProgressBar
 var player_hp: ProgressBar
+var bow_bar: ProgressBar
+var bow_status: Label
 var dash_bar: ProgressBar
 var boss_label: Label
 var intro_label: Label
@@ -50,14 +57,24 @@ func _ready() -> void:
 	boss.died.connect(func() -> void: finish(true))
 	debug_panel = load("res://scenes/ui/DebugPanel.tscn").instantiate()
 	add_child(debug_panel)
-	debug_panel.toolbar.position.y = 255
+	debug_panel.toolbar.position.y = 165
 	debug_panel.weapon_bar.position.y = 320
 	debug_panel.live_readout.position.y = 377
 	debug_panel.practice_buttons["허수아비 공격"].hide()
 	debug_panel.practice_buttons["다시 연습"].text = "다시 도전"
 	debug_panel.practice_buttons["닫고 연습"].text = "재개"
 	_add_hub_buttons()
+	detail_button = Button.new()
+	detail_button.text = "상세 정보"
+	detail_button.toggle_mode = true
+	detail_button.focus_mode = Control.FOCUS_NONE
+	debug_panel.toolbar.add_child(detail_button)
+	detail_button.toggled.connect(func(on: bool) -> void:
+		details_visible = on
+		_apply_hud_details())
+	_apply_hud_details()
 	debug_panel.toggled.connect(func(open: bool) -> void:
+		_apply_hud_details()
 		player.controls.set_blocked(open or intro > 0 or ended)
 		if open:
 			player.clear_action_intent()
@@ -103,8 +120,9 @@ func _build_battle_ui() -> void:
 	root.theme = theme
 	battle_canvas.add_child(root)
 	var backdrop: ColorRect = ColorRect.new()
-	backdrop.size = Vector2(1920,415)
-	backdrop.color = Color(0.035,0.045,0.065,0.98)
+	hud_backdrop = backdrop
+	backdrop.size = Vector2(1920,218)
+	backdrop.color = Color(0.035,0.045,0.065,0.83)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(backdrop)
 	_label(root,("실제 게임 · "+boss.data["name"]) if GameState.progression_run else ("연습 모드 · "+boss.data["name"]+" / 보상 없음"),Vector2(44,22),32)
@@ -112,6 +130,8 @@ func _build_battle_ui() -> void:
 	player_hp = _bar(root,Vector2(44,115),Vector2(510,18),Color(0.25,0.9,0.75))
 	dash_bar = _bar(root,Vector2(44,148),Vector2(170,10),Color(0.4,0.7,1))
 	_label(root,"대시",Vector2(230,136),20)
+	bow_bar = _bar(root,Vector2(360,148),Vector2(170,10),Color(0.95,0.75,0.35))
+	bow_status = _label(root,"활 준비",Vector2(545,136),20)
 	boss_label = _label(root,"",Vector2(780,28),28)
 	boss_hp = _bar(root,Vector2(780,78),Vector2(1096,30),Color(0.93,0.43,0.25))
 	boss_hp.max_value = boss.data["max_hp"]
@@ -125,8 +145,8 @@ func _build_battle_ui() -> void:
 	stagger_bar = _bar(root,Vector2(780,122),Vector2(1096,10),Color(0.7,0.8,1))
 	stagger_bar.max_value = boss.data["stagger"]["threshold"]
 	status = _label(root,"",Vector2(780,145),22)
-	_label(root,"A/D 이동 · Space 점프 · 방향 + Shift 대시 · J 유지 연속 공격 · 대시 중 W/S + J 상하 공격 · K 패리 · L 포션",Vector2(44,195),22)
-	_label(root,"U / 패드 RB : 마법 활 충전 → 떼면 자동 조준 발사 · 대시 중 사용 가능   |   Tab / Esc : 조작감",Vector2(44,225),20)
+	detail_labels.append(_label(root,"A/D 이동 · Space 점프 · 방향 + Shift 대시 · J 유지 연속 공격 · 대시 중 W/S + J 상하 공격 · K 패리 · L 포션",Vector2(44,195),22))
+	detail_labels.append(_label(root,"U / 패드 RB : 마법 활 충전 → 떼면 자동 조준 발사 · 대시 중 사용 가능   |   Tab / Esc : 조작감",Vector2(44,225),20))
 	intro_label = _label(root,boss.data["name"],Vector2(790,440),72)
 	result_screen = load("res://scenes/ui/ResultScreen.tscn").instantiate()
 	root.add_child(result_screen)
@@ -145,6 +165,8 @@ func _physics_process(delta: float) -> void:
 	player_hp.max_value = player.p("max_hp")
 	player_hp.value = player.hp
 	dash_bar.value = 100*(1-player.dash_cooldown/maxf(player.p("dash_cooldown"),0.001))
+	bow_bar.value = 100*(player.bow.ratio() if player.bow.charging else 1-player.bow.cooldown/maxf(player.p("bow_cooldown"),0.001))
+	bow_status.text = ("활 %d%%" % int(player.bow.ratio()*100)) if player.bow.charging else (("활 %.1f초" % player.bow.cooldown) if player.bow.cooldown > 0 else "활 준비")
 	boss_hp.value = boss.hp
 	stagger_bar.value = boss.stagger
 	boss_label.text = "%s    %s / %s    ·    PHASE %d" % [boss.data["name"],snappedf(boss.hp,0.1),boss.data["max_hp"],boss.phase_index+1]
@@ -190,3 +212,25 @@ func to_training() -> void:
 	get_tree().change_scene_to_file.call_deferred("res://scenes/arena/Arena.tscn")
 
 
+
+func _apply_hud_details() -> void:
+	if not is_instance_valid(debug_panel): return
+	debug_panel.weapon_bar.visible = details_visible and not debug_panel.is_open and not ended
+	debug_panel.live_readout.visible = details_visible and not debug_panel.is_open and not ended
+	debug_panel.toolbar.position.y = 255 if details_visible else 165
+	hud_backdrop.size.y = 415 if details_visible else 218
+	for label: Label in detail_labels: label.visible = details_visible
+
+func _draw() -> void:
+	if arena.is_empty(): return
+	# The generated causeway top is 76% down the asset. Align art and physics floor.
+	var height: float = float(arena["floor_y"])/0.76
+	var width: float = height*background.get_width()/background.get_height()
+	draw_texture_rect(background,Rect2((1920-width)/2,0,width,height),false)
+	draw_rect(Rect2(0,218,1920,862),Color(0.015,0.04,0.035,0.12))
+	for platform: Dictionary in arena["platforms"]:
+		var rect: Rect2 = Rect2(platform["x"],platform["y"],platform["w"],arena["platform_thickness"])
+		draw_rect(rect,Color(0.25,0.28,0.23))
+		draw_line(rect.position,Vector2(rect.end.x,rect.position.y),Color(0.52,0.59,0.32),5)
+		for x: int in range(int(rect.position.x)+35,int(rect.end.x),55):
+			draw_line(Vector2(x,rect.position.y+5),Vector2(x-4,rect.end.y),Color(0.1,0.14,0.12),2)

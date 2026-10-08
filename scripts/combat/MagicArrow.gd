@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 		queue_redraw()
 		return
 	if targetable(target):
-		var desired: Vector2 = target.global_position-global_position
+		var desired: Vector2 = target.aim_point()-global_position
 		motion = motion.rotated(clampf(wrapf(desired.angle()-motion.angle(),-PI,PI),-turn_rate*delta,turn_rate*delta))
 	var start: Vector2 = global_position
 	var finish: Vector2 = start+motion*speed*minf(delta,maxf(0,duration-elapsed))
@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 	for node: Node in get_tree().get_nodes_in_group("hurtboxes"):
 		var box: CombatHurtbox = node as CombatHurtbox
 		if not targetable(box): continue
-		var fraction: float = sweep_fraction(start,finish,box.bounds().grow(box_size.y/2))
+		var fraction: float = box.sweep_fraction(start,finish,box_size.y/2)
 		if fraction >= 0 and fraction < earliest:
 			nearest = box
 			earliest = fraction

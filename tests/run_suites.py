@@ -10,7 +10,7 @@ a = p.parse_args()
 project = pathlib.Path(__file__).resolve().parents[1]
 output = pathlib.Path(a.output or tempfile.mkdtemp(prefix='gate1-tests-')).resolve()
 output.mkdir(parents=True, exist_ok=True)
-suites = a.suites or ['PlayerSuite','ControlsRevisionSuite','CombatFeelSuite','DefenseInputSuite','InputComboSuite','ReviewFixSuite','ReviewBalanceProbe','RegistrySuite','GrowthSuite','BossSuite','BattleFlowSuite','IndependentReviewSuite','MagicBowSuite','GolemCutoutSuite']
+suites = a.suites or ['PlayerSuite','ControlsRevisionSuite','CombatFeelSuite','DefenseInputSuite','InputComboSuite','ReviewFixSuite','ReviewBalanceProbe','RegistrySuite','GrowthSuite','BossSuite','BattleFlowSuite','IndependentReviewSuite','MagicBowSuite','GolemCutoutSuite','GolemMobilitySuite']
 subprocess.run([sys.executable,str(project/'tests/make_fixtures.py'),str(output/'fixtures')],check=True)
 import_dir = pathlib.Path(tempfile.mkdtemp(prefix='import-',dir=output))
 import_env = dict(os.environ, GATE1_TEST_SAVE=str(import_dir/'save.json'), GATE1_TEST_TUNING=str(import_dir/'tuning.json'))

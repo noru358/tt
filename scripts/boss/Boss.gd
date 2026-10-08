@@ -17,6 +17,9 @@ var enabled: bool = false
 var runner: Node
 var hurtbox: CombatHurtbox
 var cutout: Node2D
+var walking: bool = false
+var contact_clock: float = 0.0
+var contact_attack: CombatHitbox
 var foot_time: float = 0
 var pattern_streak: int = 0
 var weakbox: CombatHurtbox
@@ -53,6 +56,9 @@ func _ready() -> void:
 		weakbox.combatant = self
 		weakbox.box_size = Vector2.ZERO
 		add_child(weakbox)
+		contact_attack = CombatHitbox.new()
+		contact_attack.source = self
+		contact_attack.attack_id = "golem.contact"
 func target_player() -> Node2D:
 	var nearest: Node2D
 	var distance: float = INF
@@ -77,6 +83,8 @@ func target_position(kind: String, offset_y: float = 0) -> Vector2:
 		"opposite_side": point.x = float(arena["right"]) if global_position.x < (float(arena["left"])+float(arena["right"]))/2 else float(arena["left"])
 	return clamp_position(point)
 func _physics_process(delta: float) -> void:
+	contact_clock = maxf(0,contact_clock-delta)
+	walking = false
 	flash = maxf(0,flash-delta)
 	queue_redraw()
 	if not enabled or hp <= 0: return
@@ -100,6 +108,8 @@ func _physics_process(delta: float) -> void:
 			var enter: String = pending_enter
 			pending_enter = ""
 			start_pattern(enter)
+		elif _walk_toward_player(delta):
+			pass
 		elif retry <= 0:
 			var selected: String = choose_pattern()
 			if selected.is_empty(): retry = rules["selection_retry"]
@@ -209,6 +219,9 @@ func receive_hit(box: CombatHitbox) -> String:
 		elif box.damage >= float(data["stagger"]["heavy_damage_threshold"]): add_stagger(float(data["stagger"]["heavy_hit_gain"]))
 	return "hit"
 func _contact() -> void:
+	if is_instance_valid(cutout):
+		_cutout_contact()
+		return
 	if stagger_time > 0 or float(data["contact_damage"]) <= 0: return
 	for player: Node2D in get_tree().get_nodes_in_group("players"):
 		if player.hp > 0 and Rect2(global_position-body_size/2,body_size).intersects(player.hurtbox.bounds()):
@@ -289,3 +302,31 @@ func _draw() -> void:
 	draw_rect(Rect2(-body_size/2,body_size),Color.GRAY if not vulnerable else Color(0.85,0.9,0.95),false,4)
 	draw_line(Vector2(facing*body_size.x/4,-body_size.y/4),Vector2(facing*body_size.x/2,-body_size.y/4),Color.WHITE,8)
 
+
+func _walk_toward_player(delta: float) -> bool:
+	if not is_instance_valid(cutout) or not Tuning.golem["walk_enabled"]: return false
+	var target: Node2D = target_player()
+	if target == null: return false
+	var gap: float = target.global_position.x-global_position.x
+	var stop: float = Tuning.golem["walk_stop_distance"]
+	if absf(gap) <= stop: return false
+	facing = int(signf(gap))
+	var previous: Vector2 = global_position
+	global_position = clamp_position(global_position+Vector2(facing*minf(float(Tuning.golem["walk_speed"])*delta,absf(gap)-stop),0))
+	walking = not is_equal_approx(previous.x,global_position.x)
+	if walking: cutout.walk(delta,global_position.x-previous.x)
+	return walking
+
+func _cutout_contact() -> void:
+	if stagger_time > 0 or contact_clock > 0 or float(Tuning.golem["contact_damage"]) <= 0: return
+	for player: Node2D in get_tree().get_nodes_in_group("players"):
+		if player.hp <= 0 or not cutout.body_overlaps(player.hurtbox.bounds()): continue
+		# The authored attack wins over contact on its impact tick.
+		if is_instance_valid(cutout.box) and cutout.attack_rect().intersects(player.hurtbox.bounds()): continue
+		contact_attack.damage = Tuning.golem["contact_damage"]
+		contact_attack.position = global_position
+		var outcome: String = player.receive_hit(contact_attack)
+		if outcome != "ignored": contact_clock = Tuning.golem["contact_interval"]
+
+func _exit_tree() -> void:
+	if is_instance_valid(contact_attack): contact_attack.free()

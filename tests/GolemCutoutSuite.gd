@@ -116,6 +116,7 @@ func _run() -> void:
 	check(boss.choose_pattern() == "sweep","same pattern cannot occur three times in a row")
 	boss.foot_time = 1.5
 	check(boss.choose_pattern() == "stomp","foot dwell selects stomp")
+	Tuning.golem["walk_enabled"] = false
 	var origin: Vector2 = boss.position
 	boss.enabled = true
 	boss.set_physics_process(true)
@@ -126,7 +127,7 @@ func _run() -> void:
 			captured_live = true
 			await snapshot("golem_live_telegraph")
 	check(captured_live,"real AI runner advances cutout telegraph")
-	check(boss.position.distance_to(origin) < 0.01,"new golem stays stationary without fake walk animation")
+	check(boss.position.distance_to(origin) < 0.01,"walking can be disabled for stationary encounter")
 	boss.set_physics_process(false)
 	boss.interrupt()
 	Tuning.set_value("golem","weakpoint_enabled",true)

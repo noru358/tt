@@ -1,6 +1,7 @@
 extends Node2D
 const Arrow = preload("res://scripts/combat/MagicArrow.gd")
 var player: GatePlayer
+var queued_charge: float = 0.0
 var charging: bool = false
 var charge_time: float = 0.0
 var cooldown: float = 0.0
@@ -20,6 +21,7 @@ func ratio() -> float:
 	return clampf(charge_time/maxf(player.p("bow_charge_time"),0.001),0,1)
 
 func cancel() -> void:
+	queued_charge = 0
 	charging = false
 	charge_time = 0
 	target = null
@@ -36,13 +38,18 @@ func tick(delta: float) -> void:
 	if input.blocked or not input._focused or player.state in [GatePlayer.State.DEAD,GatePlayer.State.HURT,GatePlayer.State.POTION,GatePlayer.State.PARRY] or player._whiff_locked() or player.parry_age <= player.p("parry_window"):
 		cancel()
 		return
-	if input.just_pressed(&"magic_bow") and cooldown <= 0:
+	queued_charge = maxf(0,queued_charge-delta)
+	if input.just_released(&"magic_bow"): queued_charge = 0
+	if input.just_pressed(&"magic_bow") and cooldown > 0 and cooldown <= player.p("bow_input_buffer"):
+		queued_charge = player.p("bow_input_buffer")
+	if (input.just_pressed(&"magic_bow") or (queued_charge > 0 and input.pressed(&"magic_bow"))) and cooldown <= 0:
+		queued_charge = 0
 		charging = true
 		charge_time = 0
 		target = acquire_target()
 	if charging:
 		if not Arrow.targetable(target): target = acquire_target()
-		aim = (target.global_position-global_position).normalized() if Arrow.targetable(target) else Vector2(player.facing,0)
+		aim = (target.aim_point()-global_position).normalized() if Arrow.targetable(target) else Vector2(player.facing,0)
 		if input.pressed(&"magic_bow"): charge_time = minf(player.p("bow_charge_time"),charge_time+delta)
 		if input.just_released(&"magic_bow") or not input.pressed(&"magic_bow"): fire()
 	queue_redraw()
@@ -53,10 +60,10 @@ func acquire_target() -> CombatHurtbox:
 	for node: Node in get_tree().get_nodes_in_group("hurtboxes"):
 		var box: CombatHurtbox = node as CombatHurtbox
 		if not Arrow.targetable(box): continue
-		var distance: float = global_position.distance_to(box.global_position)
+		var distance: float = global_position.distance_to(box.aim_point())
 		if distance > player.p("bow_lock_range"): continue
 		# Bosses win over incidental enemies; otherwise choose the nearest target.
-		var score: float = distance-(player.p("bow_lock_range") if box.combatant.has_signal("died") else 0.0)
+		var score: float = distance-float(box.aim_priority)*player.p("bow_lock_range")-(player.p("bow_lock_range") if box.combatant.has_signal("died") else 0.0)
 		if score < best:
 			selected = box
 			best = score
@@ -98,7 +105,7 @@ func _draw() -> void:
 	var color: Color = Color(0.35,0.85,1).lerp(Color(1,0.85,0.35),power)
 	var alpha: float = 1.0 if charging else release_flash/0.22
 	if charging and Arrow.targetable(target):
-		var center: Vector2 = to_local(target.global_position)
+		var center: Vector2 = to_local(target.aim_point())
 		draw_arc(center,34,0,TAU,28,Color(color,0.75),2,true)
 		for i: int in 4:
 			var ray: Vector2 = Vector2.RIGHT.rotated(i*PI/2)

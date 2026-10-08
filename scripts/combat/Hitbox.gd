@@ -28,7 +28,7 @@ func _physics_process(delta: float) -> void:
 	for node: Node in get_tree().get_nodes_in_group("hurtboxes"):
 		var target: CombatHurtbox = node as CombatHurtbox
 		if target.team == team or not is_instance_valid(target.combatant) or not target.box_size.x > 0 or struck.has(target.get_instance_id()) or struck.has(target.combatant.get_instance_id()): continue
-		if Rect2(global_position-box_size/2.0, box_size).intersects(target.bounds()):
+		if target.overlaps(Rect2(global_position-box_size/2.0, box_size)):
 			var outcome: String = target.combatant.receive_hit(self)
 			if outcome == "reflected": break
 			if outcome != "ignored":

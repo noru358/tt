@@ -15,7 +15,7 @@
       1
     ]
   },
-  "contact_damage": 0,
+  "contact_damage": 8,
   "gravity": 3600,
   "arena": {
     "floor_y": 960,
@@ -148,10 +148,6 @@
   "order": 0,
   "cutout": {
     "scale": 0.7,
-    "body_x": -75.0,
-    "body_y": -210.0,
-    "body_width": 170.0,
-    "body_height": 260.0,
     "weakpoint_enabled": false,
     "weakpoint_size": 90.0,
     "weakpoint_multiplier": 1.5,
@@ -216,6 +212,13 @@
         "parriable": false,
         "shake": 10.0
       }
-    }
+    },
+    "walk_enabled": true,
+    "walk_speed": 95.0,
+    "walk_stop_distance": 170.0,
+    "walk_stride": 90.0,
+    "walk_lift": 24.0,
+    "contact_damage": 8.0,
+    "contact_interval": 0.7
   }
 }

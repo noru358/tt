@@ -56,7 +56,8 @@
     "bow_turn_rate": 9.0,
     "bow_lock_range": 2400.0,
     "bow_lifetime": 1.8,
-    "bow_hit_size": 18.0
+    "bow_hit_size": 18.0,
+    "bow_input_buffer": 0.15
   },
   "feedback": {
     "hitstop_on_hit": 0.05,
@@ -406,10 +407,6 @@
   },
   "golem": {
     "scale": 0.7,
-    "body_x": -75.0,
-    "body_y": -210.0,
-    "body_width": 170.0,
-    "body_height": 260.0,
     "weakpoint_enabled": false,
     "weakpoint_size": 90.0,
     "weakpoint_multiplier": 1.5,
@@ -474,6 +471,13 @@
         "parriable": false,
         "shake": 10.0
       }
-    }
+    },
+    "walk_enabled": true,
+    "walk_speed": 95.0,
+    "walk_stop_distance": 170.0,
+    "walk_stride": 90.0,
+    "walk_lift": 24.0,
+    "contact_damage": 8.0,
+    "contact_interval": 0.7
   }
 }

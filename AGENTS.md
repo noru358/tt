@@ -31,3 +31,5 @@
 - 2026-10-08 사용자 승인으로 마법 활 보조 공격 추가. 최신 추가 계약 docs/MAGIC_BOW.md. U/RB hold→release, 강한 자동조준·유도, 이동/대시/근접과 독립. 점멸은 미래 계획이며 구현 금지. 패널은 마법 활 포함 8탭. 전투 수치는 player JSON/defaults/schema 동시 변경. MagicBowSuite40 포함 전체687검사.
 
 - 2026-10-08 사용자 승인: 골렘 컷아웃 3패턴 이식, 원본 Lab 수정 금지, GitHub noru358/tt 업로드. 최신 계약 docs/GOLEM_PORT_REPORT.md. 패널은 골렘 포함 9탭. 컷아웃 제작 키트/점멸/미제공 모션은 다음 작업. Windows 절대경로 WORK_MEMORY는 원개발 환경의 역사적 참조이며 현재 checkout의 문서를 기준으로 한다.
+
+- 2026-10-08 추가 사용자 승인: 전신 판정/몸박/추적 걷기/동남아 습지 폐사원 배경/조작감 개선. 최신 docs/GOLEM_MOBILITY_WETLAND.md. 원본 Lab 수정 금지 유지. 걷기는 기존 리그 절차적 보행, 이동 금지는 해제. 골렘 사각 몸통 필드 제거 시 과거 override 이전 유지. 전신 판정 중복 피해·몸박과 공격 피해 우선순위·활 몸통 자동조준 보존. 881 headless 및 131 GPU 검사.

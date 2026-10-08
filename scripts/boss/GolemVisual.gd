@@ -23,6 +23,7 @@ func _ready() -> void:
 	animator = rig.get_node("AnimationPlayer")
 	animator.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
 	animator.add_animation_library("runtime",AnimationLibrary.new())
+	_build_body_parts(rig)
 	Tuning.changed.connect(_settings_changed)
 	_update_transform()
 	idle(0)
@@ -43,6 +44,10 @@ func idle(delta: float) -> void:
 	if active: return
 	idle_clock += delta
 	_update_transform()
+	rig.get_node("Torso/LegFront_Upper").position = Vector2(6,-10)
+	rig.get_node("Torso/LegBack_Upper").position = Vector2(-16,-10)
+	animator.play("RESET")
+	animator.seek(0,true)
 	animator.play("idle")
 	animator.seek(fmod(idle_clock,animator.get_animation("idle").length),true)
 	_update_hurtbox()
@@ -113,9 +118,6 @@ func attack_rect() -> Rect2:
 	return rig.global_transform*Rect2(c["hitbox_x"],c["hitbox_y"],c["hitbox_width"],c["hitbox_height"])
 
 func _update_hurtbox() -> void:
-	var rect: Rect2 = rig.get_node("Torso").global_transform*Rect2(settings["body_x"],settings["body_y"],settings["body_width"],settings["body_height"])
-	boss.hurtbox.global_position = rect.get_center()
-	boss.hurtbox.box_size = rect.size
 	if is_instance_valid(boss.weakbox):
 		var weak: Rect2 = weakpoint_bounds()
 		boss.weakbox.box_size = weak.size
@@ -156,3 +158,74 @@ func _draw() -> void:
 	if Feedback.boxes_visible and active:
 		var rect: Rect2 = attack_rect()
 		draw_rect(Rect2(to_local(rect.position),rect.size),Color.RED if is_instance_valid(box) else Color(1,0.8,0,0.5),false,2)
+
+# One outline per visible part, generated once from supplied PNG alpha.
+# Convex outlines avoid a giant body rectangle hitting empty limb gaps.
+var body_parts: Array[CombatHurtbox] = []
+var walk_clock: float = 0.0
+static var outline_cache: Dictionary = {}
+
+func _build_body_parts(node: Node) -> void:
+	if node is Sprite2D:
+		var sprite: Sprite2D = node as Sprite2D
+		var path: String = sprite.texture.resource_path
+		if not outline_cache.has(path):
+			var bitmap: BitMap = BitMap.new()
+			bitmap.create_from_image_alpha(sprite.texture.get_image(),0.15)
+			var points: PackedVector2Array = []
+			for polygon: PackedVector2Array in bitmap.opaque_to_polygons(Rect2i(Vector2i.ZERO,bitmap.get_size()),2.0): points.append_array(polygon)
+			outline_cache[path] = Geometry2D.convex_hull(points)
+		var part: CombatHurtbox = CombatHurtbox.new()
+		part.name = "BodyHurtbox"
+		part.combatant = boss
+		part.team = "enemy"
+		part.outline = outline_cache[path].duplicate()
+		for i: int in part.outline.size(): part.outline[i] += sprite.get_rect().position
+		part.box_size = sprite.texture.get_size()
+		part.aim_priority = 1 if sprite.name == "TorsoSkin" else 0
+		sprite.add_child(part)
+		body_parts.append(part)
+		if sprite.name == "TorsoSkin":
+			boss.hurtbox.box_size = Vector2.ZERO
+			boss.hurtbox = part
+	for child: Node in node.get_children():
+		if not child is CombatHurtbox: _build_body_parts(child)
+
+func body_overlaps(rect: Rect2) -> bool:
+	for part: CombatHurtbox in body_parts:
+		if part.overlaps(rect): return true
+	return false
+
+func walk(delta: float, distance: float) -> void:
+	if active: return
+	idle(delta)
+	var stride: float = float(settings["walk_stride"])
+	walk_clock = fmod(walk_clock+absf(distance)/float(settings["scale"])/(stride*2),1.0)
+	var torso: Node2D = rig.get_node("Torso")
+	torso.position.y = -250+sin(walk_clock*TAU*2)*3
+	for side: String in ["Front","Back"]:
+		var cycle: float = fmod(walk_clock+(0.5 if side == "Back" else 0.0),1.0)
+		var stance: bool = cycle < 0.5
+		var fraction: float = cycle*2 if stance else (cycle-0.5)*2
+		var foot_x: float = lerpf(stride/2,-stride/2,fraction) if stance else lerpf(-stride/2,stride/2,fraction)
+		var lift: float = 0.0 if stance else sin(fraction*PI)*float(settings["walk_lift"])
+		var upper: Node2D = torso.get_node("Leg"+side+"_Upper")
+		var lower: Node2D = upper.get_node("Leg"+side+"_Lower")
+		var hip: Vector2 = torso.position+upper.position
+		var goal: Vector2 = Vector2(upper.position.x+foot_x,-lift)-hip
+		var a: float = lower.position.y
+		var b: float = 164.12
+		var length: float = clampf(goal.length(),absf(a-b)+0.1,a+b-0.1)
+		var bend: float = acos(clampf((a*a+length*length-b*b)/(2*a*length),-1,1))
+		upper.rotation = goal.angle()-PI/2-bend
+		var knee: Vector2 = hip+Vector2(0,a).rotated(upper.rotation)
+		lower.rotation = (Vector2(upper.position.x+foot_x,-lift)-knee).angle()-PI/2-upper.rotation
+		# Foot is part of the shin artwork: keep the lowest sole point on ground.
+		var hull: PackedVector2Array = (lower.get_node("BodyHurtbox") as CombatHurtbox).world_outline()
+		var bottom: float = -INF
+		for point: Vector2 in hull: bottom = maxf(bottom,rig.to_local(point).y)
+		upper.position.y -= bottom+lift
+	var sway: float = sin(walk_clock*TAU)*0.13
+	torso.get_node("ArmFront_Upper").rotation = -0.12+sway
+	torso.get_node("ArmBack_Upper").rotation = 0.22-sway
+	_update_hurtbox()
