@@ -55,7 +55,7 @@ func _ready() -> void:
 	check(world.tuning.bash_launch_speed == JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("MOVEMENT_TEST_TUNING"))).bash_launch_speed,"reads approved movement tuning")
 	check(world.golem_spawn.y == world.floor_y and world.arena_size == Vector2(60,12)*32,"arena B marks golem feet on floor")
 	var height: float = world.floor_y-golem.top_y()
-	check(height > 150 and height < 200,"golem about five tiles tall (%.0f px)" % height)
+	check(height > 190 and height < 250,"golem about seven tiles tall (%.0f px)" % height)
 	await _reach_without_bash()
 	await _slam()
 	await _stomp_rock()
