@@ -1,4 +1,6 @@
 extends Node2D
+# Emitted instead of looping when room_filter is set and its last goal is reached.
+signal rooms_finished
 const TUNING_PATH: String = "res://toys/movement/movement_tuning.json"
 var tuning_path: String = TUNING_PATH
 var room_directory: String = "res://toys/movement/rooms"
@@ -25,6 +27,7 @@ var respawning: bool = false
 var logged: bool = false
 var started: int
 var log_data: Dictionary
+var room_filter: PackedStringArray = []
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -48,6 +51,7 @@ func _ready() -> void:
 	for filename: String in DirAccess.get_files_at(room_directory):
 		if filename.ends_with(".txt"): rooms.append(filename)
 	rooms.sort()
+	if not room_filter.is_empty(): rooms = room_filter
 	if not InputMap.has_action("toy_bash"):
 		InputMap.add_action("toy_bash")
 		var key: InputEventKey = InputEventKey.new()
@@ -166,6 +170,9 @@ func _physics_process(delta: float) -> void:
 				"^":
 					if not Feedback.invincible: respawn()
 				"G":
+					if not room_filter.is_empty() and room_index == rooms.size()-1:
+						rooms_finished.emit()
+						return
 					load_room(room_index+1)
 					return
 	if player.position.y > room_size.y: respawn()

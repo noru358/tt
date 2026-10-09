@@ -1,22 +1,11 @@
 # Golem bash boss toy. Reuses the movement toy's player setup and ToyMotion unchanged;
 # golem-only numbers live in golem_bash_tuning.json.
 extends Node2D
+signal round_finished(result: String)
 const MOVEMENT_TUNING_PATH: String = "res://toys/movement/movement_tuning.json"
 const TUNING_PATH: String = "res://toys/golem_bash/golem_bash_tuning.json"
 const ARENA_PATH: String = "res://toys/golem_bash/arena.txt"
 const AIM_SIDE_BIAS: float = 2.0
-# Boss-fight movement is heavier than the jump map: these golem keys replace the
-# approved movement values in this toy's in-memory copy only.
-const BOSS_MOVEMENT: Dictionary = {
-	"boss_move_speed":"move_speed",
-	"boss_jump_velocity":"jump_velocity",
-	"boss_gravity":"gravity",
-	"boss_max_fall_speed":"max_fall_speed",
-	"boss_air_control_accel":"air_control_accel",
-	"boss_dash_distance":"dash_distance",
-	"boss_dash_duration":"dash_duration",
-	"boss_air_dash_count":"air_dash_count",
-}
 var movement_path: String = MOVEMENT_TUNING_PATH
 var tuning_path: String = TUNING_PATH
 var arena_path: String = ARENA_PATH
@@ -62,7 +51,6 @@ var dodge_text_at: float = -INF
 var attack_queued: bool = false
 var base_launch_speed: float = 0
 var part_launch: bool = false
-var was_dashing: bool = false
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -86,7 +74,6 @@ func _ready() -> void:
 			return
 		tuning[key] = own[key]
 		golem_keys.append(key)
-	for key: String in BOSS_MOVEMENT: tuning[BOSS_MOVEMENT[key]] = tuning[key]
 	base_launch_speed = float(tuning.bash_launch_speed)
 	if not InputMap.has_action("toy_bash"):
 		InputMap.add_action("toy_bash")
@@ -236,6 +223,7 @@ func round_end(result: String) -> void:
 	ended_at = Time.get_ticks_msec()
 	result_label.text = ("승리!" if result == "win" else "쓰러졌다") + "   %.1f초 · 튕기기 %d · 약점 %d · 무릎 %d" % [log_data.duration_sec,log_data.bash_count,log_data.weak_hits,log_data.kneels]
 	result_panel.show()
+	round_finished.emit(result)
 
 func _write(entry: Dictionary) -> void:
 	var file: FileAccess = FileAccess.open(log_path,FileAccess.READ_WRITE if FileAccess.file_exists(log_path) else FileAccess.WRITE)
@@ -291,7 +279,6 @@ func _physics_process(delta: float) -> void:
 	game_time += delta
 	_auto_aim()
 	_part_boost()
-	_boss_movement()
 	swing_cooldown = maxf(0,swing_cooldown-delta)
 	var attack_pressed: bool = player.controls.just_pressed(&"attack") or attack_queued
 	attack_queued = false
@@ -333,14 +320,6 @@ func _hit_feedback(result: String) -> void:
 		Feedback.shake_strength = maxf(Feedback.shake_strength,2)
 		fx_spark(at,Color(0.7,0.7,0.7),5,140)
 		fx_text(at+Vector2(-10,-20),"%d" % ceili(float(tuning.weak_hit_damage)*float(tuning.body_damage_mult)),Color(0.75,0.75,0.75),13)
-
-func _boss_movement() -> void:
-	for key: String in BOSS_MOVEMENT: tuning[BOSS_MOVEMENT[key]] = tuning[key]
-	# A dash stops short instead of carrying its full speed into the air.
-	var dashing: bool = player.state == GatePlayer.State.DASH
-	if was_dashing and not dashing and motion.launch_age < 0 and not is_instance_valid(motion.target):
-		player.velocity *= float(tuning.dash_end_keep)
-	was_dashing = dashing
 
 # Golem parts fling harder than rocks (part_launch_mult) so a fist or arm bash can clear the shoulders.
 # Only this toy's in-memory copy changes; movement_tuning.json stays as approved.

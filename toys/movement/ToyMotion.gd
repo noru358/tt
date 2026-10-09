@@ -24,12 +24,14 @@ var launch_origin: Vector2
 var launch_age: float = -1
 var coast_remaining: float = 0
 var launch_direction: Vector2
+var dash_ended: bool = false
 
 func t(key: String) -> float:
 	return float(world.tuning[key])
 
 func cancel() -> void:
 	target = null
+	dash_ended = false
 	bash_active = false
 	dash_pending = 0
 	jump_pending = 0
@@ -121,6 +123,10 @@ func tick(delta: float) -> void:
 		if direction.length() > 0: aim = direction.normalized()
 		if not held or (Time.get_ticks_msec()-held_since)/1000.0 >= t("bash_max_hold"): launch()
 		return
+	# The frame after a dash finishes its full distance, keep only part of its speed so it stops short.
+	if dash_ended:
+		dash_ended = false
+		if player.state != GatePlayer.State.DASH: player.velocity *= t("dash_end_keep")
 	lock_time = maxf(0,lock_time-delta)
 	player.dash_cooldown = maxf(0,player.dash_cooldown-delta)
 	player.since_dash += delta
@@ -197,6 +203,7 @@ func tick(delta: float) -> void:
 		player.velocity = player.dash_direction*player.dash_speed*minf(1,remaining/delta)
 		if player.dash_elapsed >= player.dash_time or is_equal_approx(player.dash_elapsed,player.dash_time):
 			player.state = GatePlayer.State.FALL
+			dash_ended = true
 			if player.dash_uses < int(t("air_dash_count")):
 				player.dash_cooldown = 0
 	else:
