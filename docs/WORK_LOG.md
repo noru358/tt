@@ -180,3 +180,7 @@ The previous test pressed direction before Shift. Four overlapping old-direction
 - 7번 일반 점프 머리 여유47.43/28.43px. 5·8 굴뚝은 벽 점프 없이 통과, 8번 탄환 방도 배시 없이 y327.26 도달. 설계 의도 차이 보고, 맵/수치 변경 없음. 상세 ROOM_SET_02_REPORT.md.
 
 최종 검증: 19개 모음, 1000개 자동 검사 통과. `docs/evidence/room-set-02/summary.json` 및 개별 로그 참조.
+
+## 2026-10-09 — 골렘 튕기기 장난감 (Claude 구현)
+- toys/golem_bash 신규. ToyMotion·Player·movement_tuning 재사용, 원본 골렘 리그 애니메이션을 장난감 쪽에서 재시간화. 기존 골렘전·움직임 장난감 코드 변경 없음.
+- 약점은 튕긴 직후/무릎 때만 열림(대시 상승으로 높이 조건 불가). GolemBashToySuite 61검사, 전체 21모음 1061검사 PASS. 무적 OFF 봇 승리 실패, 무적 ON 78초 승리. 상세 GOLEM_BASH_REPORT.md.

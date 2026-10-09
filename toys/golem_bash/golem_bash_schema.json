@@ -1,0 +1,282 @@
+{
+  "golem_scale": {
+    "min": 0.2,
+    "max": 1.0,
+    "step": 0.01
+  },
+  "golem_walk_speed": {
+    "min": 0,
+    "max": 200,
+    "step": 1
+  },
+  "golem_attack_range": {
+    "min": 40,
+    "max": 800,
+    "step": 5
+  },
+  "golem_attack_interval": {
+    "min": 0.2,
+    "max": 5,
+    "step": 0.05
+  },
+  "telegraph_time": {
+    "min": 0.1,
+    "max": 2,
+    "step": 0.05
+  },
+  "fist_bash_window": {
+    "min": 0.1,
+    "max": 3,
+    "step": 0.05
+  },
+  "fist_bash_stagger": {
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "rock_count": {
+    "min": 0,
+    "max": 8,
+    "step": 1
+  },
+  "rock_hover_time": {
+    "min": 0,
+    "max": 2,
+    "step": 0.05
+  },
+  "rock_damage_to_golem": {
+    "min": 0,
+    "max": 200,
+    "step": 1
+  },
+  "rock_stagger": {
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "arm_bash_window": {
+    "min": 0.05,
+    "max": 2,
+    "step": 0.05
+  },
+  "shockwave_speed": {
+    "min": 50,
+    "max": 1200,
+    "step": 10
+  },
+  "shockwave_height": {
+    "min": 4,
+    "max": 80,
+    "step": 1
+  },
+  "player_hit_damage": {
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "contact_damage": {
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "body_damage_mult": {
+    "min": 0,
+    "max": 1,
+    "step": 0.01
+  },
+  "weak_hit_damage": {
+    "min": 0,
+    "max": 200,
+    "step": 1
+  },
+  "weak_hits_to_stagger": {
+    "min": 1,
+    "max": 10,
+    "step": 1
+  },
+  "stagger_threshold": {
+    "min": 10,
+    "max": 500,
+    "step": 5
+  },
+  "kneel_duration": {
+    "min": 0.5,
+    "max": 8,
+    "step": 0.1
+  },
+  "golem_max_hp": {
+    "min": 50,
+    "max": 3000,
+    "step": 10
+  },
+  "shake_off_time": {
+    "min": 0.2,
+    "max": 6,
+    "step": 0.1
+  },
+  "weak_open_after_bash": {
+    "min": 0,
+    "max": 5,
+    "step": 0.05
+  },
+  "weak_radius": {
+    "min": 4,
+    "max": 60,
+    "step": 1
+  },
+  "kneel_drop": {
+    "min": 0,
+    "max": 450,
+    "step": 5
+  },
+  "attack_reach": {
+    "min": 10,
+    "max": 120,
+    "step": 1
+  },
+  "attack_height": {
+    "min": 10,
+    "max": 120,
+    "step": 1
+  },
+  "attack_active": {
+    "min": 0.02,
+    "max": 0.5,
+    "step": 0.01
+  },
+  "attack_cooldown": {
+    "min": 0.05,
+    "max": 1,
+    "step": 0.01
+  },
+  "pogo_velocity": {
+    "min": 100,
+    "max": 1200,
+    "step": 10
+  },
+  "player_hurt_iframe": {
+    "min": 0,
+    "max": 3,
+    "step": 0.05
+  },
+  "player_knockback": {
+    "min": 0,
+    "max": 800,
+    "step": 10
+  },
+  "rock_launch_speed": {
+    "min": 100,
+    "max": 1200,
+    "step": 10
+  },
+  "rock_bash_speed": {
+    "min": 100,
+    "max": 1500,
+    "step": 10
+  },
+  "rock_radius": {
+    "min": 4,
+    "max": 40,
+    "step": 1
+  },
+  "contact_interval": {
+    "min": 0.1,
+    "max": 3,
+    "step": 0.05
+  },
+  "turn_distance": {
+    "min": 0,
+    "max": 300,
+    "step": 5
+  },
+  "kneel_lean": {
+    "min": 0,
+    "max": 1.6,
+    "step": 0.01
+  },
+  "contact_grace": {
+    "min": 0,
+    "max": 2,
+    "step": 0.05
+  },
+  "dash_iframe": {
+    "min": 0,
+    "max": 1,
+    "step": 0.01
+  },
+  "golem_step_time": {
+    "min": 0.2,
+    "max": 3,
+    "step": 0.05
+  },
+  "golem_step_lift": {
+    "min": 0,
+    "max": 120,
+    "step": 1
+  },
+  "footstep_shake": {
+    "min": 0,
+    "max": 20,
+    "step": 0.5
+  },
+  "hitstop_frames": {
+    "min": 0,
+    "max": 20,
+    "step": 1
+  },
+  "auto_aim": {
+    "min": 0,
+    "max": 1,
+    "step": 1
+  },
+  "part_launch_mult": {
+    "min": 1,
+    "max": 2,
+    "step": 0.05
+  },
+  "boss_move_speed": {
+    "min": 80,
+    "max": 400,
+    "step": 5
+  },
+  "boss_jump_velocity": {
+    "min": 200,
+    "max": 700,
+    "step": 5
+  },
+  "boss_gravity": {
+    "min": 500,
+    "max": 3000,
+    "step": 25
+  },
+  "boss_max_fall_speed": {
+    "min": 200,
+    "max": 1500,
+    "step": 10
+  },
+  "boss_air_control_accel": {
+    "min": 200,
+    "max": 4000,
+    "step": 50
+  },
+  "boss_dash_distance": {
+    "min": 0,
+    "max": 300,
+    "step": 5
+  },
+  "boss_dash_duration": {
+    "min": 0.05,
+    "max": 0.5,
+    "step": 0.01
+  },
+  "boss_air_dash_count": {
+    "min": 0,
+    "max": 3,
+    "step": 1
+  },
+  "dash_end_keep": {
+    "min": 0,
+    "max": 1,
+    "step": 0.05
+  }
+}
