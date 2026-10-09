@@ -1,0 +1,134 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+PASS: all twelve visible body parts have outlines
+PASS: stable torso aim anchor
+PASS: body hit at ArmBack_Upper facing -1
+PASS: body hit at ArmBack_Lower facing -1
+PASS: body hit at FistBack facing -1
+PASS: body hit at LegBack_Upper facing -1
+PASS: body hit at LegBack_Lower facing -1
+PASS: body hit at TorsoSkin facing -1
+PASS: body hit at Head facing -1
+PASS: body hit at LegFront_Upper facing -1
+PASS: body hit at LegFront_Lower facing -1
+PASS: body hit at ArmFront_Upper facing -1
+PASS: body hit at ArmFront_Lower facing -1
+PASS: body hit at FistFront facing -1
+PASS: arrow sweeps mirrored limb facing -1
+PASS: outside silhouette misses facing -1
+PASS: body hit at ArmBack_Upper facing 1
+PASS: body hit at ArmBack_Lower facing 1
+PASS: body hit at FistBack facing 1
+PASS: body hit at LegBack_Upper facing 1
+PASS: body hit at LegBack_Lower facing 1
+PASS: body hit at TorsoSkin facing 1
+PASS: body hit at Head facing 1
+PASS: body hit at LegFront_Upper facing 1
+PASS: body hit at LegFront_Lower facing 1
+PASS: body hit at ArmFront_Upper facing 1
+PASS: body hit at ArmFront_Lower facing 1
+PASS: body hit at FistFront facing 1
+PASS: arrow sweeps mirrored limb facing 1
+PASS: outside silhouette misses facing 1
+PASS: fast arrow sweeps actual moving limb
+PASS: twelve overlapping parts still receive one hit
+PASS: arm contact deals configured body damage
+PASS: contact interval prevents immediate repeated damage
+PASS: body damage repeats only after interval and invulnerability
+PASS: dash passes body safely with one perfect dodge reward
+PASS: stagger allows safe close-range punishment
+PASS: impact tick prioritizes authored attack over body contact
+PASS: slam retains full damage with contact enabled
+PASS: golem walks toward distant player
+PASS: distant golem approaches instead of attacking empty space
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: walking sole stays above floor
+PASS: golem stops in range and starts attack
+PASS: attack windup does not slide after retreating target
+PASS: compact HUD exposes more combat space
+PASS: details remain accessible with screen button
+PASS: near-ready held bow press starts when cooldown ends
+PASS: automatic aim selects stable torso instead of limbs
+PASS: buffered charge releases exactly one arrow
+PASS: released early press is discarded, not fired later
+PASS: cancel clears pending bow press
+PASS: old rectangular-body tuning migrates without blocking startup
+GOLEM_MOBILITY_RESULT checks=131 failures=0

@@ -1,7 +1,7 @@
 """Run isolated, sequential Godot 4.6 tests. No third-party Python packages.
 Usage: python3 tests/run_suites.py --godot /path/to/Godot --output /scratch/path
 """
-import argparse, json, os, pathlib, subprocess, sys, tempfile
+import argparse, json, os, pathlib, shutil, subprocess, sys, tempfile
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--godot', default='godot')
 p.add_argument('--output', default=None)
@@ -10,7 +10,7 @@ a = p.parse_args()
 project = pathlib.Path(__file__).resolve().parents[1]
 output = pathlib.Path(a.output or tempfile.mkdtemp(prefix='gate1-tests-')).resolve()
 output.mkdir(parents=True, exist_ok=True)
-suites = a.suites or ['PlayerSuite','ControlsRevisionSuite','CombatFeelSuite','DefenseInputSuite','InputComboSuite','ReviewFixSuite','ReviewBalanceProbe','RegistrySuite','GrowthSuite','BossSuite','BattleFlowSuite','IndependentReviewSuite','MagicBowSuite','GolemCutoutSuite','GolemMobilitySuite']
+suites = a.suites or ['PlayerSuite','ControlsRevisionSuite','CombatFeelSuite','DefenseInputSuite','InputComboSuite','ReviewFixSuite','ReviewBalanceProbe','RegistrySuite','GrowthSuite','BossSuite','BattleFlowSuite','IndependentReviewSuite','MagicBowSuite','GolemCutoutSuite','GolemMobilitySuite','MovementToySuite','MovementAuditSuite','MovementRoomSet02Suite','MovementRoomSet02Probe']
 subprocess.run([sys.executable,str(project/'tests/make_fixtures.py'),str(output/'fixtures')],check=True)
 import_dir = pathlib.Path(tempfile.mkdtemp(prefix='import-',dir=output))
 import_env = dict(os.environ, GATE1_TEST_SAVE=str(import_dir/'save.json'), GATE1_TEST_TUNING=str(import_dir/'tuning.json'))
@@ -22,6 +22,10 @@ results = []
 for suite in suites:
     folder = pathlib.Path(tempfile.mkdtemp(prefix=suite+'-',dir=output))
     env = dict(os.environ, GATE1_TEST_SAVE=str(folder/'save.json'), GATE1_TEST_TUNING=str(folder/'tuning.json'), GATE1_TEST_REORDER=str(folder/'reorder.json'))
+    if suite.startswith('Movement'):
+        shutil.copytree(project/'toys/movement/rooms', folder/'rooms')
+        shutil.copy2(project/'toys/movement/movement_tuning.json', folder/'movement_tuning.json')
+        env.update(MOVEMENT_TEST_ROOMS=str(folder/'rooms'), MOVEMENT_TEST_TUNING=str(folder/'movement_tuning.json'), MOVEMENT_TEST_LOG=str(folder/'movement.jsonl'))
     command = [a.godot,'--headless','--fixed-fps','60','--path',str(project),'res://tests/'+suite+'.tscn']
     if suite == 'RegistrySuite': command += ['--','--manifest='+str(output/'fixtures/manifest.json')]
     logpath = folder/'result.log'

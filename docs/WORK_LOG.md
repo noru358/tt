@@ -173,3 +173,10 @@ The previous test pressed direction before Shift. Four overlapping old-direction
 225 synthetic key-event checks passed with normal automatic physics in both headless and GPU runs, including jump -> horizontal dash -> opposite/diagonal, and 1-2 frame late direction. Movement48, Audit52, existing981 regression checks passed. This is not physical keyboard validation; user confirmation remains necessary. HUD now shows Shift receipts, dash starts, and final direction.
 
 - 2026-10-09: 사용자 실플레이에서 최신 더블 대시 수정 작동 확인("됨"). 요청에 따라 tt/main 업로드 준비. 원격 기획·인수인계 문서 보존 및 최신 기본 실행/검증 상태 반영.
+
+## 2026-10-09 — ROOM_SET_02 검증
+- claude/room-set-02 fd750f9 기준. 새 5~8 네 방 무적 없는 자동 입력 완주. 5/6/7/8 사망 누계 0/7/5/0. 사람 실기·재미·키보드 8방향 완주와 구분.
+- 이동 테스트 임시 방·튜닝·로그 격리 누락 수정, 기본 실행 목록에 이동 검사 추가. 국소 검사와 전체 경로 진단 추가.
+- 7번 일반 점프 머리 여유47.43/28.43px. 5·8 굴뚝은 벽 점프 없이 통과, 8번 탄환 방도 배시 없이 y327.26 도달. 설계 의도 차이 보고, 맵/수치 변경 없음. 상세 ROOM_SET_02_REPORT.md.
+
+최종 검증: 19개 모음, 1000개 자동 검사 통과. `docs/evidence/room-set-02/summary.json` 및 개별 로그 참조.
