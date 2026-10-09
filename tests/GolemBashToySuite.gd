@@ -56,7 +56,7 @@ func _ready() -> void:
 	check(world.golem_spawn.y == world.floor_y and world.arena_size == Vector2(60,12)*32,"arena B marks golem feet on floor")
 	var height: float = world.floor_y-golem.top_y()
 	check(height > 190 and height < 250,"golem about seven tiles tall (%.0f px)" % height)
-	check(world.player.get_children().any(func(n: Node) -> bool: return n is HeroRig),"fennec cutout rig draws the hero")
+	check(world.player.get_children().any(func(n: Node) -> bool: return n is HeroFrames),"fennec frame sprite draws the hero")
 	await _reach_without_bash()
 	await _slam()
 	await _stomp_rock()

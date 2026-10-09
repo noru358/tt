@@ -71,7 +71,7 @@ var total_potions: int = 0
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	add_to_group("players")
-	if toy_movement_enabled: add_child(HeroRig.new())
+	if toy_movement_enabled: add_child(HeroFrames.new())
 	var visual: Dictionary = DataRegistry.documents["training.json"]["player"]
 	body_size = Vector2(visual["size"][0], visual["size"][1])
 	body_color = Color(visual["color"][0], visual["color"][1], visual["color"][2], visual["color"][3])
@@ -547,7 +547,7 @@ func _draw() -> void:
 	elif state == State.POTION: tint = Color.LIME_GREEN
 	if hurt_iframe > 0: tint.a = 0.6
 	if toy_movement_enabled:
-		# The fennec cutout rig (HeroRig child) draws the body; keep the hitbox visible on F2.
+		# The fennec frame sprite (HeroFrames child) draws the body; keep the hitbox visible on F2.
 		if Feedback.boxes_visible: draw_rect(Rect2(-body_size/2,body_size),Color.YELLOW,false)
 	else:
 		draw_rect(Rect2(-body_size/2,body_size),tint)

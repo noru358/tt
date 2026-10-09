@@ -73,6 +73,28 @@ Sprite animation strip of the attached fennec fox character (keep the design, co
 - idle: `N = 4`. 뒤에 붙인다: `Idle breathing loop: shoulders rise and fall slightly, ear tips twitch on frame 3, tail tip sways slowly. Fan held closed, pointing down.`
 - run: `N = 6`. 뒤에 붙인다: `Run cycle: contact, down, passing, up, then the same with the other leg. Body leans forward, closed fan held close to the body, tail streams behind, ears slightly back. Legs clearly alternate near and far.`
 
+## 검수 결과 1차 (2026-10-10, Claude) — idle·run 게임 적용
+
+- **idle 4칸 통과.**
+  - 발바닥선이 4칸 모두 같다(원본 y648).
+  - 3칸째만 귀 끝이 내려가 정수리가 14px 낮다. 지시대로다.
+  - 부채는 접힌 채 아래로, 꼬리는 크기 일정, 여우불 없음.
+- **run 6칸 조건부 통과.**
+  - 바닥선은 ±6px로 맞다. 4칸째는 28px 떠 있는 공중 보폭이다.
+  - **배율이 idle의 약 0.76배**로 나왔다(얼굴 맞대기 측정). 코드에서 1/0.76배로 맞췄으므로 재생성은 필요 없다.
+  - 아쉬운 점 둘:
+    - 부채 쥔 앞팔이 6칸 내내 허리에 고정돼 있다.
+    - 두 다리가 같은 검은 바지라 앞뒤 다리 교대가 잘 안 읽힌다.
+  - 플레이 판정에서 어색하면 이 둘을 고쳐 다시 뽑는다.
+- **칸 규격:** 512px 정사각이 아니고 띠 전체가 2172×724다. 상관없다. Claude가 초록 배경을 빼고 칸을 자동으로 나누며, 각 칸의 남색 철릭 중심과 바닥선을 기준점으로 맞춘다.
+- **게임 연결:**
+  - `scripts/player/HeroFrames.gd`가 부품 리그(`HeroRig`)를 대체했다. 부품 리그와 부품 PNG는 지웠다.
+  - 프레임 PNG는 `assets/hero/frames/<동작>_<번호>.png`이다. 캔버스 아래 가운데가 발 기준점이다.
+  - 아직 그림이 없는 동작은 이렇게 임시로 채운다:
+    - 공중·대시: run 4칸째(공중 보폭)
+    - 벽·공격·사망: idle
+    - 피격: 빨간 깜빡임
+
 ## Claude 검수 기준
 
 - 한 띠의 칸들을 바닥선 기준으로 겹쳐 본다.
