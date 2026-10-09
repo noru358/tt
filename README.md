@@ -1,8 +1,8 @@
-# 현재 실행 대상: 점프 장난감
+# 현재 실행 대상: 한 판 (점프 방 8개 → 골렘)
 
-골렘 튕기기 장난감은 RunGolemBash.command(Mac) / RunGolemBash.cmd(Windows)로 엽니다. 조작과 규칙은 docs/GOLEM_BASH_REPORT.md를 참고하세요.
+Run.command(Mac), Run.cmd(Windows), 또는 Godot F5로 시작합니다. 방 순서는 toys/run/run.json, 규칙은 docs/RUN_REPORT.md를 참고하세요.
 
-RunMovement.command(Mac), Run.cmd(Windows), 또는 Godot F5로 시작합니다. 최신 조작은 MOVEMENT_README.md, 입력 수정 내역은 docs/MOVEMENT_INPUT_AUDIT.md를 참고하세요. 아래 내용은 재사용 기반인 이전 전투 프로젝트 문서입니다.
+부분만 열기: 점프 방만 RunMovement.command / RunMovement.cmd, 골렘만 RunGolemBash.command / RunGolemBash.cmd(골렘 조작은 docs/GOLEM_BASH_REPORT.md). 최신 조작은 MOVEMENT_README.md, 입력 수정 내역은 docs/MOVEMENT_INPUT_AUDIT.md를 참고하세요. 아래 내용은 재사용 기반인 이전 전투 프로젝트 문서입니다.
 
 # 최신: 전신 판정·이동·폐사원 배경
 

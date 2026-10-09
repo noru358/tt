@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Movement Toy — 점프 장난감"
-run/main_scene="res://toys/movement/movement_toy.tscn"
+run/main_scene="res://toys/run/run_toy.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Gate1Prototype"
 config/features=PackedStringArray("4.6", "GL Compatibility")

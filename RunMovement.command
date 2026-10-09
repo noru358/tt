@@ -15,4 +15,6 @@ fi
 if [[ ! -f .godot/global_script_class_cache.cfg ]]; then
   "$engine" --headless --editor --import --quit --path "$PWD" || exit $?
 fi
+# No scene argument: open the jump toy (the project main scene is now the full run).
+if (( $# == 0 )); then set -- res://toys/movement/movement_toy.tscn; fi
 exec "$engine" --path "$PWD" "$@"

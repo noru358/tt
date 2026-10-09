@@ -4,8 +4,10 @@
 
 ## 실행
 
-- Mac `RunOneRun.command`, Windows `RunOneRun.cmd`. 에디터에서는 `res://toys/run/run_toy.tscn`.
-- 방 목록은 `toys/run/run.json`(기본: room_01 → room_05 → room_06). 파일만 고치면 순서와 개수가 바뀐다.
+- **기본 게임이 한 판이다(최종 통합, 같은 날).** Mac `Run.command`(또는 `RunOneRun.command`), Windows `Run.cmd`(또는 `RunOneRun.cmd`), 에디터 F5. 프로젝트 기본 씬이 `res://toys/run/run_toy.tscn`.
+- 점프 방만: `RunMovement.command`/`.cmd`(인자 없으면 점프 장난감). 골렘만: `RunGolemBash`.
+- 방 목록은 `toys/run/run.json`(기본: room_01 → room_08 전부). 파일만 고치면 순서와 개수가 바뀐다.
+- 1~4번 방은 통일 이동 수치로 자동 경로 확인을 못 했다. 기존 경로 봇(`MovementRouteProbe`)은 이전 수치에서도 1·3·4번을 못 깨는 낡은 봇이라 판단 근거가 안 된다. 5~8번은 방 묶음 2 봇으로 통과.
 
 ## 이동 수치 통일 (사용자 결정, 같은 날)
 

@@ -7,4 +7,8 @@ if exist ".godot\global_script_class_cache.cfg" goto launch
 "%GODOT_EXE%" --headless --editor --import --quit --path "%CD%"
 if errorlevel 1 exit /b 1
 :launch
-"%GODOT_EXE%" --path "%CD%" %*
+if "%~1"=="" (
+  "%GODOT_EXE%" --path "%CD%" res://toys/movement/movement_toy.tscn
+) else (
+  "%GODOT_EXE%" --path "%CD%" %*
+)
