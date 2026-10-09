@@ -16,6 +16,8 @@ const LEG_SHIN: float = 164.12
 const ARM_FOREARM: float = 168.177
 # Fraction of a stride spent moving; the rest is the planted pause after the footfall.
 const STEP_LAND: float = 0.7
+# Crystal art size; the hit radius (weak_radius) can be larger than the drawing.
+const WEAK_DRAW: float = 24.0
 var world: Node2D
 var rig: Node2D
 var torso: Node2D
@@ -567,7 +569,7 @@ func _draw() -> void:
 	draw_set_transform_matrix(get_global_transform().affine_inverse())
 	if state != "dead":
 		var weak: Vector2 = weak_center()
-		var r: float = t("weak_radius")
+		var r: float = WEAK_DRAW
 		var open: bool = weak_open()
 		var crystal: PackedVector2Array = PackedVector2Array([weak+Vector2(0,-r*1.2),weak+Vector2(r*0.8,0),weak+Vector2(0,r*0.9),weak+Vector2(-r*0.8,0)])
 		draw_colored_polygon(crystal,Color(1,0.85,0.3,0.95) if open else Color(0.45,0.4,0.35,0.9))

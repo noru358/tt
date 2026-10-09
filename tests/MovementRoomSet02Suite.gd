@@ -28,7 +28,8 @@ func _ready() -> void:
 				elif c in "<>AV": valid = valid and col>0 and row[col-1]=="T"
 				else: valid = valid and c in "#=.P^omG "
 		check(valid,"valid map tokens room %d" % (index+1))
-		check(starts==1 and goals==1,"one spawn and goal room %d" % (index+1))
+		# A goal may span stacked cells (room 5 uses a two-tile goal so a flying pass still counts).
+		check(starts==1 and goals>=1,"one spawn and a goal room %d" % (index+1))
 	# Local geometry checks use explicit setup positions; they are not full routes.
 	for at: Vector2 in [Vector2(80,208),Vector2(464,182)]:
 		world.load_room(6)

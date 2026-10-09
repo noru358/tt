@@ -42,7 +42,8 @@ func _ready() -> void:
 	check(seen == expected,"rooms play in run.json order (%s)" % [seen])
 	check(run.phase == "boss" and run.stage.has_method("start_round") and is_instance_valid(run.stage.golem),"last goal opens the golem fight")
 	var boss: Node = run.stage
-	check(float(boss.tuning.move_speed) == float(boss.tuning.boss_move_speed),"golem fight uses boss movement numbers")
+	var movement: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("MOVEMENT_TEST_TUNING")))
+	check(float(boss.tuning.move_speed) == float(movement.move_speed) and float(boss.tuning.dash_distance) == float(movement.dash_distance),"golem fight uses the same movement as the jump rooms")
 	Feedback.invincible = false
 	boss.player.hurt_iframe = 0
 	boss.player.since_dash = INF

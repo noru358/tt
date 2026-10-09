@@ -9,7 +9,7 @@ var results: Array = []
 var minimum_y: float = INF
 var maximum_x: float = 0
 var bash_release: bool = false
-var goals: Array[Vector2] = [Vector2(48,112),Vector2(1200,304),Vector2(1552,208),Vector2(368,112)]
+var goals: Array[Vector2] = [Vector2(144,144),Vector2(1200,304),Vector2(1552,208),Vector2(368,112)]
 func _ready() -> void:
 	world = preload("res://toys/movement/movement_toy.tscn").instantiate()
 	add_child(world)
@@ -61,7 +61,8 @@ func _physics_process(_delta: float) -> void:
 		if p.dash_uses >= 2:
 			direction.x = -1 if p.position.x < center_x else 1
 	if room == 4 and p.position.y < 230:
-		direction = (Vector2(-1,-1).normalized() if p.position.y > 115 else Vector2.LEFT) if p.position.x > 100 else Vector2(0,1)
+		# Room 5 goal sits on the ledge at row 4 (moved down one row for the unified movement).
+		direction = (Vector2(-1,-1).normalized() if p.position.y > 135 else Vector2.LEFT) if p.position.x > 120 else Vector2(0,1)
 	if room == 6:
 		direction = Vector2.RIGHT if p.position.y < 165 else Vector2(1,-0.2).normalized()
 	var c: PlayerInput = p.controls
