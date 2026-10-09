@@ -1,0 +1,8 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+GOLEM_BASH_ROUND {"bash_by_source":{"arm":1,"fist":1,"rock":6},"bash_count":8,"deaths_before":0,"duration_sec":0.569,"game_seconds":23.9166666666667,"golem_hp_left":400.0,"kneels":1,"result":"death","retry_within_sec":null,"rock_hits":4,"started_at":"2026-10-09T13:37:30","wall_jump_count":0,"weak_hits":2}
+GOLEM_BASH_ROUND {"bash_by_source":{"arm":1,"fist":1,"rock":6},"bash_count":8,"deaths_before":1,"duration_sec":0.601,"game_seconds":26.0666666666667,"golem_hp_left":360.0,"kneels":1,"result":"death","retry_within_sec":null,"rock_hits":4,"started_at":"2026-10-09T13:37:30","wall_jump_count":0,"weak_hits":3}
+GOLEM_BASH_ROUND {"bash_by_source":{"arm":0,"fist":2,"rock":9},"bash_count":11,"deaths_before":2,"duration_sec":0.863,"game_seconds":34.3833333333333,"golem_hp_left":340.0,"kneels":1,"result":"death","retry_within_sec":null,"rock_hits":6,"started_at":"2026-10-09T13:37:31","wall_jump_count":0,"weak_hits":2}
+GOLEM_BASH_ROUND {"bash_by_source":{"arm":0,"fist":2,"rock":9},"bash_count":11,"deaths_before":3,"duration_sec":0.688,"game_seconds":27.6666666666667,"golem_hp_left":340.0,"kneels":1,"result":"death","retry_within_sec":null,"rock_hits":6,"started_at":"2026-10-09T13:37:32","wall_jump_count":0,"weak_hits":2}
+GOLEM_BASH_ROUND {"bash_by_source":{"arm":0,"fist":1,"rock":6},"bash_count":7,"deaths_before":4,"duration_sec":0.634,"game_seconds":24.4166666666667,"golem_hp_left":400.0,"kneels":1,"result":"death","retry_within_sec":null,"rock_hits":4,"started_at":"2026-10-09T13:37:33","wall_jump_count":0,"weak_hits":2}
+GOLEM_BASH_ROUTE_RESULT rounds=5 wins=0 invincible=false (synthetic bot)
