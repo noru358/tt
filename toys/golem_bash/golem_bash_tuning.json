@@ -53,6 +53,6 @@
   "boss_air_control_accel": 1100,
   "boss_dash_distance": 110,
   "boss_dash_duration": 0.16,
-  "boss_air_dash_count": 1,
+  "boss_air_dash_count": 2,
   "dash_end_keep": 0.3
 }
