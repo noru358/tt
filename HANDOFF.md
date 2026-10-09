@@ -20,14 +20,14 @@
 - 엔진: Godot 4.6 / GDScript. 기본 실행은 움직임 장난감(점프 게임)이다. 기존 허브·골렘 전투는 보존되어 있다.
 - 보스 러시 판정 결과: 골렘 하나 잡는 건 괜찮지만 "왜 이어서 해야 하는지"가 없음. 보상(장비·기술)을 더 붙이는 방향은 "테라리아 보스런 따라 한 느낌"이라 거부. 루프를 다시 찾는 중.
 - 움직임 장난감(`toys/movement/`, 실행: `RunMovement.command`/`RunMovement.cmd` 또는 `toys/movement/movement_toy.tscn`): 튕기기(오리 배시 계열)·벽 점프·텍스트 방 파일. 사용자가 1시간 넘게 수치를 다듬으며 놀았고 튕기기 체감 승인. **현재 가장 강한 재미 신호.**
-- 방 1~4는 Claude 초안, 5~8은 Codex 생성(패턴 반복이 심함). 사용자가 직접 만든 방은 아직 없음.
+- 방 1~4는 Claude 초안, 5~8은 Codex 생성(패턴 반복이 심함). 9~12는 Claude가 "방 하나에 순간 하나" 컨셉으로 제작(미검증, ROOM_SET_02_SPEC).
 - 주인공 디자인·스토리·UI·아트 확장은 보류.
 
 - 2026-10-09 최신 수정: 공중 두 번째 대시는 새 입력 방향으로 즉시 발동. 방향키와 Shift 입력 순서 차이를 0.06초 방향 입력 유예로 처리. 사용자 실플레이에서 작동 확인 후 tt 업로드 요청. 입력 주입 225검사, 기존 회귀 15개 모음 통과. 상세: `docs/MOVEMENT_INPUT_AUDIT.md`.
 
 ## 다음 할 일
 
-1. 사용자: 종이에 방 하나 그려서 올리기 → Claude가 텍스트 방 파일로 옮김 → 장난감에 넣어 5~8번 방과 비교. "내 손으로 만든 방이 더 재밌나"가 맵 제작 방식 판정.
+1. Codex: `docs/plan/ROOM_SET_02_SPEC.md` — Claude가 컨셉을 잡은 방 9~12(`toys/movement/rooms/room_09~12.txt`) 테스트 반영·완주 확인. 이후 사용자가 5~8번과 비교해 "컨셉 방이 더 재밌나" 판정. (2026-10-09 사용자 결정: 종이 방 대신 Claude가 컨셉·방 제작, 코딩은 Codex.)
 2. Codex: `docs/plan/GOLEM_BASH_TOY_SPEC.md` 구현. 골렘의 공격을 튕기기 발판으로 써서 약점을 치는 보스전 장난감. 판정은 "시키지 않았는데 다시 붙고 싶은가", 기존 골렘전과 비교.
 3. 둘 다 통과하면: 움직임 + 보스를 묶은 짧은 구간(방 몇 개 + 보스 하나)으로 다음 관문 설계.
 
@@ -36,6 +36,7 @@
 - `docs/plan/DIRECTION.md` — 방향, 결정, 거부된 것, 이야기 메모. 기획의 누적 기록.
 - `docs/plan/MOVEMENT_TOY_SPEC.md` — 움직임 장난감 원 설계서.
 - `docs/plan/GOLEM_BASH_TOY_SPEC.md` — 다음 구현 설계서.
+- `docs/plan/ROOM_SET_02_SPEC.md` — 방 9~12 컨셉과 Codex 확인 항목.
 - `docs/MOVEMENT_REPORT.md`, `MOVEMENT_README.md` — 움직임 장난감 구현 보고와 조작법.
 - `docs/GATE1_SPEC.md`, `docs/GOLEM_MOBILITY_WETLAND.md` 외 — 보스 러시 1차 관문 시기의 설계·보고.
 - `docs/WORK_LOG.md` — Codex 누적 작업 기록.
