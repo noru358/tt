@@ -15,6 +15,13 @@ func _ready() -> void:
 	Feedback.invincible = true
 	await get_tree().create_timer(0.3).timeout
 	await shot("idle")
+	# Fan swing into the golem's body: slash arc, hit flash, shouting face.
+	world.player.position = Vector2(golem.position.x-110,world.floor_y-14)
+	world.player.facing = 1
+	await get_tree().create_timer(0.2).timeout
+	world.attack_queued = true
+	for i: int in 4: await get_tree().physics_frame
+	await shot("swing")
 	# Walk: let it take a stride toward the player, capture mid-stride and at the footfall.
 	world.player.position = Vector2(golem.position.x-400,world.floor_y-14)
 	while golem.step_u < 0.35: await get_tree().physics_frame

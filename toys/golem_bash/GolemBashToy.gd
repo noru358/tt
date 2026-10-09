@@ -6,6 +6,9 @@ const MOVEMENT_TUNING_PATH: String = "res://toys/movement/movement_tuning.json"
 const TUNING_PATH: String = "res://toys/golem_bash/golem_bash_tuning.json"
 const ARENA_PATH: String = "res://toys/golem_bash/arena.txt"
 const AIM_SIDE_BIAS: float = 2.0
+# Hero effect art (HERO_ART_PLAN 3b B): the fan slash arc bulges toward -x, the spark is a star.
+const SLASH_TEXTURE: Texture2D = preload("res://assets/hero/fx/slash.png")
+const SPARK_TEXTURE: Texture2D = preload("res://assets/hero/fx/spark.png")
 var movement_path: String = MOVEMENT_TUNING_PATH
 var tuning_path: String = TUNING_PATH
 var arena_path: String = ARENA_PATH
@@ -53,6 +56,7 @@ var base_launch_speed: float = 0
 var part_launch: bool = false
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	get_tree().auto_accept_quit = false
 	DisplayServer.window_set_title("골렘 튕기기 장난감")
 	if not OS.get_environment("GOLEM_BASH_TEST_TUNING").is_empty(): tuning_path = OS.get_environment("GOLEM_BASH_TEST_TUNING")
@@ -292,6 +296,8 @@ func _physics_process(delta: float) -> void:
 		swing_hit = false
 		swing_cooldown = float(tuning.attack_cooldown)
 		Sfx.play("swing")
+		var direction: Vector2 = Vector2.UP if swing_kind == "up" else (Vector2.DOWN if swing_kind == "down" else Vector2(player.facing,0))
+		fx.append({"kind":"slash","pos":Vector2.ZERO,"vel":Vector2.ZERO,"age":0.0,"life":0.18,"color":Color.WHITE,"dir":direction,"offset":_swing_rect().get_center()-player.position})
 	if swing_time >= 0:
 		swing_time += delta
 		swing_rect = _swing_rect()
@@ -318,12 +324,14 @@ func _hit_feedback(result: String) -> void:
 		freeze(int(tuning.hitstop_frames)+2)
 		Feedback.shake_strength = maxf(Feedback.shake_strength,6)
 		fx_spark(at,Color(1,0.9,0.4),14,260)
+		fx.append({"kind":"flash","pos":at,"vel":Vector2.ZERO,"age":0.0,"life":0.2,"color":Color.WHITE,"size":0.2})
 		fx_text(at+Vector2(-26,-40),"약점! %d" % int(tuning.weak_hit_damage),Color(1,0.9,0.35),20)
 	else:
 		var at: Vector2 = swing_rect.get_center()
 		freeze(2)
 		Feedback.shake_strength = maxf(Feedback.shake_strength,2)
 		fx_spark(at,Color(0.7,0.7,0.7),5,140)
+		fx.append({"kind":"flash","pos":at,"vel":Vector2.ZERO,"age":0.0,"life":0.14,"color":Color(1,1,1,0.8),"size":0.12})
 		fx_text(at+Vector2(-10,-20),"%d" % ceili(float(tuning.weak_hit_damage)*float(tuning.body_damage_mult)),Color(0.75,0.75,0.75),13)
 
 # Golem parts fling harder than rocks (part_launch_mult) so a fist or arm bash can clear the shoulders.
@@ -528,7 +536,7 @@ func _draw() -> void:
 	if Feedback.boxes_visible:
 		draw_arc(player.position,float(tuning.bash_radius),0,TAU,64,Color.CYAN,1)
 		draw_rect(player_rect(),Color.YELLOW,false)
-	if swing_time >= 0:
+	if swing_time >= 0 and Feedback.boxes_visible:
 		draw_rect(swing_rect,Color(1,1,1,0.35))
 		draw_rect(swing_rect,Color(0.7,1,1,0.9),false,2)
 	if motion.flash_remaining > 0:
@@ -545,6 +553,17 @@ func _draw() -> void:
 			"spark": draw_line(item.pos,item.pos-item.vel*0.04,color,3)
 			"dust": draw_circle(item.pos,4+8*(1-fade),Color(color,0.6*fade))
 			"text": draw_string(ThemeDB.fallback_font,item.pos,item.text,HORIZONTAL_ALIGNMENT_LEFT,-1,item.size,color)
+			"slash":
+				# The arc follows the hero, sweeping out a little as it fades.
+				var grow: float = 0.85+0.3*(1-fade)
+				var span: float = float(tuning.attack_height)*1.3/SLASH_TEXTURE.get_height()*grow
+				draw_set_transform(player.position+item.offset,item.dir.angle()-PI,Vector2.ONE*span)
+				draw_texture(SLASH_TEXTURE,-SLASH_TEXTURE.get_size()/2,color)
+				draw_set_transform(Vector2.ZERO)
+			"flash":
+				draw_set_transform(item.pos,item.age*3.0,Vector2.ONE*item.size*(0.7+0.6*(1-fade)))
+				draw_texture(SPARK_TEXTURE,-SPARK_TEXTURE.get_size()/2,color)
+				draw_set_transform(Vector2.ZERO)
 	if is_instance_valid(motion.target):
 		var start: Vector2 = motion.target.global_position
 		draw_arc(start,22,0,TAU,32,Color.GOLD,3)
