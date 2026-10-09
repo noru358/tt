@@ -184,7 +184,7 @@ func _pose_limbs(k: float) -> void:
 		_ik(upper,lower,LEG_SHIN,walk_foot.lerp(kneel_foot,k),-1,maxf(walk_blend,k))
 		var arm: Node2D = torso.get_node("Arm"+side+"_Upper")
 		# Arms swing against their own leg while striding.
-		if stride > 0: arm.rotation += 0.22*x/(stride/2)*walk_blend*(1-k)
+		if stride > 0: arm.rotation += 0.06*x/(stride/2)*walk_blend*(1-k)
 		var shoulder: Vector2 = torso.transform*arm.position
 		# Hands slap the floor in front to catch the fall.
 		_ik(arm,arm.get_node("Arm"+side+"_Lower"),ARM_FOREARM,Vector2(shoulder.x+(70 if side == "Front" else 30),-50),1,k)
