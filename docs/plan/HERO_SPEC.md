@@ -4,8 +4,21 @@
 
 - 기준 그림: `docs/plan/hero_refs/side.png`, `front.png`, `back.png` (new-game `codex/fennec-idle-sample-v1` 브랜치 `game/fennec_idle/`, 각 384×448 투명 PNG, 발 기준점 약 (190, 416)). 당시 상태는 "시안 시험 승인"이고 최종 디자인 승인은 아님.
 - 잘못 가져왔던 game2의 크림색 판타지 관복 시트는 기준이 아니다(2026-10-09 사용자 정정). 다만 **털색만** game2 여우의 크림색을 쓴다(같은 날 사용자 결정: 주황은 너무 쨍함). `hero_refs/`의 세 장은 털만 크림색으로 바꾼 것이고, 주황 원본은 new-game 브랜치에 그대로 있다.
-- **디자인은 확정이 아니다.** 사용자와 같이 맞춰 간다. 바꿀 때마다 이 문서와 비교 페이지를 갱신한다.
+- **2026-10-10 사용자 디자인 확정: hero_side_final_v3.png.** 최신 기준은 승인된 v3다. 바꿀 때마다 이 문서와 비교 페이지를 갱신한다.
 - 비교 페이지(실제 화면 크기, 카메라·골렘 크기 바꿔 보기): https://claude.ai/artifact/5KBz3NkyGcp3mf3GaYupcd
+
+## 2026-10-10 디자인 선택 (이전 색·무기 묘사보다 우선)
+
+- 화풍 A: 굵은 짙은 갈색 외곽선과 2~3단 명암.
+- 부채 C: 두꺼운 검은 철골, 놋쇠 끝 장식과 사북, 주홍 술.
+- 여우불 D: 청백색 2개. 털색 G: 따뜻한 모래색, 가슴·주둥이·꼬리 끝은 밝은 미색.
+- 2단계 원화 `assets/hero/raw/hero_side_final.png` 생성, 최종 사용자 승인 대기. 부품 시트는 승인 후 제작하며 아래 옛 프롬프트의 크림 털·부채 묘사는 선택안에 맞춰 갱신해야 함.
+
+### 2단계 생성 프롬프트
+
+```text
+Create one final character design illustration for a 2D side-scrolling game, strict side view facing right, full body standing idle holding an iron war fan. Image 1 is the approved character and thick-outline style A; image 2 is the design board: use its TOP RIGHT fan C, MIDDLE LEFT blue-white fox-fire D, and BOTTOM RIGHT sandy beige fur G. Images 3 and 4 are supporting golem style references. Preserve the first image's face, huge ears, cute proportions, navy Korean cheollik coat with cream collar, rust-orange sash, small black leather shoulder pads and bracers, black trousers, white leg wraps, black shoes and single large fluffy tail. Change body fur to the warmer sandy beige of G; chest, muzzle and tail tip remain lighter off-white. Thick even very dark brown outlines, two to three crisp cel-shaded tones, large fur tufts, muted colors, no fine strands. Hold the heavier fan C in the near paw at waist height, slightly open as in the board, pointing forward: thick black iron outer ribs, small brass tips and brass pivot, rust-orange tassel. Keep its silhouette clear of the face and tail. Exactly two small pale blue-white fox-fire wisps float behind the head, separate from ears and tail. Calm idle pose, feet grounded, all character parts and accessories inside the canvas with margin. Flat light gray background, no floor shadow, no text, no labels, no additional views. This is a single final design, not a comparison board.
+```
 
 ## 1. 생김새 (기준 그림 그대로)
 
@@ -78,3 +91,11 @@ Limb parts need rounded joint ends so they can rotate at the joint. Keep one con
 - 크림색 털 톤이 괜찮은지 (더 노랗게, 더 하얗게)
 - 철부채 모양(색, 문양, 술)
 - 임시로 `side.png`를 먼저 게임에 붙일지(추천)
+
+- 2026-10-10 사용자 수정: 대기 자세는 팔을 자연스럽게 내려 부채를 몸 옆 아래로 들고, 웃는 입·요염한 눈매를 줄여 차분한 중립 표정. hero_side_final.png는 v2로 갱신, 승인 대기.
+
+- 2026-10-10 대기 자세 최신 기준: 기존 부채 길이 유지, 팔과 손목을 내려 편하게 잡고 미소는 잔잔하게. 원화 v3 생성, 사용자 승인 대기.
+
+## 최종 승인 및 부품 시트 상태 (2026-10-10)
+
+사용자 v3 확정. 이전 승인 대기 기록을 대체한다. 부품 시트 parts_sheet.png 생성 및 1회 수정, 아직 제작 검수 전. 최신 실제 생성 프롬프트와 남은 문제는 docs/HERO_ART_PROMPTS.md의 3단계 기록 참조. 위 옛 프롬프트 B의 크림색 털·구름무늬는 승인된 G 털색·C 무기와 다르므로 재사용하지 않는다.
