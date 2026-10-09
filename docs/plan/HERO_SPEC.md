@@ -3,14 +3,15 @@
 2026-10-09 사용자 결정: 주인공은 **new-game 저장소에서 잡아 둔 사막여우 전투형 문관(철릭)**. 작업 방식은 "Claude가 아이디어·구조 설계 → ChatGPT가 이미지 제작".
 
 - 기준 그림: `docs/plan/hero_refs/side.png`, `front.png`, `back.png` (new-game `codex/fennec-idle-sample-v1` 브랜치 `game/fennec_idle/`, 각 384×448 투명 PNG, 발 기준점 약 (190, 416)). 당시 상태는 "시안 시험 승인"이고 최종 디자인 승인은 아님.
-- 잘못 가져왔던 game2의 크림색 판타지 관복 시트는 기준이 아니다(2026-10-09 사용자 정정).
+- 잘못 가져왔던 game2의 크림색 판타지 관복 시트는 기준이 아니다(2026-10-09 사용자 정정). 다만 **털색만** game2 여우의 크림색을 쓴다(같은 날 사용자 결정: 주황은 너무 쨍함). `hero_refs/`의 세 장은 털만 크림색으로 바꾼 것이고, 주황 원본은 new-game 브랜치에 그대로 있다.
+- **디자인은 확정이 아니다.** 사용자와 같이 맞춰 간다. 바꿀 때마다 이 문서와 비교 페이지를 갱신한다.
 - 비교 페이지(실제 화면 크기, 카메라·골렘 크기 바꿔 보기): https://claude.ai/artifact/5KBz3NkyGcp3mf3GaYupcd
 
 ## 1. 생김새 (기준 그림 그대로)
 
 | 부위 | 내용 |
 |---|---|
-| 털 | 주황, 가슴·주둥이·귀 안쪽·꼬리 끝은 크림 |
+| 털 | 크림(약 #ecd9bd), 가슴·주둥이·귀 안쪽·꼬리 끝은 더 밝은 미색. 외곽선은 따뜻한 갈색 |
 | 얼굴 | 갈색 눈(밝은 하이라이트), 짧은 목, 귀 제외 약 3등신 |
 | 귀 | 아주 큼. 가장 높은 실루엣 |
 | 옷 | 남색 철릭(앞섶 겹침), 크림색 깃, 녹슨 주홍 허리띠(매듭 끝이 늘어짐) |
@@ -18,16 +19,21 @@
 | 아래 | 검은 바지, 흰 행전, 검은 가죽 신 |
 | 꼬리 | 하나, 크고 풍성함. 뿌리는 허리띠 아래 등 중앙 |
 
-## 2. 크기 문제 (사용자 피드백: "둘 사이즈가 너무 차이 나고 안 보인다")
+## 2. 크기와 판정 (2026-10-09 적용)
 
-지금 수치(카메라 세로 384, 판정 20×28, 골렘 배율 0.42)로 720p 화면에 세우면 주인공은 귀까지 약 83px(화면 높이 11%), 골렘은 약 530px(73%)로 **6배 넘게** 차이 난다(비교 페이지 측정, 골렘 다리는 곧게 세운 근사).
+예전 수치(카메라 세로 384, 판정 20×28, 골렘 0.42)로는 720p 화면에서 주인공이 귀까지 약 83px, 골렘이 약 400px 이상이라 작고 차이가 컸다. 사용자가 비교 페이지에서 고른 조합을 실제 수치로 옮겼다.
 
-손볼 수 있는 손잡이 세 개:
-1. **카메라 당기기** (`camera_view_height` 384 → 300 등): 둘 다 커짐. 대신 점프 방에서 앞이 덜 보임.
-2. **골렘 줄이기** (`golem_scale` 0.42 → 0.34 등): 차이가 줄어듦. 골렘의 공격 판정 위치도 함께 줄어드니 골렘 수치 재확인 필요.
-3. **주인공 그림만 키우기** (판정은 그대로, 그림 1.3배): 손맛·방 설계 영향 없음. 맞는 범위보다 그림이 커 보이는 게 단점.
+| 항목 | 예전 | 지금 | 파일 |
+|---|---|---|---|
+| 카메라 보이는 범위 | 800×384 | 624×300 (1.28배 가까이) | `movement_tuning.json` |
+| 주인공 판정 | 20×28 | 24×36 | `movement_tuning.json` |
+| 골렘 배율 | 0.42 | 0.34 (키 약 170px, 5.3칸) | `golem_bash_tuning.json` |
+| 골렘 공격 시작 거리 | 260 | 210 (몸이 작아진 만큼) | `golem_bash_tuning.json` |
+| 주인공 공격 범위 | 44×36 | 52×44 (몸이 커진 만큼) | `golem_bash_tuning.json` |
 
-조합은 사용자가 비교 페이지에서 고르고, 정해지면 Claude가 수치로 옮긴다.
+- 판정은 **그림의 몸(정수리~발바닥)** 에 맞춘다. 귀와 꼬리는 맞지 않는 장식이다. 그림을 붙일 때 정수리를 판정 윗변에, 발바닥을 아랫변에 맞춘다(side.png 기준 정수리 y≈156, 발바닥 y=416, 몸 260px → 판정 36이면 배율 약 0.138).
+- 점프 높이·대시 거리·벽 점프는 그대로다. 판정이 8px 커져도 방 8개 모두 1칸짜리 세로 틈이 없어서 막히는 곳이 없고, 경로 검사도 그대로 통과한다.
+- 720p 화면 기준 주인공 약 128px(귀 포함), 골렘 약 408px, 키 차이 약 3.2배. 점프 방에서 가로로 보이는 범위는 약 21칸에서 17칸으로 준다.
 
 ## 3. 게임용 기능 (코드로 처리)
 
@@ -35,9 +41,16 @@
 - 귀·꼬리·철릭 자락·허리띠 매듭은 **코드가 흔든다**(속도 반대 방향으로 늘어짐). 그림은 정지 부품만 있으면 된다.
 - 대시 무적 표시는 몸 외곽 빛, 피격 깜빡임은 지금 그대로.
 
-## 4. 무기
+## 4. 무기 — 철부채 (2026-10-09 사용자 선택)
 
-지금 게임은 J로 근접 휘두르기(옆·위·아래 내려찍기). 기준 그림은 맨손이다. 기본값은 **짧은 환도**, 대안은 **철 부채** 또는 new-game처럼 **맨손 마력 충격**(칼 없이 손에서 문양·충격). 사용자 선택 대기, 정하기 전까지 환도.
+문관이 들고 다니는 쇠 부채(철선). 칼 대신 부채라서 문관 설정과 맞고, 접고 펴는 두 모양으로 동작을 나눌 수 있다.
+
+- **모양:** 검은 쇠 부챗살 10~12개, 사슬 없이 굵은 사북(고정 못)은 놋쇠색, 부채면은 짙은 남색 비단에 크림색 구름 문양 하나. 손잡이 끝에 허리띠와 같은 녹슨 주홍 술.
+- **J 옆 휘두르기:** 접은 부채로 가로 베기. 휘두르는 끝에 반쯤 펴진 부채꼴 잔상.
+- **위 휘두르기:** 머리 위로 활짝 펴며 반원을 그린다.
+- **아래 내려찍기(포고):** 접은 부채 끝으로 내려찍는다. 튕길 때 잠깐 펴서 받친다.
+- 판정은 지금 휘두르기 상자(52×44) 그대로. 그림이 판정을 따라가고, 판정이 그림을 따라가지 않는다.
+- 다른 후보(환도, 맨손 마력)는 보류.
 
 ## 5. 제작 방식
 
@@ -52,9 +65,9 @@ new-game·game2 모두 GPT로 방향·프레임을 한 장씩 뽑을 때 꼬리 
 첨부: `side.png`
 
 ```
-Create a cutout animation parts sheet of exactly this fennec fox character: same face, orange fur, cream chest and tail tip, huge ears, navy cheollik coat with cream collar, rust-orange sash, small black leather shoulder pads and bracers, black trousers, white leg wraps, black leather shoes. Same painterly style, outline, colors and scale as the attached image. Strict side view facing right.
+Create a cutout animation parts sheet of exactly this fennec fox character: same face, pale cream fur (around #ecd9bd) with lighter off-white chest, muzzle and tail tip, huge ears, navy cheollik coat with cream collar, rust-orange sash, small black leather shoulder pads and bracers, black trousers, white leg wraps, black leather shoes. Same painterly style, outline, colors and scale as the attached image. Strict side view facing right.
 Every part separated with empty space around it, transparent background, no overlaps, no shadows, no text except small gray part numbers.
-Parts: 1 head without ears (eye open), 2 near ear, 3 far ear (slightly darker), 4 torso with coat top, collar and sash (no arms, no skirt flaps), 5 coat skirt hanging straight as one piece, 6 sash knot tails, 7 near upper arm with shoulder pad, 8 near forearm with bracer, 9 near paw (open), 10 far upper arm, 11 far forearm, 12 far paw, 13 near thigh, 14 near shin with leg wrap and shoe, 15 far thigh, 16 far shin with shoe, 17 tail as one piece pointing straight back, 18 short Korean sword (hwando) horizontal.
+Parts: 1 head without ears (eye open), 2 near ear, 3 far ear (slightly darker), 4 torso with coat top, collar and sash (no arms, no skirt flaps), 5 coat skirt hanging straight as one piece, 6 sash knot tails, 7 near upper arm with shoulder pad, 8 near forearm with bracer, 9 near paw (open), 10 far upper arm, 11 far forearm, 12 far paw, 13 near thigh, 14 near shin with leg wrap and shoe, 15 far thigh, 16 far shin with shoe, 17 tail as one piece pointing straight back, 18 closed Korean iron war fan (cheolseon) horizontal: black iron ribs, brass pivot rivet, small rust-orange tassel at the handle end, 19 the same iron fan fully opened as a half circle: dark navy silk face with one cream cloud motif, black iron ribs.
 Limb parts need rounded joint ends so they can rotate at the joint. Keep one consistent pixel scale across all parts.
 ```
 
@@ -62,6 +75,6 @@ Limb parts need rounded joint ends so they can rotate at the joint. Keep one con
 
 ## 6. 사람이 정할 것
 
-- 크기 조합 (비교 페이지): 카메라 / 골렘 크기 / 주인공 그림 배율
-- 무기: 환도(기본) / 철 부채 / 맨손 마력
+- 크림색 털 톤이 괜찮은지 (더 노랗게, 더 하얗게)
+- 철부채 모양(색, 문양, 술)
 - 임시로 `side.png`를 먼저 게임에 붙일지(추천)
