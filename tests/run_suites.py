@@ -10,7 +10,7 @@ a = p.parse_args()
 project = pathlib.Path(__file__).resolve().parents[1]
 output = pathlib.Path(a.output or tempfile.mkdtemp(prefix='gate1-tests-')).resolve()
 output.mkdir(parents=True, exist_ok=True)
-suites = a.suites or ['PlayerSuite','ControlsRevisionSuite','CombatFeelSuite','DefenseInputSuite','InputComboSuite','ReviewFixSuite','ReviewBalanceProbe','RegistrySuite','GrowthSuite','BossSuite','BattleFlowSuite','IndependentReviewSuite','MagicBowSuite','GolemCutoutSuite','GolemMobilitySuite','MovementToySuite','MovementAuditSuite','MovementRoomSet02Suite','MovementRoomSet02Probe','GolemBashToySuite','GolemBashRouteProbe']
+suites = a.suites or ['PlayerSuite','ControlsRevisionSuite','CombatFeelSuite','DefenseInputSuite','InputComboSuite','ReviewFixSuite','ReviewBalanceProbe','RegistrySuite','GrowthSuite','BossSuite','BattleFlowSuite','IndependentReviewSuite','MagicBowSuite','GolemCutoutSuite','GolemMobilitySuite','MovementToySuite','MovementAuditSuite','MovementRoomSet02Suite','MovementRoomSet02Probe','GolemBashToySuite','GolemBashRouteProbe','RunToySuite']
 subprocess.run([sys.executable,str(project/'tests/make_fixtures.py'),str(output/'fixtures')],check=True)
 import_dir = pathlib.Path(tempfile.mkdtemp(prefix='import-',dir=output))
 import_env = dict(os.environ, GATE1_TEST_SAVE=str(import_dir/'save.json'), GATE1_TEST_TUNING=str(import_dir/'tuning.json'))
@@ -30,6 +30,12 @@ for suite in suites:
         shutil.copy2(project/'toys/movement/movement_tuning.json', folder/'movement_tuning.json')
         shutil.copy2(project/'toys/golem_bash/golem_bash_tuning.json', folder/'golem_bash_tuning.json')
         env.update(MOVEMENT_TEST_TUNING=str(folder/'movement_tuning.json'), GOLEM_BASH_TEST_TUNING=str(folder/'golem_bash_tuning.json'), GOLEM_BASH_TEST_LOG=str(folder/'golem_bash.jsonl'))
+    if suite.startswith('RunToy'):
+        shutil.copytree(project/'toys/movement/rooms', folder/'rooms')
+        shutil.copy2(project/'toys/movement/movement_tuning.json', folder/'movement_tuning.json')
+        shutil.copy2(project/'toys/golem_bash/golem_bash_tuning.json', folder/'golem_bash_tuning.json')
+        shutil.copy2(project/'toys/run/run.json', folder/'run.json')
+        env.update(MOVEMENT_TEST_ROOMS=str(folder/'rooms'), MOVEMENT_TEST_TUNING=str(folder/'movement_tuning.json'), MOVEMENT_TEST_LOG=str(folder/'movement.jsonl'), GOLEM_BASH_TEST_TUNING=str(folder/'golem_bash_tuning.json'), GOLEM_BASH_TEST_LOG=str(folder/'golem_bash.jsonl'), RUN_TEST_CONFIG=str(folder/'run.json'), RUN_TEST_LOG=str(folder/'run.jsonl'))
     command = [a.godot,'--headless','--fixed-fps','60','--path',str(project),'res://tests/'+suite+'.tscn']
     if suite == 'RegistrySuite': command += ['--','--manifest='+str(output/'fixtures/manifest.json')]
     logpath = folder/'result.log'

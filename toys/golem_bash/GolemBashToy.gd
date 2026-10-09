@@ -1,6 +1,7 @@
 # Golem bash boss toy. Reuses the movement toy's player setup and ToyMotion unchanged;
 # golem-only numbers live in golem_bash_tuning.json.
 extends Node2D
+signal round_finished(result: String)
 const MOVEMENT_TUNING_PATH: String = "res://toys/movement/movement_tuning.json"
 const TUNING_PATH: String = "res://toys/golem_bash/golem_bash_tuning.json"
 const ARENA_PATH: String = "res://toys/golem_bash/arena.txt"
@@ -236,6 +237,7 @@ func round_end(result: String) -> void:
 	ended_at = Time.get_ticks_msec()
 	result_label.text = ("승리!" if result == "win" else "쓰러졌다") + "   %.1f초 · 튕기기 %d · 약점 %d · 무릎 %d" % [log_data.duration_sec,log_data.bash_count,log_data.weak_hits,log_data.kneels]
 	result_panel.show()
+	round_finished.emit(result)
 
 func _write(entry: Dictionary) -> void:
 	var file: FileAccess = FileAccess.open(log_path,FileAccess.READ_WRITE if FileAccess.file_exists(log_path) else FileAccess.WRITE)
