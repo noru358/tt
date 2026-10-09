@@ -131,3 +131,31 @@ Create a 2D game effects sheet in the same art style as the attached character (
 ```text
 Edit ONLY the leftmost hand in the bottom row of this supplementary cutout parts sheet: the black fingerless-gloved gripping hand with the round green hole. It currently has too many digits. Redraw that single hand with anatomically correct EXACTLY FIVE digits total: ONE thumb and FOUR fingers. Show one thumb wrapping across the top/side and exactly four curled fingers around the grip, with no sixth fingertip, extra nub, duplicated finger, or extra thumb. Preserve the empty round green hole for the fan handle, the existing hand's size, location, angle, dark glove, cream fingertips, thick outlines and cel shading. Preserve ALL other pixels/content as closely as possible: four heads, other two hands, fan, green background, canvas size and layout. Do not change any other expression, pose, scale or asset. No text.
 ```
+
+## 통그림 프레임 idle/run — 2026-10-10
+
+기준 HERO_FRAMES_PLAN.md (b1bbe1a). 내장 image_gen, transparent_background=false. 사용자 범위: idle 4칸, run 6칸만. 각각 한 가로 띠에 생성.
+
+### idle 최초 (첨부: hero_side_final.png)
+
+```text
+Sprite animation strip of the attached fennec fox character (keep the design, colors and art style exactly: thick dark outlines, two to three tone cel shading, sandy cream fur, navy cheollik coat, rust-orange sash, black iron fan with brass caps and rust tassel). Strict side view facing right, full body, every frame the same character height and the same ground line. Ears and tail are attached naturally and change shape with the motion. The iron fan is always in the front (right) paw; the tail is always behind. One horizontal strip of 4 square frames with wide empty gaps between them, flat solid green background #00B140, no frame borders, no numbers, no text, no shadow, no ground line.
+Idle breathing loop: shoulders rise and fall slightly, ear tips twitch on frame 3, tail tip sways slowly. Fan held closed, pointing down.
+Do not draw fox-fire wisps. Exactly four complete frames in one horizontal row. Target each cell 512x512 pixels with character height about 340 pixels, consistent scale and baseline. Both ears visible in every frame.
+```
+
+### idle 수정 (첨부: idle 최초 생성)
+
+```text
+Correct this four-frame idle strip. Keep exactly four right-facing full body foxes, same design and palette. In ALL frames the iron fan MUST be FULLY CLOSED into a single narrow long black baton, ribs stacked tightly, brass tip, pointing straight down from the relaxed front hand. No fan wedge or spread ribs. Preserve fan pivot-to-tip length. Make tail motion very subtle: same large tail silhouette and volume in all four frames, only the final tip sways a little; no whole-tail lifting or shrinking on frames 2 and 4. Gentle shoulder breathing, on frame 3 visibly bend the ear tips slightly, both ears present. Maintain identical scale and foot baseline, flat green background, no wisps, no text. Four square cells in one row with generous margins.
+```
+
+### run (첨부: hero_side_final.png, 수정 idle 띠)
+
+```text
+Sprite animation strip of the attached fennec fox character (keep the design, colors and art style exactly: thick dark outlines, two to three tone cel shading, sandy cream fur, navy cheollik coat, rust-orange sash, black iron fan with brass caps and rust tassel). Strict side view facing right, full body, every frame the same character height and the same ground line. Ears and tail are attached naturally and change shape with the motion. The iron fan is always in the front (right) paw; the tail is always behind. One horizontal strip of 6 square frames with wide empty gaps between them, flat solid green background #00B140, no frame borders, no numbers, no text, no shadow, no ground line.
+Run cycle: contact, down, passing, up, then the same with the other leg. Body leans forward, closed fan held close to the body, tail streams behind, ears slightly back. Legs clearly alternate near and far.
+Do not draw fox-fire wisps. Exactly six complete frames in ONE horizontal row, no second row. Target square 512x512 cells with generous empty gaps. Both ears visible in each frame. Match image 2's character scale and closed narrow baton-shaped fan. Six distinct sequential poses forming a complete alternating-leg run loop; do not repeat the same stride six times.
+```
+
+원본 무편집 저장. idle은 자체 육안 확인 후 run 참고로 사용했으며 Claude 겹쳐보기 검수 통과를 뜻하지 않는다. idle 4칸, run 6칸 및 여우불 없음 확인. 출력은 모두 2172×724로, 문서의 512px 정사각 칸 규격/동일 픽셀 배율은 미충족. run은 idle보다 작게 생성되고 양끝 여백이 좁다. 키 ±3%, 발 기준선, near/far 다리 교대와 순환 연결은 검수 전. 리그 교체·게임 적용 및 다른 동작 생성은 하지 않음.

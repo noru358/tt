@@ -33,6 +33,7 @@
 - 2026-10-10 v3 사용자 최종 승인(앞선 승인 대기 상태 대체). 부품 시트: `assets/hero/raw/parts_sheet.png`, 초안 `parts_sheet_alt1.png` (제작 검수 전).
 - 2026-10-10 Codex 3b 생성: `assets/hero/raw/parts_sheet_extra.png`, `fx_sheet.png` (프롬프트·검수 메모: `docs/HERO_ART_PROMPTS.md`).
 - 2026-10-10 사용자 보충 아트 나머지 승인, 맨 왼쪽 쥔 손만 5개 손가락으로 수정: `assets/hero/raw/parts_sheet_extra.png`.
+- 2026-10-10 통그림 프레임 초안 생성: `assets/hero/frames/raw/idle.png` (4칸), `run.png` (6칸). 원본 2172×724, 512칸 규격·동작 간 배율 미충족, Claude 겹쳐보기 검수 전.
 - 스토리·UI·아트 확장은 보류.
 
 - 2026-10-09 최신 수정: 공중 두 번째 대시는 새 입력 방향으로 즉시 발동. 방향키와 Shift 입력 순서 차이를 0.06초 방향 입력 유예로 처리. 사용자 실플레이에서 작동 확인 후 tt 업로드 요청. 입력 주입 225검사, 기존 회귀 15개 모음 통과. 상세: `docs/MOVEMENT_INPUT_AUDIT.md`.
@@ -57,3 +58,7 @@
 - `docs/SFX_REPORT.md` — 효과음 목록, 합성·재생 구조.
 - `docs/WORK_LOG.md` — Codex 누적 작업 기록.
 - `AGENTS.md` — Codex 작업 규칙. `CLAUDE.md` — Claude 진입점.
+
+## 최신 프레임 인계 (2026-10-10)
+
+사용자 요청 범위 idle 4칸/run 6칸 생성 완료. 다음은 Claude의 프레임 겹쳐보기 검수 및 필요 프레임 재생성 판단. idle/run 배율·발 기준선·run 다리 교대 확인 필요. 검수와 사용자 플레이 승인 전 다른 동작은 진행하지 않는다. 생성 전문은 HERO_ART_PROMPTS 마지막 항목 참조.
