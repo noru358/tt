@@ -19,6 +19,9 @@ var controls: PlayerInput
 var bow: Node2D
 var body_size: Vector2
 var body_color: Color
+# Temporary hero art (HERO_ART_PLAN step 0): one side view, crown at y156 and sole at y416 of the 384x448 image, foot x190.
+const HERO_ART: String = "res://assets/hero/temp/side.png"
+static var hero_texture: Texture2D
 var hurtbox: CombatHurtbox
 var hp: float
 var potions: int
@@ -69,6 +72,7 @@ var total_perfect: int = 0
 var total_potions: int = 0
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	add_to_group("players")
 	var visual: Dictionary = DataRegistry.documents["training.json"]["player"]
 	body_size = Vector2(visual["size"][0], visual["size"][1])
@@ -544,7 +548,15 @@ func _draw() -> void:
 	elif state == State.PARRY: tint = Color.DEEP_SKY_BLUE
 	elif state == State.POTION: tint = Color.LIME_GREEN
 	if hurt_iframe > 0: tint.a = 0.6
-	draw_rect(Rect2(-body_size/2,body_size),tint)
+	if toy_movement_enabled and _hero_texture() != null:
+		# Body (crown to sole) fills the hitbox height; ears and tail stick out.
+		var s: float = body_size.y/260.0
+		draw_set_transform(Vector2(0,body_size.y/2),0,Vector2(facing*s,s))
+		draw_texture(hero_texture,Vector2(-190,-416),Color(1,1,1,tint.a) if state != State.DASH else tint)
+		draw_set_transform(Vector2.ZERO)
+		if Feedback.boxes_visible: draw_rect(Rect2(-body_size/2,body_size),Color.YELLOW,false)
+	else:
+		draw_rect(Rect2(-body_size/2,body_size),tint)
 	var aim: Vector2 = Vector2(0,signf(controls.vertical())) if controls.vertical() != 0 else Vector2(facing,0)
 	if attack_running:
 		aim = Vector2.UP if attack_kind == "up_attack" else (Vector2.DOWN if attack_kind == "down_attack" else Vector2(attack_facing,0))
@@ -558,6 +570,13 @@ func _draw() -> void:
 		draw_arc(Vector2.ZERO,body_size.y/2+8,0,TAU,32,Color.DEEP_SKY_BLUE,4)
 	if Feedback.boxes_visible and Tuning.player["parry_enabled"] and state == State.PARRY:
 		draw_rect(Rect2(-body_size/2,body_size),Color.BLUE,false,4)
+
+static func _hero_texture() -> Texture2D:
+	if hero_texture == null and FileAccess.file_exists(HERO_ART):
+		var image: Image = Image.load_from_file(HERO_ART)
+		image.generate_mipmaps()
+		hero_texture = ImageTexture.create_from_image(image)
+	return hero_texture
 
 # Geometry follows the actual attack rectangle, facing and action clock.
 func _draw_swing() -> void:
