@@ -1,3 +1,7 @@
+# 현재 실행 대상: 점프 장난감
+
+RunMovement.command(Mac), Run.cmd(Windows), 또는 Godot F5로 시작합니다. 최신 조작은 MOVEMENT_README.md, 입력 수정 내역은 docs/MOVEMENT_INPUT_AUDIT.md를 참고하세요. 아래 내용은 재사용 기반인 이전 전투 프로젝트 문서입니다.
+
 # 최신: 전신 판정·이동·폐사원 배경
 
 [2026-10-08 추가 변경·검증](docs/GOLEM_MOBILITY_WETLAND.md): 전신 12부위 피격, 몸박8, 추적 걷기, 동남아 습지 폐사원 배경, 작은 HUD와 활 입력 개선. 아래 과거 제자리 골렘 설명보다 우선합니다.

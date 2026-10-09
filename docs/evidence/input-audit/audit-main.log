@@ -1,0 +1,9 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+WARNING: Unknown room character row=2 col=5 char=?
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] load_room (res://toys/movement/MovementToy.gd:126)
+         [1] _command (res://toys/movement/MovementToy.gd:290)
+         [2] _ready (res://tests/MovementToySuite.gd:79)
+MOVEMENT_TOY_RESULT checks=48 failures=0

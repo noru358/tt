@@ -1,0 +1,138 @@
+[
+  {
+    "suite": "PlayerSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/PlayerSuite-iixe59lg/result.log",
+    "summary": [
+      "PLAYER_SUITE_RESULT checks=56 failures=0"
+    ]
+  },
+  {
+    "suite": "ControlsRevisionSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/ControlsRevisionSuite-1vg_on_z/result.log",
+    "summary": [
+      "CONTROLS_SUITE_RESULT checks=52 failures=0"
+    ]
+  },
+  {
+    "suite": "CombatFeelSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/CombatFeelSuite-aljon00_/result.log",
+    "summary": [
+      "COMBAT_FEEL_RESULT checks=31 failures=0"
+    ]
+  },
+  {
+    "suite": "DefenseInputSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/DefenseInputSuite-8lqd28pe/result.log",
+    "summary": [
+      "DEFENSE_SUITE_RESULT checks=23 failures=0"
+    ]
+  },
+  {
+    "suite": "InputComboSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/InputComboSuite-px6cvzfa/result.log",
+    "summary": [
+      "INPUT_COMBO_RESULT checks=49 failures=0"
+    ]
+  },
+  {
+    "suite": "ReviewFixSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/ReviewFixSuite-rsreajqd/result.log",
+    "summary": [
+      "REVIEW_FIX_RESULT checks=43 failures=0"
+    ]
+  },
+  {
+    "suite": "ReviewBalanceProbe",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/ReviewBalanceProbe-n3sw8sju/result.log",
+    "summary": [
+      "REVIEW_BALANCE {\"damage\":{\"daggers_twin\":{\"held\":126.0,\"rapid\":126.0,\"relative_difference\":0.0},\"greatsword_slab\":{\"held\":132.0,\"rapid\":132.0,\"relative_difference\":0.0},\"sword_basic\":{\"held\":120.0,\"rapid\":120.0,\"relative_difference\":0.0}},\"dash_displacement\":1055.92578125,\"dash_immune_ratio\":0.5}",
+      "REVIEW_BALANCE_RESULT checks=4 failures=0"
+    ]
+  },
+  {
+    "suite": "RegistrySuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/RegistrySuite-098b1lxs/result.log",
+    "summary": [
+      "SUITE_RESULT checks=237 failures=0"
+    ]
+  },
+  {
+    "suite": "GrowthSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/GrowthSuite-nyfltos0/result.log",
+    "summary": [
+      "GROWTH_SUITE_RESULT checks=48 failures=0"
+    ]
+  },
+  {
+    "suite": "BossSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/BossSuite-dseqphwi/result.log",
+    "summary": [
+      "BOSS_SUITE_RESULT checks=41 failures=0"
+    ]
+  },
+  {
+    "suite": "BattleFlowSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/BattleFlowSuite-uf28i1sq/result.log",
+    "summary": [
+      "BATTLE_FLOW_RESULT checks=17 failures=0"
+    ]
+  },
+  {
+    "suite": "IndependentReviewSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/IndependentReviewSuite-gk0n0zh5/result.log",
+    "summary": [
+      "INDEPENDENT_REVIEW_RESULT checks=62 failures=0"
+    ]
+  },
+  {
+    "suite": "MagicBowSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/MagicBowSuite-2zivm25u/result.log",
+    "summary": [
+      "MAGIC_BOW_RESULT checks=40 failures=0"
+    ]
+  },
+  {
+    "suite": "GolemCutoutSuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/GolemCutoutSuite-5gk_byut/result.log",
+    "summary": [
+      "GOLEM_CUTOUT_RESULT checks=47 failures=0"
+    ]
+  },
+  {
+    "suite": "GolemMobilitySuite",
+    "passed": true,
+    "exit_code": 0,
+    "log": "/Users/lty/Documents/Codex/2026-10-09/new-chat/work/audit-regression/GolemMobilitySuite-gb0_ne7i/result.log",
+    "summary": [
+      "GOLEM_MOBILITY_RESULT checks=131 failures=0"
+    ]
+  }
+]

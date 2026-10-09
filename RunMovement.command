@@ -12,4 +12,7 @@ if [[ -z "$engine" ]]; then
   read '?Enter를 누르면 닫힙니다.'
   exit 1
 fi
-exec "$engine" --path "$PWD" res://toys/movement/movement_toy.tscn
+if [[ ! -f .godot/global_script_class_cache.cfg ]]; then
+  "$engine" --headless --editor --import --quit --path "$PWD" || exit $?
+fi
+exec "$engine" --path "$PWD" "$@"

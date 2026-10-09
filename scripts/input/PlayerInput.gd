@@ -4,6 +4,9 @@ extends Node
 @export var device_id: int = -1
 @export var auto_device: bool = true
 var blocked: bool = false
+# Opt-in only for the movement toy; combat keeps exact press snapshots.
+var toy_dash_aim: bool = false
+var latest_direction_press: Vector2 = Vector2.ZERO
 var received: Dictionary = {}
 var history_version: int = 0
 var input_clock: float = 0.0
@@ -58,9 +61,14 @@ func _input(event: InputEvent) -> void:
 			elif action == &"aim_up": _last_vertical = -1
 			elif action == &"aim_down": _last_vertical = 1
 			_pending_directions[action] = _raw_direction()
+			if action in [&"move_left",&"move_right",&"aim_up",&"aim_down"]:
+				latest_direction_press = _raw_direction()
+				if toy_dash_aim and _pending_press.has(&"dash"):
+					_pending_directions[&"dash"] = latest_direction_press
 		elif event.is_action_released(action): _pending_release[action] = true
 
 func clear_history() -> void:
+	latest_direction_press = Vector2.ZERO
 	history_version += 1
 	_pending_press.clear()
 	_pending_release.clear()
@@ -96,6 +104,14 @@ func _physics_process(delta: float) -> void:
 	_pending_directions.clear()
 	for action: StringName in ACTIONS:
 		_current[action] = _read_strength(action) if _focused and not blocked else 0.0
+
+func recent_direction() -> Vector2:
+	# Prefer the final held chord when a new direction key is still held.
+	# Preserve quick taps when the new key was already released before physics.
+	for action: StringName in [&"move_left",&"move_right",&"aim_up",&"aim_down"]:
+		if just_pressed(action) and pressed(action):
+			return Vector2(horizontal(),vertical()).normalized()
+	return latest_direction_press.normalized()
 
 func _read_strength(action: StringName) -> float:
 	var result: float = 0.0

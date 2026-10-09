@@ -1,0 +1,28 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Could not find type "PlayerInput" in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:18)
+SCRIPT ERROR: Parse Error: Could not find type "CombatHurtbox" in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:22)
+SCRIPT ERROR: Parse Error: Could not find type "CombatHitbox" in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:46)
+SCRIPT ERROR: Parse Error: Could not find type "CombatHitbox" in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:471)
+SCRIPT ERROR: Parse Error: Could not find type "CombatHitbox" in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:478)
+SCRIPT ERROR: Parse Error: Identifier "PlayerInput" not declared in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:83)
+SCRIPT ERROR: Parse Error: Identifier "CombatHurtbox" not declared in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:87)
+SCRIPT ERROR: Parse Error: Identifier "CombatHitbox" not declared in the current scope.
+          at: GDScript::reload (res://scripts/player/Player.gd:451)
+ERROR: Failed to load script "res://scripts/player/Player.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+SCRIPT ERROR: Parse Error: Could not find type "GatePlayer" in the current scope.
+          at: GDScript::reload (res://toys/movement/MovementToy.gd:9)
+SCRIPT ERROR: Parse Error: Identifier "GatePlayer" not declared in the current scope.
+          at: GDScript::reload (res://toys/movement/MovementToy.gd:131)
+SCRIPT ERROR: Parse Error: Identifier "GatePlayer" not declared in the current scope.
+          at: GDScript::reload (res://toys/movement/MovementToy.gd:206)
+ERROR: Failed to load script "res://toys/movement/MovementToy.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)

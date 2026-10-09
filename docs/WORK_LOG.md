@@ -155,3 +155,21 @@
 - 일반점프 괜찮음 확인. 일반 중력/점프 유지. 배시 가속 중 누적중력 적용, 관성 전환0.5→0.18초/감속500→1200. 대시150px 유지·시간0.24→0.20초. 46검사 PASS.
 
 - 벽점프 방향키 유지 조건 제거, 입력유예0.12초/벽접촉유예0.10초 추가. K를 먼저 유지한 상태로 범위 진입 시 포착; 최대홀드 자동발사 후 재포착은 키 해제 필요. 잡힘 노란링/연결선/안내 추가. 입력 관련48검사 PASS.
+
+- 사용자 실행 진입 오류 수정: project.godot 기본 씬 Boot→movement_toy, 프로젝트 이름 점프 장난감으로 변경. 일반 실행/F5/Run.cmd에서도 장난감 직접 진입.
+
+## 2026-10-09 — 좌우 2회 대시 입력 검수
+- 현재 MovementToy 5 기준. 조기 두번째 입력 소실/지상쿨다운/거리162.5px/대시점프/벽너머배시/붙잡힌투사체피해/소멸슬로모션/페이드잔류/캐시없는실행 문제 재현·수정.
+- MovementAudit52 headless+52GPU, 기존Movement48, 물리30/60/120Hz 150px, 기존981검사 PASS. 상세 MOVEMENT_INPUT_AUDIT.md와 evidence/input-audit 참조.
+- 승인된150px/.20초, 공중2회, 배시600 등 손맛 수치 유지. 새 입력예약0.22초만 추가. Windows/실물입력/전맵완주는 미검증.
+
+## 2026-10-09 — 두 번째 대시 즉시 전환 정정
+- 이전 수정은 대시 종료 뒤 예약 실행으로 사용자 의도와 달랐음. 두 번째 새 Shift는 첫 대시/쿨다운을 즉시 끊고 그 입력 방향으로 새 대시를 시작. 두 번의 방향/시간/횟수 독립. 세번째 거부·단순유지 반복금지.
+- Input.parse_input_event로 WASD/Shift 실제 이벤트 경로를 사용한 64방향쌍 및 지상전환/급탭/세번째거부/키유지 포함203개 native GPU PASS. 물리키보드 실기는 아님. 기존 입력검수52 및 Movement48 PASS. 이전 검수의 종료후대기 기대값을 새 계약으로 수정.
+- GPU 테스트 초기 창 포커스 이벤트 간섭을 확인해 초기 이벤트 대기와 테스트별 포커스 복원으로 격리. 제품의 포커스 차단은 유지.
+
+## Direction input order correction (2026-10-09)
+The previous test pressed direction before Shift. Four overlapping old-direction + Shift-before-new-direction cases reproduced a stale aim snapshot. The toy now updates same-tick direction snapshots and accepts new direction edges for 0.06 seconds after dash start. Combat remains opt-out. Third dash presses cannot redirect the second dash.
+225 synthetic key-event checks passed with normal automatic physics in both headless and GPU runs, including jump -> horizontal dash -> opposite/diagonal, and 1-2 frame late direction. Movement48, Audit52, existing981 regression checks passed. This is not physical keyboard validation; user confirmation remains necessary. HUD now shows Shift receipts, dash starts, and final direction.
+
+- 2026-10-09: 사용자 실플레이에서 최신 더블 대시 수정 작동 확인("됨"). 요청에 따라 tt/main 업로드 준비. 원격 기획·인수인계 문서 보존 및 최신 기본 실행/검증 상태 반영.

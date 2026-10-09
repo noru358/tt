@@ -47,5 +47,7 @@
   "bash_coast_time": 0.18,
   "bash_coast_accel": 1200,
   "wall_jump_buffer": 0.12,
-  "wall_jump_grace": 0.1
+  "wall_jump_grace": 0.1,
+  "dash_input_buffer": 0.22,
+  "dash_aim_grace": 0.06
 }

@@ -4,12 +4,14 @@ var tuning_path: String = TUNING_PATH
 var room_directory: String = "res://toys/movement/rooms"
 var schema: Dictionary
 var respawn_generation: int = 0
+var respawn_tween: Tween
 var tuning: Dictionary
 var player: GatePlayer
 var motion: Node
 var geometry: Node2D
 var camera: Camera2D
 var panel: PanelContainer
+var dash_help: Label
 var aim_help: Label
 var status: Label
 var fade: ColorRect
@@ -26,6 +28,7 @@ var log_data: Dictionary
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
+	DisplayServer.window_set_title("점프 장난감 — 대시 방향 입력순서 수정판")
 	if not OS.get_environment("MOVEMENT_TEST_TUNING").is_empty(): tuning_path = OS.get_environment("MOVEMENT_TEST_TUNING")
 	if not OS.get_environment("MOVEMENT_TEST_ROOMS").is_empty(): room_directory = OS.get_environment("MOVEMENT_TEST_ROOMS")
 	schema = JSON.parse_string(FileAccess.get_file_as_string("res://toys/movement/movement_schema.json"))
@@ -56,6 +59,7 @@ func _ready() -> void:
 	player = preload("res://scenes/player/Player.tscn").instantiate()
 	player.toy_movement_enabled = true
 	add_child(player)
+	player.controls.toy_dash_aim = true
 	player.body_size = Vector2(tuning.player_width,tuning.player_height)
 	for child: Node in player.get_children():
 		if child is CollisionShape2D: child.shape.size = player.body_size
@@ -74,6 +78,7 @@ func _ready() -> void:
 
 func load_room(index: int, reload_room: bool = false) -> void:
 	motion.cancel()
+	if is_instance_valid(respawn_tween): respawn_tween.kill()
 	respawn_generation += 1
 	respawning = false
 	fade.color.a = 0
@@ -129,11 +134,7 @@ func load_room(index: int, reload_room: bool = false) -> void:
 	player.state = GatePlayer.State.IDLE
 	player.dash_uses = 0
 	player.dash_cooldown = 0
-	motion.lock_time = 0
-	motion.jump_pending = 0
-	motion.wall_grace = 0
-	motion.launch_age = -1
-	motion.coast_remaining = 0
+	motion.reset_motion()
 	motion.cooldowns.clear()
 	camera.position = player.position
 	camera.reset_smoothing()
@@ -186,6 +187,8 @@ func _process(delta: float) -> void:
 		room_size.x/2 if room_size.x < half.x*2 else clampf(player.position.x,half.x,room_size.x-half.x),
 		room_size.y/2 if room_size.y < half.y*2 else clampf(player.position.y,half.y,room_size.y-half.y))
 	status.text = "%s   %.1f분   HP %d   사망 %d   배시 %d   %s" % [rooms[room_index],(Time.get_ticks_msec()-started)/60000.0,player.hp,log_data.deaths,log_data.bash_count,"무적 ON" if Feedback.invincible else ""]
+	status.text += "   대시 %d/%d" % [maxi(0,int(tuning.air_dash_count)-player.dash_uses),int(tuning.air_dash_count)]
+	dash_help.text = "Shift 입력 %d · 대시 발동 %d · 마지막 %s" % [motion.dash_received,motion.dash_started,motion.dash_note]
 	aim_help.text = "K 유지 → %s → K 놓으면 발사 · R: 조준 방식 전환" % ("WASD 8방향 조준" if motion.direct_aim else "방향키 ↑↓←→ 8방향 조준")
 	if is_instance_valid(motion.target): aim_help.text = "잡힘! WASD 조준 · K 놓으면 발사" if motion.direct_aim else "잡힘! 방향키 조준 · K 놓으면 발사"
 	queue_redraw()
@@ -197,9 +200,9 @@ func respawn() -> void:
 	motion.cancel()
 	respawn_generation += 1
 	var generation: int = respawn_generation
-	var tween: Tween = create_tween().set_ignore_time_scale(true)
-	tween.tween_property(fade,"color:a",1.0,float(tuning.respawn_fade)/2)
-	await tween.finished
+	respawn_tween = create_tween().set_ignore_time_scale(true)
+	respawn_tween.tween_property(fade,"color:a",1.0,float(tuning.respawn_fade)/2)
+	await respawn_tween.finished
 	if generation != respawn_generation: return
 	player.position = checkpoint
 	player.velocity = Vector2.ZERO
@@ -207,14 +210,10 @@ func respawn() -> void:
 	player.state = GatePlayer.State.IDLE
 	player.dash_uses = 0
 	player.dash_cooldown = 0
-	motion.lock_time = 0
-	motion.jump_pending = 0
-	motion.wall_grace = 0
-	motion.launch_age = -1
-	motion.coast_remaining = 0
-	tween = create_tween().set_ignore_time_scale(true)
-	tween.tween_property(fade,"color:a",0.0,float(tuning.respawn_fade)/2)
-	await tween.finished
+	motion.reset_motion()
+	respawn_tween = create_tween().set_ignore_time_scale(true)
+	respawn_tween.tween_property(fade,"color:a",0.0,float(tuning.respawn_fade)/2)
+	await respawn_tween.finished
 	if generation == respawn_generation: respawning = false
 
 func _build_ui() -> void:
@@ -225,11 +224,13 @@ func _build_ui() -> void:
 	layer.add_child(column)
 	status = Label.new()
 	column.add_child(status)
+	dash_help = Label.new()
+	column.add_child(dash_help)
 	aim_help = Label.new()
 	aim_help.text = "K 유지 → WASD 8방향 조준 → K 놓으면 발사 · R: 조준 방식 전환"
 	column.add_child(aim_help)
 	var movement_help: Label = Label.new()
-	movement_help.text = "이동 WASD · 점프 Space · 공중 대시 Shift 2회 · 패드 Y 튕기기 / 왼쪽 스틱 조준"
+	movement_help.text = "이동 WASD · 점프 Space · 공중 대시 Shift 2회 (다시 누르면 즉시 방향 전환) · 패드 Y 튕기기 / 왼쪽 스틱 조준"
 	column.add_child(movement_help)
 	var buttons: HBoxContainer = HBoxContainer.new()
 	column.add_child(buttons)

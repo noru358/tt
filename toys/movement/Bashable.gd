@@ -19,7 +19,7 @@ func bash(direction: Vector2) -> void:
 	else: offset += direction*float(world.tuning.orb_push_distance)
 
 func _physics_process(delta: float) -> void:
-	if world.panel.visible: return
+	if world.panel.visible or world.respawning or world.motion.target == self: return
 	age += delta
 	if kind == "bullet":
 		var next: Vector2 = position+velocity*delta

@@ -1,0 +1,57 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PASS: early second dash retained with press direction
+PASS: third dash rejected
+DASH_DISPLACEMENT 150.0
+PASS: dash actual travel equals tuning
+PASS: ground horizontal second dash retained
+PASS: ground dash can jump cancel
+PASS: wall blocks bash acquisition
+PASS: held projectile neither moves nor damages player
+PASS: deleted bash target restores time scale
+PASS: room reload clears queued dash
+PASS: reload during fade does not leave black overlay
+PASS: second dash direction=(1.0, 0.0) delay=0.02
+PASS: second dash direction=(1.0, 0.0) delay=0.08
+PASS: second dash direction=(1.0, 0.0) delay=0.16
+PASS: second dash direction=(1.0, 0.0) delay=0.20
+PASS: second dash direction=(1.0, 0.0) delay=0.24
+PASS: second dash direction=(-1.0, 0.0) delay=0.02
+PASS: second dash direction=(-1.0, 0.0) delay=0.08
+PASS: second dash direction=(-1.0, 0.0) delay=0.16
+PASS: second dash direction=(-1.0, 0.0) delay=0.20
+PASS: second dash direction=(-1.0, 0.0) delay=0.24
+PASS: second dash direction=(0.0, -1.0) delay=0.02
+PASS: second dash direction=(0.0, -1.0) delay=0.08
+PASS: second dash direction=(0.0, -1.0) delay=0.16
+PASS: second dash direction=(0.0, -1.0) delay=0.20
+PASS: second dash direction=(0.0, -1.0) delay=0.24
+PASS: second dash direction=(0.0, 1.0) delay=0.02
+PASS: second dash direction=(0.0, 1.0) delay=0.08
+PASS: second dash direction=(0.0, 1.0) delay=0.16
+PASS: second dash direction=(0.0, 1.0) delay=0.20
+PASS: second dash direction=(0.0, 1.0) delay=0.24
+PASS: second dash direction=(1.0, -1.0) delay=0.02
+PASS: second dash direction=(1.0, -1.0) delay=0.08
+PASS: second dash direction=(1.0, -1.0) delay=0.16
+PASS: second dash direction=(1.0, -1.0) delay=0.20
+PASS: second dash direction=(1.0, -1.0) delay=0.24
+PASS: second dash direction=(-1.0, -1.0) delay=0.02
+PASS: second dash direction=(-1.0, -1.0) delay=0.08
+PASS: second dash direction=(-1.0, -1.0) delay=0.16
+PASS: second dash direction=(-1.0, -1.0) delay=0.20
+PASS: second dash direction=(-1.0, -1.0) delay=0.24
+PASS: second dash direction=(1.0, 1.0) delay=0.02
+PASS: second dash direction=(1.0, 1.0) delay=0.08
+PASS: second dash direction=(1.0, 1.0) delay=0.16
+PASS: second dash direction=(1.0, 1.0) delay=0.20
+PASS: second dash direction=(1.0, 1.0) delay=0.24
+PASS: second dash direction=(-1.0, 1.0) delay=0.02
+PASS: second dash direction=(-1.0, 1.0) delay=0.08
+PASS: second dash direction=(-1.0, 1.0) delay=0.16
+PASS: second dash direction=(-1.0, 1.0) delay=0.20
+PASS: second dash direction=(-1.0, 1.0) delay=0.24
+PASS: menu clears queued dash
+PASS: focus change clears queued dash
+MOVEMENT_AUDIT_RESULT checks=52 failures=0
