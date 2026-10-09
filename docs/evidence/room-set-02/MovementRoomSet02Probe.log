@@ -1,0 +1,30 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+BASH_INPUT room=5 position=(322.0763, 272.1687) direction=(0.212052, -0.977258) kind=o
+ROOM_SET_TRIAL {"bash":1,"deaths":0,"frames":149,"goal":true,"max_x":345.364898681641,"min_y":109.158645629883,"mode":"bash_allowed","room":5,"wall_jumps":0}
+BASH_INPUT room=6 position=(342.5, 304.0) direction=(1.0, 0.0) kind=bullet
+BASH_INPUT room=6 position=(518.6471, 304.2321) direction=(1.0, -0.000341) kind=bullet
+BASH_INPUT room=6 position=(693.6471, 304.1724) direction=(1.0, -0.00034) kind=bullet
+BASH_INPUT room=6 position=(843.6471, 304.1215) direction=(1.0, -0.000341) kind=bullet
+BASH_INPUT room=6 position=(1046.351, 304.4326) direction=(0.999996, -0.002815) kind=bullet
+ROOM_SET_TRIAL {"bash":5,"deaths":7,"frames":470,"goal":true,"max_x":1174.05004882812,"min_y":221.5908203125,"mode":"bash_allowed","room":6,"wall_jumps":0}
+BASH_INPUT room=7 position=(277.7479, 125.5908) direction=(1.0, 0.0) kind=o
+BASH_INPUT room=7 position=(273.0051, 172.5685) direction=(0.980581, -0.196116) kind=o
+BASH_INPUT room=7 position=(617.3021, 134.3842) direction=(1.0, 0.0) kind=m
+BASH_INPUT room=7 position=(274.3384, 173.4435) direction=(0.980581, -0.196116) kind=o
+BASH_INPUT room=7 position=(274.3384, 173.4435) direction=(0.980581, -0.196116) kind=o
+BASH_INPUT room=7 position=(618.6354, 135.2592) direction=(1.0, 0.0) kind=m
+BASH_INPUT room=7 position=(274.3384, 173.4435) direction=(0.980581, -0.196116) kind=o
+BASH_INPUT room=7 position=(274.3384, 173.4435) direction=(0.980581, -0.196116) kind=o
+BASH_INPUT room=7 position=(631.1354, 135.2592) direction=(1.0, 0.0) kind=m
+BASH_INPUT room=7 position=(1267.214, 106.4244) direction=(1.0, 0.0) kind=o
+ROOM_SET_TRIAL {"bash":10,"deaths":5,"frames":731,"goal":true,"max_x":1557.98571777344,"min_y":106.424354553223,"mode":"bash_allowed","room":7,"wall_jumps":0}
+BASH_INPUT room=8 position=(374.4859, 464.2506) direction=(0.146481, -0.989213) kind=bullet
+BASH_INPUT room=8 position=(388.073, 404.7074) direction=(-0.068416, -0.997657) kind=m
+ROOM_SET_TRIAL {"bash":2,"deaths":0,"frames":232,"goal":true,"max_x":388.072967529297,"min_y":139.382110595703,"mode":"bash_allowed","room":8,"wall_jumps":0}
+ROOM_SET_TRIAL {"bash":0,"deaths":14,"frames":1800,"goal":false,"max_x":343.169738769531,"min_y":68.6199645996094,"mode":"no_bash","room":5,"wall_jumps":13}
+ROOM_SET_TRIAL {"bash":0,"deaths":38,"frames":1800,"goal":false,"max_x":620.69677734375,"min_y":221.5908203125,"mode":"no_bash","room":6,"wall_jumps":0}
+ROOM_SET_TRIAL {"bash":0,"deaths":26,"frames":1800,"goal":false,"max_x":652.243103027344,"min_y":125.590812683105,"mode":"no_bash","room":7,"wall_jumps":0}
+ROOM_SET_TRIAL {"bash":0,"deaths":9,"frames":1800,"goal":false,"max_x":383.305267333984,"min_y":327.260437011719,"mode":"no_bash","room":8,"wall_jumps":0}
+ROOM_SET_RESULT [{"bash":1,"deaths":0,"frames":149,"goal":true,"max_x":345.364898681641,"min_y":109.158645629883,"mode":"bash_allowed","room":5,"wall_jumps":0},{"bash":5,"deaths":7,"frames":470,"goal":true,"max_x":1174.05004882812,"min_y":221.5908203125,"mode":"bash_allowed","room":6,"wall_jumps":0},{"bash":10,"deaths":5,"frames":731,"goal":true,"max_x":1557.98571777344,"min_y":106.424354553223,"mode":"bash_allowed","room":7,"wall_jumps":0},{"bash":2,"deaths":0,"frames":232,"goal":true,"max_x":388.072967529297,"min_y":139.382110595703,"mode":"bash_allowed","room":8,"wall_jumps":0},{"bash":0,"deaths":14,"frames":1800,"goal":false,"max_x":343.169738769531,"min_y":68.6199645996094,"mode":"no_bash","room":5,"wall_jumps":13},{"bash":0,"deaths":38,"frames":1800,"goal":false,"max_x":620.69677734375,"min_y":221.5908203125,"mode":"no_bash","room":6,"wall_jumps":0},{"bash":0,"deaths":26,"frames":1800,"goal":false,"max_x":652.243103027344,"min_y":125.590812683105,"mode":"no_bash","room":7,"wall_jumps":0},{"bash":0,"deaths":9,"frames":1800,"goal":false,"max_x":383.305267333984,"min_y":327.260437011719,"mode":"no_bash","room":8,"wall_jumps":0}]
+ROOM_SET_ROUTE_RESULT checks=4 failures=0 (no-bash searches are observations only)

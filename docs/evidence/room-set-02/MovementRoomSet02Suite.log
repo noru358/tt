@@ -1,0 +1,5 @@
+Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
+
+ROOM7_JUMP start=(80.0, 208.0) apex_center_y=125.425170898438 clearance=47.4251708984375
+ROOM7_JUMP start=(464.0, 182.0) apex_center_y=106.425224304199 clearance=28.4252243041992
+ROOM_SET_LOCAL_RESULT checks=15 failures=0
