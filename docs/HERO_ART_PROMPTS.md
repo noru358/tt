@@ -123,3 +123,11 @@ Create a 2D game effects sheet in the same art style as the attached character (
 ## 3b 확인 결과
 
 보충 시트는 귀 없는 머리 4개·팔 없는 손 3개·반쯤 편 부채 1개로 분리됨. 최초 결과에 붙은 팔·토시는 수정 생성으로 제거. 손은 기존 시트보다 커서 정확한 동일 픽셀 배율 조건은 미충족: 조립 시 손 배율 보정 필요. 집중 표정 입에 약한 미소가 남고, 부채 펼침각은 70도보다 넓어 보여 검수 대상. 효과는 바람 베기·둥근 먼지·착지 먼지·타격 불꽃·여우불 5종 확인. 바람 호는 지시의 120도보다 넓게 표현됨. 효과별 떨어진 작은 조각은 본체와 함께 잘라야 함. 원본 PNG 무편집, 복사본 바이트 동일 확인. 제작 적용·재조립 검수는 Claude 단계.
+
+## 3b 손가락 수정 — 2026-10-10
+
+사용자: 맨 왼쪽 쥔 손 손가락 과다 지적, 나머지 승인. 내장 image_gen으로 기존 parts_sheet_extra.png 편집, transparent_background=false. 결과 원본 무편집 복사. 엄지 1개와 굽힌 손가락 4개 육안 확인.
+
+```text
+Edit ONLY the leftmost hand in the bottom row of this supplementary cutout parts sheet: the black fingerless-gloved gripping hand with the round green hole. It currently has too many digits. Redraw that single hand with anatomically correct EXACTLY FIVE digits total: ONE thumb and FOUR fingers. Show one thumb wrapping across the top/side and exactly four curled fingers around the grip, with no sixth fingertip, extra nub, duplicated finger, or extra thumb. Preserve the empty round green hole for the fan handle, the existing hand's size, location, angle, dark glove, cream fingertips, thick outlines and cel shading. Preserve ALL other pixels/content as closely as possible: four heads, other two hands, fan, green background, canvas size and layout. Do not change any other expression, pose, scale or asset. No text.
+```

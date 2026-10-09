@@ -213,3 +213,6 @@ The previous test pressed direction before Shift. Four overlapping old-direction
 - origin/claude/project-thread-venykx의 최신 3b 지시를 fast-forward로 반영. 원화와 기존 통과 시트는 보존.
 - 내장 image_gen으로 보충 시트 생성 후 팔·토시 제거 1회 수정, 효과 5종 시트 생성. PNG 원본 및 프롬프트 저장, 복사본 바이트 동일 확인.
 - 보충 8부품과 효과 5종 육안 확인. 손 동일 배율·집중 표정 입·부채/베기 펼침각은 지시와 차이가 남아 Claude 검수에 명시. 게임 코드·수치 변경 및 런타임 테스트 없음.
+
+## 2026-10-10 — 보충 시트 쥔 손 수정
+- 사용자 지적으로 맨 왼쪽 쥔 손만 image_gen 편집. 엄지 1 + 손가락 4 육안 확인. 나머지 사용자 승인 기록. 수정 원본 저장·동일성 확인, 게임 코드 변경 없음.
