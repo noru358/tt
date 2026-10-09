@@ -4,6 +4,8 @@ signal perfect_dodge
 signal parry_success
 signal died
 enum State {IDLE, RUN, JUMP, FALL, DASH, ATTACK, PARRY, HURT, POTION, DEAD}
+@export var toy_movement_enabled: bool = false
+var toy_motion: Node
 @export var player_index: int = 0
 @export var use_loadout: bool = false
 const StatCalc = preload("res://scripts/stats/StatCalc.gd")
@@ -123,6 +125,10 @@ func _tuning_changed() -> void:
 	queue_redraw()
 
 func _physics_process(delta: float) -> void:
+	if toy_movement_enabled and is_instance_valid(toy_motion):
+		toy_motion.tick(delta)
+		queue_redraw()
+		return
 	if state == State.DEAD:
 		velocity = Vector2.ZERO
 		queue_redraw()

@@ -1,0 +1,247 @@
+{
+  "tile_size": {
+    "min": 1,
+    "max": 96,
+    "step": 1
+  },
+  "wall_slide_speed": {
+    "min": 12.0,
+    "max": 360,
+    "step": 1.2
+  },
+  "wall_jump_push_x": {
+    "min": 38.0,
+    "max": 1140,
+    "step": 3.8
+  },
+  "wall_jump_push_y": {
+    "min": 52.0,
+    "max": 1560,
+    "step": 5.2
+  },
+  "wall_jump_lock_time": {
+    "min": 0.012,
+    "max": 0.36,
+    "step": 0.0012
+  },
+  "bash_radius": {
+    "min": 7.2,
+    "max": 216,
+    "step": 0.72
+  },
+  "bash_time_scale": {
+    "min": 0.008,
+    "max": 0.24,
+    "step": 0.0008
+  },
+  "bash_max_hold": {
+    "min": 0.12,
+    "max": 3.5999999999999996,
+    "step": 0.012
+  },
+  "bash_launch_speed": {
+    "min": 78.0,
+    "max": 2340,
+    "step": 7.8
+  },
+  "bash_air_control_delay": {
+    "min": 0.015,
+    "max": 0.44999999999999996,
+    "step": 0.0015
+  },
+  "bash_same_target_cooldown": {
+    "min": 0.04,
+    "max": 1.2000000000000002,
+    "step": 0.004
+  },
+  "orb_return_time": {
+    "min": 0.06,
+    "max": 1.7999999999999998,
+    "step": 0.006
+  },
+  "moving_orb_range": {
+    "min": 0.4,
+    "max": 12,
+    "step": 0.04
+  },
+  "turret_interval": {
+    "min": 0.13999999999999999,
+    "max": 4.199999999999999,
+    "step": 0.013999999999999999
+  },
+  "projectile_speed": {
+    "min": 26.0,
+    "max": 780,
+    "step": 2.6
+  },
+  "player_width": {
+    "min": 1,
+    "max": 60,
+    "step": 1
+  },
+  "player_height": {
+    "min": 1,
+    "max": 84,
+    "step": 1
+  },
+  "move_speed": {
+    "min": 26.0,
+    "max": 780,
+    "step": 2.6
+  },
+  "jump_velocity": {
+    "min": 43.0,
+    "max": 1290,
+    "step": 4.3
+  },
+  "gravity": {
+    "min": 105.0,
+    "max": 3150,
+    "step": 10.5
+  },
+  "max_fall_speed": {
+    "min": 70.0,
+    "max": 2100,
+    "step": 7.0
+  },
+  "air_control_accel": {
+    "min": 160.0,
+    "max": 4800,
+    "step": 16.0
+  },
+  "wall_control_mult": {
+    "min": 0.015,
+    "max": 0.44999999999999996,
+    "step": 0.0015
+  },
+  "aim_turn_speed": {
+    "min": 0.27999999999999997,
+    "max": 8.399999999999999,
+    "step": 0.027999999999999997
+  },
+  "orb_radius": {
+    "min": 1.0,
+    "max": 30,
+    "step": 0.1
+  },
+  "orb_push_distance": {
+    "min": 4.0,
+    "max": 120,
+    "step": 0.4
+  },
+  "moving_orb_period": {
+    "min": 0.3,
+    "max": 9,
+    "step": 0.03
+  },
+  "projectile_radius": {
+    "min": 0.7,
+    "max": 21,
+    "step": 0.07
+  },
+  "projectile_damage": {
+    "min": 2.0,
+    "max": 60,
+    "step": 0.2
+  },
+  "projectile_lifetime": {
+    "min": 1.0,
+    "max": 30,
+    "step": 0.1
+  },
+  "respawn_fade": {
+    "min": 0.03,
+    "max": 0.8999999999999999,
+    "step": 0.003
+  },
+  "camera_smoothing": {
+    "min": 0.7,
+    "max": 21,
+    "step": 0.07
+  },
+  "camera_view_width": {
+    "min": 80.0,
+    "max": 2400,
+    "step": 8.0
+  },
+  "camera_view_height": {
+    "min": 45.0,
+    "max": 1350,
+    "step": 4.5
+  },
+  "platform_thickness": {
+    "min": 0.6,
+    "max": 18,
+    "step": 0.06
+  },
+  "slow_speed": {
+    "min": 0.05,
+    "max": 1.5,
+    "step": 0.005
+  },
+  "dash_distance": {
+    "min": 30.0,
+    "max": 900,
+    "step": 3.0
+  },
+  "dash_duration": {
+    "min": 0.018,
+    "max": 0.54,
+    "step": 0.0018
+  },
+  "dash_cooldown": {
+    "min": 0.045,
+    "max": 1.35,
+    "step": 0.0045000000000000005
+  },
+  "air_dash_count": {
+    "min": 1,
+    "max": 3,
+    "step": 1
+  },
+  "bash_flash_time": {
+    "min": 0.02,
+    "max": 1,
+    "step": 0.01
+  },
+  "bash_trail_length": {
+    "min": 10,
+    "max": 300,
+    "step": 1
+  },
+  "bash_burst_radius": {
+    "min": 5,
+    "max": 100,
+    "step": 1
+  },
+  "bash_launch_ramp": {
+    "min": 0.02,
+    "max": 0.3,
+    "step": 0.01
+  },
+  "bash_start_speed_ratio": {
+    "min": 0.1,
+    "max": 1,
+    "step": 0.05
+  },
+  "bash_coast_time": {
+    "min": 0.05,
+    "max": 1.5,
+    "step": 0.05
+  },
+  "bash_coast_accel": {
+    "min": 100,
+    "max": 1600,
+    "step": 50
+  },
+  "wall_jump_buffer": {
+    "min": 0.01,
+    "max": 0.3,
+    "step": 0.01
+  },
+  "wall_jump_grace": {
+    "min": 0.01,
+    "max": 0.3,
+    "step": 0.01
+  }
+}

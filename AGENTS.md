@@ -1,5 +1,7 @@
 # Gate 1 작업 규칙
 
+- **가장 먼저 저장소 루트의 `HANDOFF.md`를 읽는다.** 현재 진행 중인 설계서와 최신 결정이 거기 있고, 아래 Step 기록보다 우선한다. 작업을 마치면 HANDOFF.md의 "현재 상태"를 갱신한다.
+
 - 먼저 `C:/Users/User/Documents/Codex/WORK_MEMORY.md`, 이 파일, `docs/WORK_LOG.md`, `docs/GATE1_SPEC.md`를 읽는다.
 - 새 독립 Godot 4.6 / typed GDScript 프로젝트다. 이전 게임 프로젝트와 합치지 않는다.
 - 한 번에 한 단계만 구현한다. 현재 사용자 지시에 따라 Step 3까지 구현·검증 완료. 사용자 다음 지시 전 Step 4 시작 금지.
