@@ -1,6 +1,6 @@
 # 주인공 설계서 — 사막여우 전투형 문관 (철릭)
 
-2026-10-09 사용자 결정: 주인공은 **new-game 저장소에서 잡아 둔 사막여우 전투형 문관(철릭)**. 작업 방식은 "Claude가 아이디어·구조 설계 → ChatGPT가 이미지 제작".
+2026-10-09 사용자 결정: 주인공은 **new-game 저장소에서 잡아 둔 사막여우 전투형 문관(철릭)**. 작업 방식은 "Claude가 아이디어·구조 설계 → 이미지 제작"(2026-10-09부터 이미지는 Codex 내장 image_gen). 작업 순서와 Codex 지시는 `docs/plan/HERO_ART_PLAN.md`.
 
 - 기준 그림: `docs/plan/hero_refs/side.png`, `front.png`, `back.png` (new-game `codex/fennec-idle-sample-v1` 브랜치 `game/fennec_idle/`, 각 384×448 투명 PNG, 발 기준점 약 (190, 416)). 당시 상태는 "시안 시험 승인"이고 최종 디자인 승인은 아님.
 - 잘못 가져왔던 game2의 크림색 판타지 관복 시트는 기준이 아니다(2026-10-09 사용자 정정). 다만 **털색만** game2 여우의 크림색을 쓴다(같은 날 사용자 결정: 주황은 너무 쨍함). `hero_refs/`의 세 장은 털만 크림색으로 바꾼 것이고, 주황 원본은 new-game 브랜치에 그대로 있다.
@@ -66,12 +66,12 @@ new-game·game2 모두 GPT로 방향·프레임을 한 장씩 뽑을 때 꼬리 
 
 ```
 Create a cutout animation parts sheet of exactly this fennec fox character: same face, pale cream fur (around #ecd9bd) with lighter off-white chest, muzzle and tail tip, huge ears, navy cheollik coat with cream collar, rust-orange sash, small black leather shoulder pads and bracers, black trousers, white leg wraps, black leather shoes. Same painterly style, outline, colors and scale as the attached image. Strict side view facing right.
-Every part separated with empty space around it, transparent background, no overlaps, no shadows, no text except small gray part numbers.
+Every part separated with wide empty space around it, on one flat solid bright green background (#00b140) with no gradient, no floor, no shadows, no text or numbers. Parts in the listed order, left to right, top to bottom. No discs, bolts or caps covering the joints.
 Parts: 1 head without ears (eye open), 2 near ear, 3 far ear (slightly darker), 4 torso with coat top, collar and sash (no arms, no skirt flaps), 5 coat skirt hanging straight as one piece, 6 sash knot tails, 7 near upper arm with shoulder pad, 8 near forearm with bracer, 9 near paw (open), 10 far upper arm, 11 far forearm, 12 far paw, 13 near thigh, 14 near shin with leg wrap and shoe, 15 far thigh, 16 far shin with shoe, 17 tail as one piece pointing straight back, 18 closed Korean iron war fan (cheolseon) horizontal: black iron ribs, brass pivot rivet, small rust-orange tassel at the handle end, 19 the same iron fan fully opened as a half circle: dark navy silk face with one cream cloud motif, black iron ribs.
 Limb parts need rounded joint ends so they can rotate at the joint. Keep one consistent pixel scale across all parts.
 ```
 
-받은 그림은 `assets/hero/`에 원본 그대로 넣거나 스레드에 올리면 Claude가 자르고 등록한다.
+받은 그림은 `assets/hero/raw/`에 원본 그대로 넣는다. Claude가 자르고 등록한다.
 
 ## 6. 사람이 정할 것
 
