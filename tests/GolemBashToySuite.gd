@@ -133,6 +133,28 @@ func _slam() -> void:
 	check(golem.stagger >= stagger+float(world.tuning.fist_bash_stagger)-0.01,"fist bash adds stagger")
 	check(world.log_data.bash_by_source.fist == 1 and world.log_data.bash_count == 1,"fist bash logged by source")
 	check(golem.weak_open(),"bash opens the weakpoint")
+	# Auto-aim: grabbing the fist without aim input launches toward the weakpoint.
+	await _reset(Vector2(golem.position.x-200,world.floor_y-14))
+	golem.facing = -1
+	golem.begin_attack("slam")
+	while not golem.hand.open and golem.clock < 5: await frames(1)
+	world.player.position = golem.fist_center()+Vector2(-40,-20)
+	world.player.velocity = Vector2.ZERO
+	world.player.hurt_iframe = 5
+	Input.action_press("toy_bash")
+	await frames(2)
+	var to_weak: Vector2 = golem.weak_center()-golem.hand.global_position
+	check(world.motion.aim.x*to_weak.x > 0 and world.motion.aim.y < 0 and world.motion.aim != Vector2.UP,"grabbing a golem part pre-aims toward the weakpoint")
+	await bash_release(Vector2.ZERO)
+	var closest: float = INF
+	var above: bool = false
+	for i: int in 90:
+		await frames(1)
+		var gap: Vector2 = world.player.position-golem.weak_center()
+		closest = minf(closest,gap.length())
+		if absf(gap.x) < float(world.tuning.weak_radius) and gap.y < 0 and gap.y > -90: above = true
+	print("GOLEM_BASH_AUTO_AIM closest=%.0f above=%s" % [closest,above])
+	check(above,"auto-aimed fist launch passes over the weakpoint for a pogo (closest %.0f px)" % closest)
 
 func _stomp_rock() -> void:
 	await _reset(Vector2(golem.position.x-260,world.floor_y-14))
@@ -210,6 +232,7 @@ func _pogo_and_kneel() -> void:
 	for i: int in 40:
 		await frames(1)
 		if world.player.velocity.y > 0: break
+	while world.frozen(): await frames(1)
 	world.player.position = golem.weak_center()+Vector2(0,-40)
 	world.player.velocity = Vector2(0,100)
 	await frames(1)
@@ -219,6 +242,7 @@ func _pogo_and_kneel() -> void:
 	await frames(2)
 	held = {}
 	check(world.log_data.weak_hits == 2,"second pogo hit chains")
+	while world.frozen(): await frames(1)
 	world.player.position = golem.weak_center()+Vector2(0,-40)
 	world.player.velocity = Vector2(0,100)
 	await frames(1)
@@ -268,8 +292,8 @@ func _tuning_and_log() -> void:
 	await _reset(Vector2(80,world.floor_y-14))
 	golem.cooldown = INF
 	var x: float = golem.position.x
-	await frames(30)
-	check(absf(golem.position.x-x-golem.facing*120.0*0.5) < 4,"tuning change applies immediately")
+	await frames(int(float(world.tuning.golem_step_time)*2*60)+2)
+	check(absf(golem.position.x-x-golem.facing*120.0*float(world.tuning.golem_step_time)*2) < 4,"tuning change applies immediately (two strides)")
 	check(world.save_tuning(),"tuning saves")
 	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("GOLEM_BASH_TEST_TUNING")))
 	check(saved.golem_walk_speed == 120 and not saved.has("bash_launch_speed"),"only golem numbers saved to golem file")

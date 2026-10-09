@@ -15,6 +15,14 @@ func _ready() -> void:
 	Feedback.invincible = true
 	await get_tree().create_timer(0.3).timeout
 	await shot("idle")
+	# Walk: let it take a stride toward the player, capture mid-stride and at the footfall.
+	world.player.position = Vector2(golem.position.x-400,world.floor_y-14)
+	while golem.step_u < 0.35: await get_tree().physics_frame
+	await shot("walk_mid")
+	while not golem.step_landed: await get_tree().physics_frame
+	await shot("walk_land")
+	world.player.position = Vector2(golem.position.x-180,world.floor_y-14)
+	await get_tree().create_timer(1.0).timeout
 	for move: String in ["slam","stomp","sweep"]:
 		golem.begin_attack(move)
 		await get_tree().create_timer(float(world.tuning.telegraph_time)*0.7).timeout
@@ -30,6 +38,11 @@ func _ready() -> void:
 	Feedback.boxes_visible = false
 	golem.weak_hits = 99
 	golem._check_kneel()
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.2).timeout
+	await shot("kneel_falling")
+	await get_tree().create_timer(0.4).timeout
+	world.fx_text(golem.weak_center()+Vector2(-26,-40),"약점! 40",Color(1,0.9,0.35),20)
+	world.fx_spark(golem.weak_center(),Color(1,0.9,0.4),14,260)
+	await get_tree().create_timer(0.08).timeout
 	await shot("kneel")
 	get_tree().quit()

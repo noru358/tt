@@ -10,6 +10,12 @@ const MOVES: Dictionary = {
 }
 const SWEEP_DAMAGE_TIME: float = 0.12
 const SLAM_RADIUS: float = 46.0
+# Weakpoint crystal sits in the upper back just under the shoulder line, behind the head (torso-local).
+const WEAK_LOCAL: Vector2 = Vector2(30,-205)
+const LEG_SHIN: float = 164.12
+const ARM_FOREARM: float = 168.177
+# Fraction of a stride spent moving; the rest is the planted pause after the footfall.
+const STEP_LAND: float = 0.7
 var world: Node2D
 var rig: Node2D
 var torso: Node2D
@@ -43,6 +49,16 @@ var idle_clock: float = 0
 var rocks: Array = []
 var waves: Array = []
 var forced_attack: String = ""
+var step_u: float = -1
+var step_index: int = 0
+var step_from: float = 0
+var step_dir: int = -1
+var step_landed: bool = false
+var walk_blend: float = 0
+var dip: float = 0
+var recoil: float = 0
+var landed: bool = false
+var overlap_time: float = 0
 
 func t(key: String) -> float:
 	return float(world.tuning[key])
@@ -89,6 +105,13 @@ func reset() -> void:
 	shake_left = 0
 	platform_off = 0
 	flash = 0
+	step_u = -1
+	step_index = 0
+	walk_blend = 0
+	dip = 0
+	recoil = 0
+	landed = false
+	overlap_time = 0
 	hand.set_open(false)
 	for rock: Node2D in rocks: if is_instance_valid(rock): rock.queue_free()
 	rocks.clear()
@@ -107,11 +130,68 @@ func _pose(delta: float) -> void:
 		idle_clock += delta
 		animator.play("idle")
 		animator.seek(fmod(idle_clock,animator.get_animation("idle").length),true)
-	# Kneel and shake layer on top of whatever the animation set this frame.
+	# Walk, collapse, recoil and shake layer on top of whatever the animation set this frame.
+	var k: float = kneel_visual()
 	var bob: Vector2 = torso.position-torso_rest
-	torso.position = torso_rest+bob+Vector2(0,t("kneel_drop")*kneel_amount)
-	torso.rotation += 0.35*kneel_amount+(sin(shake_left*60)*0.08 if shake_left > 0 else 0.0)
+	torso.position = torso_rest+bob+Vector2(0,t("kneel_drop")*k+20*walk_blend*(1-k)+18*dip)
+	torso.rotation += t("kneel_lean")*k-0.12*recoil+(sin(shake_left*60)*0.08 if shake_left > 0 else 0.0)
+	if state != "attack":
+		# Lean into each lurch.
+		if step_u >= 0: torso.rotation += 0.06*sin(PI*step_progress())*walk_blend
+		_pose_limbs(k)
 	hand.global_position = fist_center()
+
+# 0..1 collapse pose: falls fast (eased in) and gets up smoothly.
+func kneel_visual() -> float:
+	if state in ["kneel","dead"]: return kneel_amount*kneel_amount
+	return smoothstep(0,1,kneel_amount)
+
+func step_progress() -> float:
+	return smoothstep(0,STEP_LAND,step_u) if step_u >= 0 else 1.0
+
+func swing_side() -> String:
+	return ["Front","Back"][(step_index if step_u >= 0 else step_index+1)%2]
+
+# Two-bone IK in rig space (x = facing forward, y = down, feet on y=0).
+func _ik(upper: Node2D, lower: Node2D, reach: float, goal: Vector2, bend_sign: float, weight: float) -> void:
+	if weight <= 0.001: return
+	var base: float = torso.rotation
+	var root: Vector2 = torso.transform*upper.position
+	var a: float = lower.position.length()
+	var d: Vector2 = goal-root
+	var length: float = clampf(d.length(),absf(a-reach)+0.1,a+reach-0.1)
+	var bend: float = acos(clampf((a*a+length*length-reach*reach)/(2*a*length),-1,1))
+	var angle: float = d.angle()+bend_sign*bend
+	var upper_rotation: float = angle-PI/2-base
+	var joint: Vector2 = root+Vector2.from_angle(angle)*a
+	var lower_rotation: float = (goal-joint).angle()-PI/2-base-upper_rotation
+	upper.rotation = lerp_angle(upper.rotation,upper_rotation,weight)
+	lower.rotation = lerp_angle(lower.rotation,lower_rotation,weight)
+
+func _pose_limbs(k: float) -> void:
+	var stride: float = t("golem_walk_speed")*t("golem_step_time")/scale_value()*walk_blend
+	var p: float = step_progress()
+	for side: String in ["Front","Back"]:
+		var upper: Node2D = torso.get_node("Leg"+side+"_Upper")
+		var lower: Node2D = upper.get_node("Leg"+side+"_Lower")
+		var hip: Vector2 = torso.transform*upper.position
+		var swinging: bool = side == swing_side()
+		var x: float = lerpf(-stride/2,stride/2,p) if swinging else lerpf(stride/2,-stride/2,p)
+		var lift: float = sin(PI*p)*t("golem_step_lift")*walk_blend if swinging and step_u >= 0 else 0.0
+		var walk_foot: Vector2 = Vector2(torso_rest.x+upper.position.x+x,-lift)
+		# Kneeling: knee on the ground, shin folded back along the floor.
+		var kneel_foot: Vector2 = Vector2(hip.x-120,0)
+		_ik(upper,lower,LEG_SHIN,walk_foot.lerp(kneel_foot,k),-1,maxf(walk_blend,k))
+		var arm: Node2D = torso.get_node("Arm"+side+"_Upper")
+		# Arms swing against their own leg while striding.
+		if stride > 0: arm.rotation += 0.22*x/(stride/2)*walk_blend*(1-k)
+		var shoulder: Vector2 = torso.transform*arm.position
+		# Hands slap the floor in front to catch the fall.
+		_ik(arm,arm.get_node("Arm"+side+"_Lower"),ARM_FOREARM,Vector2(shoulder.x+(70 if side == "Front" else 30),-50),1,k)
+	torso.get_node("Head").rotation += 0.3*k
+
+func foot_position(side: String) -> Vector2:
+	return torso.get_node("Leg"+side+"_Upper/Leg"+side+"_Lower").to_global(Vector2(0,LEG_SHIN))
 
 func _anim_time() -> float:
 	var elapsed: float = clock
@@ -127,7 +207,7 @@ func fist_center() -> Vector2:
 	return fist.to_global(fist.offset+fist.texture.get_size()/2)
 
 func weak_center() -> Vector2:
-	return torso.to_global(Vector2(-55,-215))
+	return torso.to_global(WEAK_LOCAL)
 
 func weak_open() -> bool:
 	if state == "dead": return false
@@ -150,12 +230,16 @@ func top_y() -> float:
 	return torso.to_global(Vector2(18,-235)).y
 
 func _physics_process(delta: float) -> void:
-	if world.paused(): return
+	if world.paused() or world.frozen(): return
 	flash = maxf(0,flash-delta)
+	recoil = move_toward(recoil,0,delta*4)
+	dip = move_toward(dip,0,delta*5)
 	contact_cooldown = maxf(0,contact_cooldown-delta)
 	_update_waves(delta)
 	_update_rocks(delta)
 	if state == "dead":
+		kneel_amount = move_toward(kneel_amount,1,delta/0.4)
+		_land_check()
 		_pose(delta)
 		_place_platform(delta)
 		return
@@ -164,11 +248,17 @@ func _physics_process(delta: float) -> void:
 	match state:
 		"idle":
 			# Turn only when the player is clearly to one side, so riding the back keeps the weakpoint still.
-			if absf(dx) > t("turn_distance"): facing = int(signf(dx))
+			if absf(dx) > t("turn_distance") and step_u < 0: facing = int(signf(dx))
 			cooldown -= delta
-			if absf(dx) > t("golem_attack_range")*0.5:
-				position.x = clampf(position.x+facing*t("golem_walk_speed")*delta,world.golem_margin(),world.arena_size.x-world.golem_margin())
-			if cooldown <= 0 and absf(dx) <= t("golem_attack_range"):
+			var want: bool = absf(dx) > t("golem_attack_range")*0.5 and kneel_amount <= 0 and t("golem_walk_speed") > 0
+			if step_u < 0 and want:
+				step_u = 0
+				step_from = position.x
+				step_dir = facing
+				step_landed = false
+			if step_u >= 0: _advance_step(delta)
+			walk_blend = move_toward(walk_blend,1.0 if want or step_u >= 0 else 0.0,delta/0.3)
+			if cooldown <= 0 and absf(dx) <= t("golem_attack_range") and step_u < 0 and kneel_amount <= 0:
 				var options: Array = ["slam","stomp","sweep"]
 				options.erase(last_attack)
 				begin_attack(forced_attack if forced_attack != "" else options[rng.randi_range(0,options.size()-1)])
@@ -178,6 +268,8 @@ func _physics_process(delta: float) -> void:
 			if clock >= _total_time():
 				_end_attack()
 		"kneel":
+			walk_blend = 0
+			_land_check()
 			kneel_left -= delta
 			if kneel_left <= 0:
 				state = "idle"
@@ -185,11 +277,32 @@ func _physics_process(delta: float) -> void:
 				weak_hits = 0
 				stagger = 0
 	var kneel_target: float = 1.0 if state == "kneel" else 0.0
-	kneel_amount = move_toward(kneel_amount,kneel_target,delta/(0.25 if kneel_target > 0 else 0.4))
+	kneel_amount = move_toward(kneel_amount,kneel_target,delta/(0.4 if kneel_target > 0 else 0.7))
 	shake_left = maxf(0,shake_left-delta)
 	_pose(delta)
 	_place_platform(delta)
 	_contact()
+
+# Heavy stride: lurch forward, plant the foot (shake + dust), pause, repeat.
+func _advance_step(delta: float) -> void:
+	step_u += delta/t("golem_step_time")
+	var stride: float = t("golem_walk_speed")*t("golem_step_time")
+	position.x = clampf(step_from+step_dir*stride*step_progress(),world.golem_margin(),world.arena_size.x-world.golem_margin())
+	if not step_landed and step_u >= STEP_LAND:
+		step_landed = true
+		dip = 1
+		Feedback.shake_strength = maxf(Feedback.shake_strength,t("footstep_shake"))
+		world.fx_dust(foot_position(swing_side()),6)
+	if step_u >= 1:
+		step_u = -1
+		step_index += 1
+
+func _land_check() -> void:
+	if landed or kneel_amount < 1: return
+	landed = true
+	Feedback.shake_strength = maxf(Feedback.shake_strength,10)
+	world.freeze(3)
+	for x: float in [-60.0,-20.0,20.0,60.0,100.0]: world.fx_dust(Vector2(position.x+facing*x,world.floor_y),5)
 
 func _total_time() -> float:
 	var total: float = 0
@@ -201,6 +314,7 @@ func begin_attack(id: String) -> void:
 	attack_id = id
 	last_attack = id
 	state = "attack"
+	walk_blend = 0
 	clock = 0
 	impacted = false
 	damage_dealt = false
@@ -286,6 +400,11 @@ func _update_rocks(delta: float) -> void:
 				if box.grow(t("rock_radius")).has_point(next): hit_golem = true
 			if hit_golem and state != "dead":
 				world.log_data.rock_hits += 1
+				recoil = 0.8
+				Feedback.shake_strength = maxf(Feedback.shake_strength,5)
+				world.freeze(int(t("hitstop_frames")))
+				world.fx_spark(next,Color(1,0.7,0.3),10,220)
+				world.fx_text(next+Vector2(0,-24),"돌 명중 %d" % int(t("rock_damage_to_golem")),Color(1,0.75,0.35),18)
 				take_damage(t("rock_damage_to_golem"))
 				add_stagger(t("rock_stagger"))
 				_remove_rock(rock)
@@ -332,6 +451,8 @@ func on_bashed(target: Node2D, direction: Vector2) -> void:
 		"fist":
 			target.set_open(false)
 			flash = 0.15
+			recoil = 0.5
+			world.fx_text(target.global_position+Vector2(0,-30),"휘청!",Color(1,0.8,0.4),16)
 			add_stagger(t("fist_bash_stagger"))
 		"arm":
 			target.set_open(false)
@@ -353,6 +474,8 @@ func take_damage(amount: float) -> void:
 	flash = 0.12
 	if hp <= 0:
 		state = "dead"
+		landed = false
+		step_u = -1
 		hand.set_open(false)
 		world.round_end("win")
 
@@ -362,6 +485,9 @@ func _check_kneel() -> void:
 		hand.set_open(false)
 		state = "kneel"
 		attack_id = ""
+		step_u = -1
+		landed = false
+		world.fx_text(weak_center()+Vector2(-40,-40),"쓰러진다!",Color(1,0.9,0.5),22)
 		kneel_left = t("kneel_duration")
 		kneels += 1
 		world.log_data.kneels += 1
@@ -374,6 +500,7 @@ func receive_player_hit(rect: Rect2) -> String:
 	if closest.distance_to(weak) <= t("weak_radius") and weak_open():
 		weak_hits += 1
 		world.log_data.weak_hits += 1
+		recoil = 1.0
 		take_damage(t("weak_hit_damage"))
 		_check_kneel()
 		return "weak"
@@ -393,7 +520,8 @@ func _place_platform(delta: float) -> void:
 	shape.disabled = platform_off > 0 or state == "dead"
 	var player: GatePlayer = world.player
 	var feet: float = player.position.y+player.body_size.y/2
-	var riding: bool = player.is_on_floor() and absf(feet-top.y) < 10 and absf(player.position.x-top.x) < platform_shape.size.x/2+player.body_size.x/2
+	# No is_on_floor: footfall dips briefly lift the rider off without ending the ride.
+	var riding: bool = absf(feet-top.y) < 14 and player.velocity.y >= 0 and absf(player.position.x-top.x) < platform_shape.size.x/2+player.body_size.x/2
 	ride_time = ride_time+delta if riding else 0.0
 	if riding and ride_time >= t("shake_off_time"):
 		ride_time = 0
@@ -407,14 +535,24 @@ func on_platform() -> bool:
 	var feet: float = player.position.y+player.body_size.y/2
 	return absf(feet-top_y()) < 12 and absf(player.position.x-platform.global_position.x) < platform_shape.size.x/2+player.body_size.x/2
 
+# Brushing the golem only pushes; staying inside it for contact_grace seconds hurts.
 func _contact() -> void:
-	if contact_cooldown > 0 or on_platform() or state == "dead": return
+	var delta: float = get_physics_process_delta_time()
+	if on_platform() or state in ["dead","kneel"] or kneel_amount > 0:
+		overlap_time = 0
+		return
 	var rect: Rect2 = world.player_rect()
-	for box: Rect2 in body_rects():
-		if box.intersects(rect):
-			contact_cooldown = t("contact_interval")
-			world.hurt_player(t("contact_damage"),position.x)
-			return
+	var touching: bool = false
+	for box: Rect2 in body_rects(): if box.intersects(rect): touching = true
+	if not touching:
+		overlap_time = 0
+		return
+	overlap_time += delta
+	var player: GatePlayer = world.player
+	if player.is_on_floor(): player.position.x += signf(player.position.x-position.x+0.01)*90*delta
+	if overlap_time >= t("contact_grace") and contact_cooldown <= 0:
+		contact_cooldown = t("contact_interval")
+		world.hurt_player(t("contact_damage"),position.x)
 
 func _process(_delta: float) -> void:
 	var tint: Color = Color.WHITE
@@ -431,8 +569,16 @@ func _draw() -> void:
 		var weak: Vector2 = weak_center()
 		var r: float = t("weak_radius")
 		var open: bool = weak_open()
-		draw_circle(weak,r,Color(1,0.85,0.3,0.95) if open else Color(0.55,0.45,0.3,0.8))
-		if open: draw_arc(weak,r+4+2*sin(Time.get_ticks_msec()/80.0),0,TAU,32,Color(1,0.95,0.6),2)
+		var crystal: PackedVector2Array = PackedVector2Array([weak+Vector2(0,-r*1.2),weak+Vector2(r*0.8,0),weak+Vector2(0,r*0.9),weak+Vector2(-r*0.8,0)])
+		draw_colored_polygon(crystal,Color(1,0.85,0.3,0.95) if open else Color(0.45,0.4,0.35,0.9))
+		draw_polyline(crystal+PackedVector2Array([crystal[0]]),Color(1,1,0.8) if open else Color(0.25,0.22,0.2),2)
+		if open:
+			var pulse: float = sin(Time.get_ticks_msec()/80.0)
+			draw_arc(weak,r+6+3*pulse,0,TAU,32,Color(1,0.95,0.6),3)
+			var left: float = 1.0 if kneel_amount > 0.5 else clampf(1-(world.game_time-world.last_bash_time)/maxf(t("weak_open_after_bash"),0.01),0,1)
+			draw_arc(weak,r+12,-PI/2,-PI/2+TAU*left,32,Color(1,1,1,0.8),3)
+			var tip: Vector2 = weak+Vector2(0,-r-30+4*pulse)
+			draw_colored_polygon(PackedVector2Array([tip+Vector2(-9,-10),tip+Vector2(9,-10),tip]),Color(1,0.9,0.4))
 	for wave: Dictionary in waves:
 		draw_rect(Rect2(wave.x-10,world.floor_y-t("shockwave_height"),20,t("shockwave_height")),Color(0.9,0.75,0.5,0.85))
 	if state == "attack" and clock < segments[0][0]:

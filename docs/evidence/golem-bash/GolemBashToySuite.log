@@ -1,4 +1,5 @@
 Godot Engine v4.6.stable.official.89cea1439 - https://godotengine.org
 
-GOLEM_BASH_REACH head_top=32.0 weak_y=150.0 floor=352.0
-GOLEM_BASH_RESULT checks=61 failures=0
+GOLEM_BASH_REACH head_top=32.0 weak_y=154.2 floor=352.0
+GOLEM_BASH_AUTO_AIM closest=1 above=true
+GOLEM_BASH_RESULT checks=63 failures=0
