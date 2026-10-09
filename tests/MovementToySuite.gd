@@ -155,6 +155,11 @@ func _ready() -> void:
 	world.player.controls._pressed_edges = {&"dash":true}
 	world.motion.tick(1.0/60)
 	check(world.player.dash_uses == 2 and world.player.state != GatePlayer.State.DASH,"third air dash denied")
+	world.player.controls._pressed_edges = {&"attack":true}
+	world.swing_cooldown = 0
+	world._swing(1.0/60)
+	check(world.swing_time >= 0 and world.slash_age >= 0 and world.swing_kind != "","attack swings in movement rooms")
+	world.player.controls._pressed_edges.clear()
 	world.write_log()
 	world.write_log()
 	var log_path: String = OS.get_environment("MOVEMENT_TEST_LOG")
