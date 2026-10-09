@@ -10,12 +10,34 @@
 - 화면 속 주인공은 귀까지 약 128px다. 원화(384px)의 토시 무늬·옷 주름은 거의 안 보인다. 그래서 디자인 판단은 항상 **게임 크기로 줄여서** 한다.
 - 부품을 뽑은 뒤 디자인을 바꾸면 부품 시트를 다시 뽑아야 한다. 그래서 **디자인 확정 → 부품 시트** 순서를 지킨다.
 
+## 화풍 기준 — 골렘에 맞춘다 (사용자 요청)
+
+지금 여우 원화와 골렘은 그림체가 다르다(`hero_refs/style_compare.png`: 왼쪽 원화, 오른쪽 굵은 외곽선·색 단순화를 기계적으로 흉내 낸 것, 게임 크기).
+
+| | 골렘 (기준) | 지금 여우 원화 |
+|---|---|---|
+| 외곽선 | 굵고 짙은 거의 검정 갈색, 두께 일정 | 가늘고 주황·갈색, 털 끝마다 끊김 |
+| 칠 | 면마다 2~3단 명암, 경계 또렷 | 부드러운 그라데이션, 털 가닥 묘사 |
+| 색 | 탁하고 차분함 | 밝고 맑음 |
+| 디테일 | 큰 덩어리 위주 | 잔털·주름 많음 |
+
+맞추는 규칙:
+
+- **외곽선:** 골렘처럼 짙은 고동색(약 #26201c) 굵은 선. 기준은 **게임 화면에서 같은 두께로 보이는 것**. 주인공 그림이 골렘보다 약 2.4배 작게 줄어드니, 원화 기준 외곽선이 골렘 부품 원본보다 2배 이상 굵어야 한다(384px 키 원화면 8~10px).
+- **칠:** 2~3단 명암, 털은 가닥 대신 큰 털 뭉치 몇 개로. 꼬리·귀 끝은 뭉치 실루엣으로 표현.
+- **색:** 크림 털·남색 철릭은 유지하되 채도를 살짝 낮춰 배경(탁한 밀림)과 골렘 사이에서 튀지 않게. 대신 허리띠 주홍과 여우불은 강조색으로 남긴다.
+- **비율:** 귀 포함 약 3등신 귀여운 비율은 유지(골렘의 둔중함과 대비가 됨).
+- 배경은 사실적인 회화체라 앞쪽 캐릭터 둘이 굵은 외곽선으로 떠 보이는 게 맞다. 배경은 바꾸지 않는다.
+
+Codex에 줄 때는 **골렘 부품 그림을 화풍 기준으로 함께 첨부**한다(`assets/bosses/golem/parts/torso.png`, `head.png`).
+
 ## 단계
 
 | 단계 | 하는 일 | 누가 | 사용자가 할 일 |
 |---|---|---|---|
 | 0 | 지금 옆모습 한 장을 게임 속 네모 자리에 임시로 붙임(좌우 뒤집기만, 정수리=판정 윗변) | Claude | 플레이하며 크기·읽힘 확인 |
-| 1 | 디자인 시안판: 철부채 3안, 여우불 2안, 털 톤 2안 | Codex 생성 → Claude가 128px 축소본과 같이 정리 | 하나씩 고르기 |
+| 1a | 화풍 시안: 여우를 골렘 화풍으로 다시 그린 옆모습 2안 | Codex 생성 → Claude가 골렘과 게임 크기로 나란히 정리 | 하나 고르기 |
+| 1b | 디자인 시안판: 철부채 3안, 여우불 2안, 털 톤 2안 (1a 화풍으로) | Codex 생성 → Claude가 128px 축소본과 같이 정리 | 하나씩 고르기 |
 | 2 | 확정 디자인 옆모습 1장(철부채 든 대기 자세) | Codex | 승인 |
 | 3 | 부품 시트 1장(19부품) | Codex | 없음(Claude 검수) |
 | 4 | 부품 자르기·관절점·리그 씬 | Claude | 없음 |
@@ -34,7 +56,19 @@
 - 저장 위치: `assets/hero/raw/` (게임이 아직 안 읽으니 `.gdignore`를 같이 둔다).
 - 코드·수치·테스트는 건드리지 않는다. 완료되면 HANDOFF.md "현재 상태"에 파일 이름만 한 줄 추가.
 
-### 1단계 — 디자인 시안판 `assets/hero/raw/design_board.png`
+### 1a단계 — 화풍 시안 `assets/hero/raw/style_A.png`, `style_B.png`
+
+첨부: `docs/plan/hero_refs/side.png`(캐릭터), `assets/bosses/golem/parts/torso.png`와 `head.png`(화풍 기준).
+
+```
+Redraw the attached fennec fox character (first image) in the art style of the attached stone golem parts (other images): thick even dark brown-black outlines, simple cel shading with two or three tone steps and crisp edges, slightly muted colors, large readable shapes instead of fine detail. Keep the character design exactly: pale cream fur with lighter chest, muzzle and tail tip, huge ears, navy cheollik coat with cream collar, rust-orange sash, small black leather shoulder pads and bracers, black trousers, white leg wraps, black shoes, cute proportions about three heads tall without ears. Fur drawn as a few big tufts, not strands. Strict side view facing right, standing idle, full body, flat light gray background, no text.
+```
+
+스타일 A는 위 그대로, 스타일 B는 문장 끝에 `Slightly thinner outlines and a little softer shading, halfway between the two styles.`를 붙인다.
+
+### 1b단계 — 디자인 시안판 `assets/hero/raw/design_board.png`
+
+1a에서 고른 그림을 캐릭터 첨부로 쓰고 골렘 부품도 같이 첨부한다. 프롬프트 첫 문장 끝에 `Match the golem art style: thick dark outlines, two to three tone cel shading.`을 붙인다.
 
 ```
 Design exploration board for a 2D side-scrolling game hero, using the attached character exactly (same face, same pale cream fennec fur, huge ears, navy cheollik coat with cream collar, rust-orange sash, black leather shoulder pads and bracers, white leg wraps, black shoes). Same painterly style and outline as the attached image. Flat light gray background, no text.
@@ -61,12 +95,12 @@ All figures same scale, evenly spaced, nothing overlapping.
 
 ## Claude 검수 기준
 
-- **1·2단계:** 128px(실제 화면 크기)로 줄인 그림에서 실루엣으로 여우·부채·방향이 읽히는가. 귀·꼬리·부채가 서로 겹쳐 덩어리지지 않는가.
+- **1·2단계:** 골렘 부품과 **같은 게임 배율로 나란히 놓고** 외곽선 두께·명암 단계·채도가 같은 게임으로 보이는가. 128px(실제 화면 크기)로 줄인 그림에서 실루엣으로 여우·부채·방향이 읽히는가. 귀·꼬리·부채가 서로 겹쳐 덩어리지지 않는가.
 - **3단계:** 부품을 다시 조립했을 때 2단계 그림과 겹쳐서 크게 어긋나지 않는가(얼굴·옷 색, 배율). 실패하면 무엇이 틀렸는지 적어서 Codex에 재생성 요청.
 - **5단계:** 발이 미끄러지지 않는가, 판정 상자(30×46) 안에 몸이 들어오는가, 휘두르기 그림이 공격 판정(66×56)과 맞는가.
 
 ## 사용자에게 받을 결정
 
 1. 0단계(임시 부착)를 먼저 할지 — 추천
-2. 1단계 시안판에서 부채·여우불·털 톤 고르기
+2. 1a 화풍 A/B 고르기, 1b 시안판에서 부채·여우불·털 톤 고르기
 3. 5단계 동작을 플레이로 판정
