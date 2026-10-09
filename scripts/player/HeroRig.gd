@@ -184,7 +184,6 @@ func _process(delta: float) -> void:
 	if s.hurt_start: hurt_t = 0.0
 	if override.is_empty():
 		if s.dash and not was_dash: _dust("puff",Vector2(-s.dash_dir.x*14.0,s.height*0.5-8),s.dash_dir.x < 0)
-		if s.floor and not was_floor and fall_speed > 260: _dust("land",Vector2(0,s.height*0.5-6),false)
 	was_dash = s.dash
 	was_floor = s.floor
 	fall_speed = s.vel.y
@@ -344,10 +343,10 @@ func _secondary(delta: float, s: Dictionary) -> void:
 	bones["skirt"].rotation = springs.skirt[0]
 	bones["sash"].rotation = springs.sash[0]
 	var head: Vector2 = to_local(bones["neck"].global_position)
-	var air_left: int = s.get("air_left",2)
 	for i: int in wisps.size():
 		var want: Vector2 = head+Vector2(-290-30*i,-400+170*i)+Vector2(0,sin(clock*3.0+i*1.7)*12.0)
 		wisp_pos[i] = want if delta <= 0 else wisp_pos[i].lerp(want,1.0-exp(-delta*(6.0-i*1.5)))
 		wisps[i].position = wisp_pos[i]
-		wisps[i].visible = i < air_left
+		# Fox-fire wisps are off (user verdict 2026-10-10); HERO_FRAMES_PLAN drops them.
+		wisps[i].visible = false
 		wisps[i].scale = Vector2(1,1+sin(clock*9.0+i)*0.06)/SHEET_SCALE*0.9

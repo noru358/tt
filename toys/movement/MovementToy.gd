@@ -28,8 +28,18 @@ var logged: bool = false
 var started: int
 var log_data: Dictionary
 var room_filter: PackedStringArray = []
+# Fan swing (same kinds and timing as the golem bash toy) so the hero can attack in every room.
+const SWING_ACTIVE: float = 0.1
+const SWING_COOLDOWN: float = 0.28
+const SLASH_TEXTURE: Texture2D = preload("res://assets/hero/fx/slash.png")
+var swing_time: float = -1
+var swing_kind: String = ""
+var swing_cooldown: float = 0
+var slash_age: float = -1
+var slash_direction: Vector2 = Vector2.RIGHT
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	get_tree().auto_accept_quit = false
 	DisplayServer.window_set_title("점프 장난감 — 대시 방향 입력순서 수정판")
 	if not OS.get_environment("MOVEMENT_TEST_TUNING").is_empty(): tuning_path = OS.get_environment("MOVEMENT_TEST_TUNING")
@@ -155,6 +165,7 @@ func _orb(at: Vector2, kind: String) -> Node2D:
 
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(player) or panel.visible: return
+	_swing(delta)
 	for turret: Dictionary in turrets:
 		turret.clock += delta
 		if turret.clock >= float(tuning.turret_interval):
@@ -323,8 +334,32 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_F7: _command("다시 읽기 F7")
 		KEY_F8: _command("이전 Shift+F8" if event.shift_pressed else "다음 F8")
 
+func _swing(delta: float) -> void:
+	swing_cooldown = maxf(0,swing_cooldown-delta)
+	if slash_age >= 0:
+		slash_age += delta
+		if slash_age > 0.18: slash_age = -1
+	if player.controls.just_pressed(&"attack") and swing_cooldown <= 0 and not respawning and not is_instance_valid(motion.target):
+		var vertical: float = player.controls.vertical()
+		swing_kind = "up" if vertical < 0 else ("down" if vertical > 0 and not player.is_on_floor() else "side")
+		swing_time = 0
+		swing_cooldown = SWING_COOLDOWN
+		slash_age = 0
+		slash_direction = Vector2.UP if swing_kind == "up" else (Vector2.DOWN if swing_kind == "down" else Vector2(player.facing,0))
+		Sfx.play("swing")
+	if swing_time >= 0:
+		swing_time += delta
+		if swing_time >= SWING_ACTIVE: swing_time = -1
+
 func _draw() -> void:
 	if not is_instance_valid(player): return
+	if slash_age >= 0:
+		var fade: float = 1-slash_age/0.18
+		var span: float = 56.0*1.3/SLASH_TEXTURE.get_height()*(0.85+0.3*(1-fade))
+		var reach: Vector2 = slash_direction*(player.body_size.x/2+33 if slash_direction.y == 0 else player.body_size.y/2+33)
+		draw_set_transform(player.position+reach,slash_direction.angle()-PI,Vector2.ONE*span)
+		draw_texture(SLASH_TEXTURE,-SLASH_TEXTURE.get_size()/2,Color(1,1,1,fade))
+		draw_set_transform(Vector2.ZERO)
 	for item: Dictionary in triggers:
 		var color: Color = Color.ORANGE_RED if item.kind == "^" else (Color.GOLD if item.kind == "G" else Color.SEA_GREEN)
 		var half: float = float(tuning.tile_size)/2
