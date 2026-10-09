@@ -223,6 +223,7 @@ func round_end(result: String) -> void:
 	ended_at = Time.get_ticks_msec()
 	result_label.text = ("승리!" if result == "win" else "쓰러졌다") + "   %.1f초 · 튕기기 %d · 약점 %d · 무릎 %d" % [log_data.duration_sec,log_data.bash_count,log_data.weak_hits,log_data.kneels]
 	result_panel.show()
+	if result == "win": Sfx.play("win")
 	round_finished.emit(result)
 
 func _write(entry: Dictionary) -> void:
@@ -254,8 +255,10 @@ func hurt_player(amount: float, from_x: float) -> void:
 		if game_time-dodge_text_at > 0.5:
 			dodge_text_at = game_time
 			fx_text(player.position+Vector2(-16,-30),"회피!",Color(0.5,1,1),14)
+			Sfx.play("dodge")
 		return
 	player.hp -= amount
+	Sfx.play("hurt")
 	freeze(int(tuning.hitstop_frames)+2)
 	Feedback.shake_strength = maxf(Feedback.shake_strength,8)
 	hurt_overlay.color.a = 0.35
@@ -288,6 +291,7 @@ func _physics_process(delta: float) -> void:
 		swing_time = 0
 		swing_hit = false
 		swing_cooldown = float(tuning.attack_cooldown)
+		Sfx.play("swing")
 	if swing_time >= 0:
 		swing_time += delta
 		swing_rect = _swing_rect()
@@ -308,6 +312,7 @@ func _physics_process(delta: float) -> void:
 	if player.position.y > arena_size.y: round_end("death")
 
 func _hit_feedback(result: String) -> void:
+	Sfx.play("weak_hit" if result == "weak" else "body_hit")
 	if result == "weak":
 		var at: Vector2 = golem.weak_center()
 		freeze(int(tuning.hitstop_frames)+2)

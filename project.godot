@@ -23,6 +23,7 @@ GameState="*res://autoload/GameState.gd"
 Tuning="*res://autoload/Tuning.gd"
 Telemetry="*res://autoload/Telemetry.gd"
 Feedback="*res://autoload/Feedback.gd"
+Sfx="*res://autoload/Sfx.gd"
 
 [display]
 
