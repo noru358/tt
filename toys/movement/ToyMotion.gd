@@ -63,6 +63,7 @@ func launch() -> void:
 	launch_origin = target.global_position
 	launch_direction = aim
 	target.bash(-aim)
+	Sfx.play("launch")
 	cooldowns[target.get_instance_id()] = Time.get_ticks_msec() + t("bash_same_target_cooldown") * 1000
 	player.dash_uses = 0
 	player.dash_cooldown = 0
@@ -111,6 +112,7 @@ func tick(delta: float) -> void:
 		launch_age = -1
 		coast_remaining = 0
 		Engine.time_scale = t("bash_time_scale") * Feedback.base_speed
+		Sfx.play("grab")
 	was_held = held
 	if is_instance_valid(target):
 		var direction: Vector2 = Vector2.ZERO
@@ -153,6 +155,7 @@ func tick(delta: float) -> void:
 			player.dash_uses = 0
 			player.dash_cooldown = 0
 			world.log_data.wall_jump_count += 1
+			Sfx.play("wall_jump")
 		elif player.is_on_floor():
 			jump_pending = 0
 			player.velocity.y = -t("jump_velocity")
@@ -160,6 +163,7 @@ func tick(delta: float) -> void:
 			launch_age = -1
 			coast_remaining = 0
 			dash_pending = 0
+			Sfx.play("jump")
 	dash_pending = maxf(0,dash_pending-delta)
 	if player.controls.just_pressed(&"dash"):
 		dash_received += 1
@@ -183,6 +187,7 @@ func tick(delta: float) -> void:
 		coast_remaining = 0
 		player._begin_dash(pending_dash_direction)
 		dash_started += 1
+		Sfx.play("dash")
 		dash_note = direction_label(player.dash_direction)
 		player.dash_time = t("dash_duration")
 		player.dash_speed = t("dash_distance") / player.dash_time

@@ -41,6 +41,7 @@ var clock: float = 0
 var segments: Array = []
 var impacted: bool = false
 var damage_dealt: bool = false
+var swept: bool = false
 var kneel_left: float = 0
 var kneel_amount: float = 0
 var ride_time: float = 0
@@ -295,6 +296,7 @@ func _advance_step(delta: float) -> void:
 		dip = 1
 		Feedback.shake_strength = maxf(Feedback.shake_strength,t("footstep_shake"))
 		world.fx_dust(foot_position(swing_side()),6)
+		Sfx.play("golem_step")
 	if step_u >= 1:
 		step_u = -1
 		step_index += 1
@@ -302,6 +304,7 @@ func _advance_step(delta: float) -> void:
 func _land_check() -> void:
 	if landed or kneel_amount < 1: return
 	landed = true
+	Sfx.play("golem_land")
 	Feedback.shake_strength = maxf(Feedback.shake_strength,10)
 	world.freeze(3)
 	for x: float in [-60.0,-20.0,20.0,60.0,100.0]: world.fx_dust(Vector2(position.x+facing*x,world.floor_y),5)
@@ -320,6 +323,8 @@ func begin_attack(id: String) -> void:
 	clock = 0
 	impacted = false
 	damage_dealt = false
+	swept = false
+	Sfx.play("golem_windup")
 	var hold: float = 0.3
 	if id == "slam": hold = t("fist_bash_window")
 	elif id == "sweep": hold = maxf(t("arm_bash_window"),SWEEP_DAMAGE_TIME)
@@ -341,6 +346,9 @@ func _attack_tick() -> void:
 	if attack_id == "sweep":
 		# The arm is a springboard while it swings and briefly after.
 		hand.kind = "arm"
+		if not swept and clock >= segments[0][0]:
+			swept = true
+			Sfx.play("golem_sweep")
 		hand.set_open(clock >= segments[0][0] and clock < hold_end)
 		if clock >= segments[0][0] and clock < impact+SWEEP_DAMAGE_TIME and not damage_dealt:
 			if hit_rect().intersects(world.player_rect()):
@@ -349,6 +357,7 @@ func _attack_tick() -> void:
 	if not impacted and clock >= impact:
 		impacted = true
 		Feedback.shake_strength = maxf(Feedback.shake_strength,6.0)
+		if attack_id != "sweep": Sfx.play("golem_"+attack_id)
 		if attack_id == "slam":
 			if fist_center().distance_to(player.position) < SLAM_RADIUS+player.body_size.y/2:
 				world.hurt_player(t("player_hit_damage"),fist_center().x)
@@ -356,6 +365,7 @@ func _attack_tick() -> void:
 			waves.append({"x":position.x,"dir":-1,"hit":false})
 			waves.append({"x":position.x,"dir":1,"hit":false})
 			_spawn_rocks()
+			Sfx.play("rock_pop")
 	if attack_id == "slam":
 		hand.kind = "fist"
 		hand.set_open(clock >= impact and clock < hold_end)
@@ -402,6 +412,7 @@ func _update_rocks(delta: float) -> void:
 				if box.grow(t("rock_radius")).has_point(next): hit_golem = true
 			if hit_golem and state != "dead":
 				world.log_data.rock_hits += 1
+				Sfx.play("rock_hit")
 				recoil = 0.8
 				Feedback.shake_strength = maxf(Feedback.shake_strength,5)
 				world.freeze(int(t("hitstop_frames")))
@@ -479,6 +490,7 @@ func take_damage(amount: float) -> void:
 		landed = false
 		step_u = -1
 		hand.set_open(false)
+		Sfx.play("golem_die")
 		world.round_end("win")
 
 func _check_kneel() -> void:
@@ -491,6 +503,7 @@ func _check_kneel() -> void:
 		landed = false
 		world.fx_text(weak_center()+Vector2(-40,-40),"쓰러진다!",Color(1,0.9,0.5),22)
 		kneel_left = t("kneel_duration")
+		Sfx.play("golem_kneel")
 		kneels += 1
 		world.log_data.kneels += 1
 
@@ -529,6 +542,7 @@ func _place_platform(delta: float) -> void:
 		ride_time = 0
 		platform_off = 0.5
 		shake_left = 0.4
+		Sfx.play("golem_shake")
 		player.velocity = Vector2(signf(player.position.x-top.x+0.01)*280,-360)
 		world.motion.launch_age = -1
 

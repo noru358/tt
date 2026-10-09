@@ -166,10 +166,13 @@ func _physics_process(delta: float) -> void:
 		var rect: Rect2 = Rect2(trigger.position-Vector2.ONE*float(tuning.tile_size)/2,Vector2.ONE*float(tuning.tile_size))
 		if rect.intersects(Rect2(player.position-player.body_size/2,player.body_size)):
 			match trigger.kind:
-				"C": checkpoint = trigger.position
+				"C":
+					if checkpoint != trigger.position: Sfx.play("checkpoint")
+					checkpoint = trigger.position
 				"^":
 					if not Feedback.invincible: respawn()
 				"G":
+					Sfx.play("goal")
 					if not room_filter.is_empty() and room_index == rooms.size()-1:
 						rooms_finished.emit()
 						return
@@ -204,6 +207,7 @@ func respawn() -> void:
 	if respawning: return
 	respawning = true
 	log_data.deaths += 1
+	Sfx.play("death")
 	motion.cancel()
 	respawn_generation += 1
 	var generation: int = respawn_generation
