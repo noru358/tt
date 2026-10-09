@@ -88,57 +88,76 @@ def thud(sec, f0, f1, seed, gain=1.0, grit=0.5, grit_cut=900):
     return mix(body, dirt)
 
 
-def crack(sec, seed, cutoff=3000, gain=0.6):
-    return shaped(highpass(noise(sec, seed), cutoff), env(int(RATE * sec), 0.001, 6), gain)
-
-
 def whoosh(sec, seed, c0, c1, gain=0.5, attack=0.3):
     n = int(RATE * sec)
     e = env(n, sec * attack, 2)
     return shaped(lowpass(highpass(noise(sec, seed), 200), c0, c1), e, gain * 3)
 
 
-def chime(sec, freqs, gain=0.3, decay=3):
-    tracks = []
-    for j, f in enumerate(freqs):
-        tracks.append(shaped(sweep(sec, f, f), env(int(RATE * sec), 0.002, decay), gain / (1 + 0.4 * j)))
-    return mix(*tracks)
+def band(track, lo, hi):
+    return lowpass(highpass(track, lo), hi)
 
 
-def arpeggio(notes, step, sec, shape='tri', gain=0.25):
-    tracks = [offset(shaped(sweep(sec, f, f, shape), env(int(RATE * sec), 0.004, 2), gain), i * step) for i, f in enumerate(notes)]
-    return mix(*tracks)
+def grains(sec, count, seed, lo=300, hi=2500, gain=0.4, grain=0.012):
+    """Debris: many tiny noise clicks scattered over time, falling off. Gravel, not a ring."""
+    rng = random.Random(seed)
+    out = silence(sec)
+    for _ in range(count):
+        at = int(RATE * sec * rng.random() ** 1.8)
+        g = band(noise(grain * rng.uniform(0.5, 1.5), rng.random()), lo, hi)
+        g = shaped(g, env(len(g), 0.0005, 3), gain * rng.uniform(0.3, 1.0) * (1 - at / len(out)))
+        for i, v in enumerate(g):
+            if at + i < len(out):
+                out[at + i] += v
+    return out
+
+
+def punch(sec, f0, f1, seed, gain=1.0, cut=1800):
+    """Muffled impact on a body: short low thump plus a lowpassed slap of noise, no ring."""
+    n = int(RATE * sec)
+    body = shaped(sweep(sec, f0, f1, curve=0.4), env(n, 0.002, 3), gain)
+    slap = shaped(lowpass(noise(sec, seed), cut, 300), env(n, 0.001, 6), gain * 0.9)
+    return mix(body, slap)
+
+
+def swell(sec, freqs, gain=0.2, attack=0.35):
+    """Soft pad: sines with a slow attack and gentle tail, for rewards (no beeps)."""
+    n = int(RATE * sec)
+    e = env(n, sec * attack, 1.6)
+    tracks = [shaped(sweep(sec, f, f * 1.003), e, gain / (1 + 0.5 * j)) for j, f in enumerate(freqs)]
+    return lowpass(mix(*tracks), 2500)
 
 
 SOUNDS = {
-    # Golem
-    'golem_step': lambda: thud(0.42, 75, 32, 1, gain=0.9, grit=0.6),
-    'golem_slam': lambda: mix(thud(0.7, 90, 28, 2, gain=1.0, grit=0.9, grit_cut=1500), crack(0.18, 3, 2500, 0.5)),
-    'golem_stomp': lambda: mix(thud(0.9, 70, 24, 4, gain=1.0, grit=1.0, grit_cut=700), offset(shaped(lowpass(noise(0.8, 5), 300), env(int(RATE * 0.8), 0.05, 2), 0.8), 0.05)),
-    'golem_windup': lambda: shaped(lowpass(noise(0.45, 6), 250, 900), env(int(RATE * 0.45), 0.3, 1.5), 1.6),
+    # Golem: stone and earth, all noise and low thumps.
+    'golem_step': lambda: mix(thud(0.42, 75, 32, 1, gain=0.9, grit=0.6), grains(0.35, 14, 101, 200, 1500, 0.25)),
+    'golem_slam': lambda: mix(thud(0.7, 90, 28, 2, gain=1.0, grit=0.9, grit_cut=1500), grains(0.6, 40, 102, 250, 2200, 0.5)),
+    'golem_stomp': lambda: mix(thud(0.9, 70, 24, 4, gain=1.0, grit=1.0, grit_cut=700), offset(shaped(lowpass(noise(0.8, 5), 300), env(int(RATE * 0.8), 0.05, 2), 0.8), 0.05), grains(0.7, 30, 103, 200, 1500, 0.4)),
+    'golem_windup': lambda: mix(shaped(lowpass(noise(0.45, 6), 250, 900), env(int(RATE * 0.45), 0.3, 1.5), 1.6), grains(0.45, 12, 104, 300, 1800, 0.15)),
     'golem_sweep': lambda: whoosh(0.5, 7, 300, 1400, gain=0.6, attack=0.45),
-    'golem_kneel': lambda: mix(shaped(lowpass(noise(0.9, 8), 1200, 200), env(int(RATE * 0.9), 0.01, 1.5), 0.7), offset(crack(0.12, 9, 2000, 0.4), 0.05), offset(crack(0.1, 10, 2500, 0.3), 0.22)),
-    'golem_land': lambda: thud(1.0, 65, 20, 11, gain=1.0, grit=1.0, grit_cut=600),
-    'golem_die': lambda: mix(thud(1.6, 55, 18, 12, gain=1.0, grit=1.2, grit_cut=800), *[offset(crack(0.15, 13 + i, 1800 + 300 * i, 0.35), 0.12 * i) for i in range(6)]),
+    'golem_kneel': lambda: mix(shaped(lowpass(noise(0.9, 8), 1200, 200), env(int(RATE * 0.9), 0.01, 1.5), 0.7), grains(0.9, 60, 105, 250, 2000, 0.45)),
+    'golem_land': lambda: mix(thud(1.0, 65, 20, 11, gain=1.0, grit=1.0, grit_cut=600), grains(0.8, 40, 106, 200, 1600, 0.4)),
+    'golem_die': lambda: mix(thud(1.6, 55, 18, 12, gain=1.0, grit=1.2, grit_cut=800), grains(1.6, 140, 107, 200, 2200, 0.5), offset(thud(0.6, 60, 25, 108, gain=0.7), 0.5)),
     'golem_shake': lambda: shaped(lowpass(noise(0.4, 20), 500), [abs(math.sin(i / RATE * 2 * math.pi * 14)) * e for i, e in enumerate(env(int(RATE * 0.4), 0.01, 1))], 1.4),
-    'rock_pop': lambda: mix(shaped(sweep(0.12, 300, 120), env(int(RATE * 0.12), 0.002, 3), 0.4), crack(0.08, 21, 1500, 0.3)),
-    'rock_hit': lambda: mix(thud(0.4, 140, 50, 22, gain=0.8, grit=0.8, grit_cut=2500), crack(0.2, 23, 2000, 0.6)),
-    # Player hits on the golem
-    'weak_hit': lambda: mix(chime(0.5, [1320, 1980, 2640], 0.35), crack(0.12, 24, 4000, 0.5), thud(0.2, 220, 90, 25, gain=0.4, grit=0.3)),
-    'body_hit': lambda: mix(thud(0.18, 160, 80, 26, gain=0.5, grit=0.7, grit_cut=1800), crack(0.06, 27, 2500, 0.25)),
+    'rock_pop': lambda: mix(punch(0.12, 140, 70, 21, gain=0.5, cut=1200), grains(0.2, 10, 109, 300, 1800, 0.3)),
+    'rock_hit': lambda: mix(thud(0.4, 120, 45, 22, gain=0.9, grit=0.9, grit_cut=1600), grains(0.45, 35, 110, 250, 2200, 0.55)),
+    # Player hits on stone: dull crunch, never a ring.
+    'weak_hit': lambda: mix(punch(0.3, 170, 60, 24, gain=0.9, cut=2200), grains(0.35, 45, 111, 400, 3500, 0.5), offset(thud(0.3, 90, 40, 112, gain=0.5, grit=0.4), 0.02)),
+    'body_hit': lambda: mix(punch(0.16, 150, 80, 26, gain=0.6, cut=1200), grains(0.15, 10, 113, 250, 1400, 0.25)),
     'swing': lambda: whoosh(0.14, 28, 1500, 4000, gain=0.25, attack=0.3),
-    # Player
-    'jump': lambda: shaped(sweep(0.1, 260, 520, 'tri'), env(int(RATE * 0.1), 0.003, 2), 0.25),
-    'wall_jump': lambda: mix(shaped(sweep(0.11, 330, 660, 'tri'), env(int(RATE * 0.11), 0.003, 2), 0.25), crack(0.04, 29, 1500, 0.2)),
+    # Player movement: air and footing.
+    'jump': lambda: shaped(band(noise(0.09, 40), 300, 1600), env(int(RATE * 0.09), 0.004, 3), 0.5),
+    'wall_jump': lambda: mix(shaped(band(noise(0.1, 41), 300, 1600), env(int(RATE * 0.1), 0.004, 3), 0.5), grains(0.08, 6, 114, 400, 2500, 0.25)),
     'dash': lambda: whoosh(0.2, 30, 2500, 700, gain=0.35, attack=0.1),
-    'dodge': lambda: mix(chime(0.35, [1760, 2637], 0.22, decay=2), whoosh(0.15, 31, 4000, 1500, gain=0.15, attack=0.1)),
-    'grab': lambda: mix(shaped(sweep(0.18, 900, 1800, 'tri'), env(int(RATE * 0.18), 0.002, 3), 0.25), crack(0.03, 32, 3000, 0.4)),
-    'launch': lambda: mix(shaped(sweep(0.22, 180, 700), env(int(RATE * 0.22), 0.002, 2), 0.35), whoosh(0.3, 33, 3500, 900, gain=0.35, attack=0.05)),
-    'hurt': lambda: mix(shaped(sweep(0.28, 520, 160, 'square'), env(int(RATE * 0.28), 0.002, 1.5), 0.16), crack(0.08, 34, 1200, 0.35)),
-    'death': lambda: mix(shaped(sweep(0.6, 440, 70, 'square'), env(int(RATE * 0.6), 0.002, 1.2), 0.14), crack(0.1, 35, 1000, 0.3)),
-    'checkpoint': lambda: arpeggio([784, 1175], 0.07, 0.3, gain=0.22),
-    'goal': lambda: arpeggio([523, 659, 784, 1047], 0.08, 0.35, gain=0.22),
-    'win': lambda: mix(arpeggio([392, 523, 659, 784, 1047], 0.11, 0.6, gain=0.22), offset(chime(1.0, [1047, 1568], 0.18, decay=2), 0.55)),
+    'dodge': lambda: mix(whoosh(0.22, 31, 5000, 1200, gain=0.4, attack=0.08), offset(whoosh(0.12, 42, 3000, 900, gain=0.2, attack=0.1), 0.06)),
+    'grab': lambda: mix(punch(0.1, 110, 60, 32, gain=0.5, cut=900), grains(0.06, 5, 115, 300, 1800, 0.2)),
+    'launch': lambda: mix(punch(0.15, 90, 45, 33, gain=0.6, cut=900), whoosh(0.32, 43, 3500, 900, gain=0.45, attack=0.05)),
+    'hurt': lambda: mix(punch(0.22, 130, 55, 34, gain=1.0, cut=1600), grains(0.1, 6, 116, 300, 1500, 0.2)),
+    'death': lambda: mix(punch(0.35, 110, 40, 35, gain=1.0, cut=1300), offset(whoosh(0.5, 44, 1200, 250, gain=0.35, attack=0.2), 0.08)),
+    # Rewards: soft swells instead of beeps.
+    'checkpoint': lambda: swell(0.6, [220, 330], gain=0.25, attack=0.25),
+    'goal': lambda: mix(swell(0.9, [196, 294, 392], gain=0.25, attack=0.3), whoosh(0.6, 45, 600, 3000, gain=0.15, attack=0.6)),
+    'win': lambda: mix(swell(2.2, [131, 196, 262, 330], gain=0.28, attack=0.3), thud(0.8, 60, 30, 117, gain=0.4, grit=0.3)),
 }
 
 

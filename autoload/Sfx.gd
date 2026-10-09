@@ -8,9 +8,9 @@ const MIX: Dictionary = {
 	"golem_step": [-7.0, 0.08], "golem_slam": [-1.0, 0.04], "golem_stomp": [-1.0, 0.04], "golem_windup": [-6.0, 0.05],
 	"golem_sweep": [-3.0, 0.05], "golem_kneel": [-2.0, 0.0], "golem_land": [-1.0, 0.0], "golem_die": [0.0, 0.0],
 	"golem_shake": [-4.0, 0.05], "rock_pop": [-8.0, 0.15], "rock_hit": [-2.0, 0.08], "weak_hit": [-2.0, 0.05],
-	"body_hit": [-5.0, 0.1], "swing": [-9.0, 0.12], "jump": [-8.0, 0.06], "wall_jump": [-7.0, 0.06], "dash": [-7.0, 0.08],
-	"dodge": [-4.0, 0.03], "grab": [-4.0, 0.03], "launch": [-4.0, 0.05], "hurt": [-2.0, 0.04], "death": [-3.0, 0.0],
-	"checkpoint": [-6.0, 0.0], "goal": [-4.0, 0.0], "win": [-2.0, 0.0],
+	"body_hit": [-4.0, 0.1], "swing": [-9.0, 0.12], "jump": [-5.0, 0.1], "wall_jump": [-4.0, 0.1], "dash": [-7.0, 0.08],
+	"dodge": [-6.0, 0.05], "grab": [-5.0, 0.05], "launch": [-4.0, 0.05], "hurt": [-2.0, 0.04], "death": [-3.0, 0.0],
+	"checkpoint": [-5.0, 0.0], "goal": [-4.0, 0.0], "win": [-3.0, 0.0],
 }
 var streams: Dictionary = {}
 var voices: Array[AudioStreamPlayer] = []
