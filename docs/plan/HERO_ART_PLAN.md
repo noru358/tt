@@ -113,6 +113,28 @@ All figures same scale, evenly spaced, nothing overlapping.
 
 - **부품 시트 통과.** 배경이 고른 단색(RGB 약 3,189,79)이라 색 거리로 19개가 정확히 나뉜다(크기 5000px² 이상 덩어리 정확히 19개).
 - **재조립:** 부품을 손으로 대충 맞춰 세운 그림을 확정 그림 옆에 놓으면 머리·귀·몸통·다리·부채 비율이 맞는다(`hero_refs/parts_reassembly.png`, 왼쪽 재조립·오른쪽 확정).
-- **코드에서 보정:** 꼬리는 시트에서 작게 나와 약 1.45배로 키우고 위로 세운다. 편 부채는 접은 부채보다 반경이 커서 약 0.66배. 매듭 부품 왼쪽의 허리띠 조각은 몸통 뒤에 깔려 안 보인다.
+- **코드에서 보정:** 꼬리는 시트에서 작게 나와 약 1.45배로 키우고 위로 세운다. 편 부채는 실제로 재 보니 반경(약 180)이 접은 부채 길이(약 205)와 거의 같아 약 1.1배면 된다. 매듭 부품 왼쪽의 허리띠 조각은 몸통 뒤에 깔려 안 보인다.
 - **해상도:** 1160×1355지만 조립한 키가 약 1000px, 게임 표시는 약 128px라 충분하다. 재생성하지 않는다.
 - **여우불:** 시트에 없다. 확정 그림에서 잘라 쓰거나 코드로 그린다.
+
+## 3b단계 — 보충 그림 (2026-10-10, Codex 다음 할 일)
+
+19부품만으로 자세(달리기·점프·대시·벽·휘두르기·피격·배시)는 각도로 다 만든다. 각도로 못 만드는 것만 추가로 받는다.
+
+공통: 첨부 `assets/hero/raw/hero_side_final.png`(확정 디자인)와 `assets/hero/raw/parts_sheet.png`(배율·화풍 기준). 저장 `assets/hero/raw/`, 프롬프트는 `docs/HERO_ART_PROMPTS.md`에 추가. 배경·간격·글자 금지 규칙은 3단계와 같다.
+
+### A. 보충 부품 시트 `assets/hero/raw/parts_sheet_extra.png` (필수)
+
+```
+Create a supplementary cutout parts sheet for exactly the attached fennec fox character (first image), matching the attached parts sheet (second image) in art style, thick dark brown outlines, crisp two to three tone cel shading, colors and EXACT pixel scale: every head below must be the same size as the head in the second image, every paw the same size as its paws, the fan the same size as its fans. Strict right-facing side view. Flat solid bright green #00b140 background, no gradient, floor, shadows, text, numbers, labels or grid. Wide empty gaps, nothing touching or overlapping. No assembled character, no ears on the heads, no fox-fire.
+Row 1 (4 heads, same shape and outline as the sheet's head, ears removed, only the face changes): 1) eyes fully closed in a calm blink, small neutral mouth; 2) hurt wince, eye squeezed shut, mouth slightly open with gritted teeth, brow pinched; 3) battle shout, eye wide and fierce, mouth open wide; 4) focused determined look, eye narrowed and alert, mouth closed in a firm line.
+Row 2 (4 parts): 5) near paw (black fingerless glove) clenched in a fist gripping around a vertical bar, with an empty round hole through the grip where a fan handle passes; 6) far paw clenched in a plain fist; 7) near paw open with fingers spread flat, palm facing right, as if pressed against a wall; 8) the same heavy iron war fan half open, about a 70 degree wedge, thick black iron ribs, brass tip caps and brass pivot, rust-orange tassel, same pivot-to-tip length as the sheet's closed fan.
+```
+
+### B. 효과 시트 `assets/hero/raw/fx_sheet.png` (선택, A 다음)
+
+```
+Create a 2D game effects sheet in the same art style as the attached character (thick dark outlines where appropriate, crisp cel shading, muted palette): 1) a crescent wind-slash arc left by a swung iron fan, pale blue-white with a darker edge, about 120 degrees of arc; 2) a small round dust puff seen from the side, sandy grey; 3) a flat landing dust burst spreading left and right along the ground; 4) a small star-shaped hit spark, white and pale yellow; 5) a single blue-white fox-fire wisp matching the character's fox-fire, flame tip up. Flat solid bright green #00b140 background, no text, wide gaps, each effect separate.
+```
+
+Claude가 받은 뒤 할 일: 머리 4개는 대기 중 깜빡임·피격·휘두르기·배시 조준에, 쥔 손은 부채를 든 모든 자세에, 벽 짚는 손은 벽 매달리기에, 반쯤 편 부채는 휘두르기 중간 프레임에 쓴다. 효과 시트는 휘두르기 잔상·착지 먼지·타격 불꽃으로 쓴다.
