@@ -15,7 +15,7 @@ func _ready() -> void:
 	Feedback.invincible = true
 	await get_tree().create_timer(0.3).timeout
 	await shot("idle")
-	# Fan swing into the golem's body: slash arc, hit flash, shouting face.
+	# Fan swing into the golem's body: slash arc and hit flash.
 	world.player.position = Vector2(golem.position.x-110,world.floor_y-14)
 	world.player.facing = 1
 	await get_tree().create_timer(0.2).timeout
