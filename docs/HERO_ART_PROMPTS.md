@@ -94,3 +94,32 @@ Correct this cutout parts sheet, preserving all 19 components, their row order a
 ```
 
 검수: 19개 분리된 덩어리 확인. 수정본에서 몸통에 붙은 팔 제거됨. 남은 사항: 접은 부채가 완전히 닫히지 않음, 부채 두 형태 반경 차이, 매듭에 허리띠 일부 잔존. 출력 1160×1355로 요청한 긴 변 2048 미달. 원화 재조립/배율 검수 미완료. 리그 준비 완료로 간주하지 않으며 Claude 검수 후 보정/재생성 필요.
+
+# 3b 추가 생성 프롬프트 (2026-10-10)
+
+기준 커밋 02917d4. 내장 image_gen, transparent_background=false. A/B 첨부 순서: hero_side_final.png, parts_sheet.png. A 수정 첨부: 첫 생성 결과, parts_sheet.png.
+
+## A 최초 생성
+
+```text
+Create a supplementary cutout parts sheet for exactly the attached fennec fox character (first image), matching the attached parts sheet (second image) in art style, thick dark brown outlines, crisp two to three tone cel shading, colors and EXACT pixel scale: every head below must be the same size as the head in the second image, every paw the same size as its paws, the fan the same size as its fans. Strict right-facing side view. Flat solid bright green #00b140 background, no gradient, floor, shadows, text, numbers, labels or grid. Wide empty gaps, nothing touching or overlapping. No assembled character, no ears on the heads, no fox-fire.
+Row 1 (4 heads, same shape and outline as the sheet's head, ears removed, only the face changes): 1) eyes fully closed in a calm blink, small neutral mouth; 2) hurt wince, eye squeezed shut, mouth slightly open with gritted teeth, brow pinched; 3) battle shout, eye wide and fierce, mouth open wide; 4) focused determined look, eye narrowed and alert, mouth closed in a firm line.
+Row 2 (4 parts): 5) near paw (black fingerless glove) clenched in a fist gripping around a vertical bar, with an empty round hole through the grip where a fan handle passes; 6) far paw clenched in a plain fist; 7) near paw open with fingers spread flat, palm facing right, as if pressed against a wall; 8) the same heavy iron war fan half open, about a 70 degree wedge, thick black iron ribs, brass tip caps and brass pivot, rust-orange tassel, same pivot-to-tip length as the sheet's closed fan.
+```
+
+## A 손 분리 수정
+
+```text
+Correct only the three hands in the bottom row of image 1, using image 2 as the exact hand size reference. They must be isolated PAWS ONLY with short wrist attachment ends, absolutely NO forearms, bracers, armor, elbow or white fur arm segments. Match the original sheet's paws at about 100 pixels wide in this 1160 pixel wide canvas, not enlarged to fill the row. Preserve their black fingerless gloves and respective poses: empty round grip hole, plain closed fist, open fingers for wall contact. Keep every other part including all four heads and the fan, canvas dimensions, colors and positions unchanged. Flat green background, no text.
+```
+
+## B 효과 시트
+
+```text
+Create a 2D game effects sheet in the same art style as the attached character (thick dark outlines where appropriate, crisp cel shading, muted palette): 1) a crescent wind-slash arc left by a swung iron fan, pale blue-white with a darker edge, about 120 degrees of arc; 2) a small round dust puff seen from the side, sandy grey; 3) a flat landing dust burst spreading left and right along the ground; 4) a small star-shaped hit spark, white and pale yellow; 5) a single blue-white fox-fire wisp matching the character's fox-fire, flame tip up. Flat solid bright green #00b140 background, no text, wide gaps, each effect separate.
+```
+
+
+## 3b 확인 결과
+
+보충 시트는 귀 없는 머리 4개·팔 없는 손 3개·반쯤 편 부채 1개로 분리됨. 최초 결과에 붙은 팔·토시는 수정 생성으로 제거. 손은 기존 시트보다 커서 정확한 동일 픽셀 배율 조건은 미충족: 조립 시 손 배율 보정 필요. 집중 표정 입에 약한 미소가 남고, 부채 펼침각은 70도보다 넓어 보여 검수 대상. 효과는 바람 베기·둥근 먼지·착지 먼지·타격 불꽃·여우불 5종 확인. 바람 호는 지시의 120도보다 넓게 표현됨. 효과별 떨어진 작은 조각은 본체와 함께 잘라야 함. 원본 PNG 무편집, 복사본 바이트 동일 확인. 제작 적용·재조립 검수는 Claude 단계.
