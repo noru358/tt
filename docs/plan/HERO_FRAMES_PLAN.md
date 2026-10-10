@@ -134,6 +134,8 @@ Sprite animation strip of the attached fennec fox character (keep the design, co
 
 ### Codex 작업: run 6칸 다시 뽑기
 
+**멈춤(2026-10-10):** 사용자가 먼저 리디자인하기로 했다(`HERO_REDESIGN_BRIEF.md`). v4가 확정되면 Claude가 마네킹 치수를 다시 재고, 아래 첨부 1을 v4로 바꿔서 진행한다.
+
 첨부는 순서대로 세 장이다.
 1. `assets/hero/raw/hero_side_final.png`
 2. `assets/hero/frames/raw/idle.png`
