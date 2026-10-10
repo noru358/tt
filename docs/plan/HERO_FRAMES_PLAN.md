@@ -113,3 +113,52 @@ Sprite animation strip of the attached fennec fox character (keep the design, co
 - 공격 프레임 ②가 공격 판정이 켜지는 순간과 같은 프레임에 오도록 맞춘다.
 - 남은 공중 대시는 화면 글자("대시 n/m")로만 보여 준다. 여우불은 뺀다. 다른 표시가 필요하면 그때 정한다.
 - 부품 리그는 프레임이 들어올 때까지만 임시로 쓴다. 지금 여우불과 착지 먼지는 껐다.
+
+## 2차: 포즈 가이드 방식 (2026-10-10, 사용자 승인)
+
+### 왜
+
+사용자 판정: GPT가 뽑은 프레임이 "신체가 미묘하게 안 맞는다". Claude 측정(`tools/hero_art/measure.py`)으로 확인한 결과:
+- run 꼬리 크기가 칸마다 -16%~+25% 흔들린다. 띠 전체로는 확정 그림보다 꼬리가 73% 크다.
+- idle은 확정 그림보다 다리가 15% 길고 머리(귀 포함)가 작다.
+- run은 머리(귀 포함) 크기가 칸마다 최대 6% 달라진다. 앞팔이 6칸 내내 허리에 고정돼 있고, 두 다리가 같은 검은색이라 교대가 안 읽힌다.
+
+원인은 글 지시만으로는 뼈대가 고정되지 않는 데 있다. 그래서 **치수가 고정된 마네킹 포즈를 그림으로 함께 넘긴다.**
+
+### 준비물 (Claude, 완료)
+
+- `docs/plan/hero_refs/poses/proportion_sheet.png`: 확정 그림과 마네킹을 같은 키로 놓고 빨간 기준선(귀 끝·깃·허리띠·철릭 끝·발바닥)을 그은 비교판. 사람 검수용이며 Codex에 첨부하지 않는다.
+- `docs/plan/hero_refs/poses/idle_pose.png`, `run_pose.png`: 512px 정사각 칸, 흰 배경, 글자 없음. 앞쪽 팔다리는 밝은 회색, 뒤쪽은 어두운 회색이다. 검은 막대는 접은 부채다.
+  - run은 접지 → 교차 → 공중 순서이고, 4~6칸은 1~3칸에서 다리를 바꾼 것이다. 팔은 다리와 반대로 흔든다. 부채는 접어서 뒤쪽 아래로 든다.
+- 다시 만들기: `python3 tools/hero_art/mannequin.py docs/plan/hero_refs/poses`. 다른 동작의 포즈도 이 파일의 `MOTIONS`에 추가한다.
+
+### Codex 작업: run 6칸 다시 뽑기
+
+첨부는 순서대로 세 장이다.
+1. `assets/hero/raw/hero_side_final.png`
+2. `assets/hero/frames/raw/idle.png`
+3. `docs/plan/hero_refs/poses/run_pose.png`
+
+```text
+Sprite animation strip of the fennec fox character in image 1 (keep the design, colors and art style exactly: thick dark outlines, two to three tone cel shading, sandy cream fur, navy cheollik coat, rust-orange sash, black iron fan with brass caps and rust tassel). Draw the character at the same scale as image 2.
+Image 3 is a pose guide: six grey mannequins drawn with the character's exact proportions. Copy each mannequin's pose, body proportions, head size, limb lengths, tail size and foot positions exactly, one frame per mannequin, in the same order and the same place inside each cell. Light grey limbs are the near side, dark grey limbs are the far side. The black bar is the closed fan, held in the near paw. Do not copy the mannequin colors or flat shapes; draw the real character.
+Keep the head, ears and tail the same size in every frame. Ears lean slightly back; the tail streams behind with the same size as in image 1. Arms swing opposite to the legs. The near trouser leg is drawn slightly lighter than the far one so the alternating legs read clearly.
+Outline thickness about 2.5% of the character height, so the lines stay bold when the sprite is shown about 128 px tall.
+One horizontal strip of six square frames with wide empty gaps, flat solid green background #00B140, no frame borders, no numbers, no text, no shadow, no ground line, no fox-fire wisps.
+```
+
+- 저장: `assets/hero/frames/raw/run_v2.png`. 프롬프트는 `docs/HERO_ART_PROMPTS.md`에 추가한다. 원본은 편집하지 않는다.
+- 첫 결과의 비율이 맞지 않으면 실패한 칸을 그대로 다시 뽑지 말고 "image 3의 n번 마네킹과 머리/꼬리/다리 길이를 맞춰라"고 수치를 넣어 다시 뽑는다.
+- idle은 지금 띠를 그대로 쓴다. 다리가 15% 긴 것은 플레이에서 어색하다고 하면 `idle_pose.png`로 다시 뽑는다.
+
+### Claude 검수 (뽑힌 뒤)
+
+1. 초록 배경을 빼고 칸을 나눈다.
+2. `python3 tools/hero_art/measure.py --ref assets/hero/raw/hero_side_final.png <칸들>`를 돌린다. 띠 안에서 머리 ±8%, 꼬리 ±15%, 확정 그림 대비 꼬리 ±20%를 넘으면 그 칸은 불합격이다. 서 있는 동작은 `--standing`을 붙여 철릭·다리 비율도 ±12% 안에서 본다.
+3. 포즈 가이드와 겹쳐 보고 앞뒤 다리가 맞는지 확인한다.
+4. **머리 고정:** 통과한 띠에서도 얼굴·귀가 칸마다 미세하게 다르면, 확정 그림의 머리를 잘라 각 칸의 목 위치에 붙이고 기울기만 맞춘다. 몸은 칸마다 그린 그림 그대로라서 종이인형처럼 보이지 않는다. 이 단계는 실제 띠가 나온 뒤 결과를 보고 만든다.
+5. 게임 크기(키 약 128px)로 줄여 골렘 옆에 놓고 외곽선 두께를 비교한다.
+
+### 보류: 디자인 단순화 (사용자 결정 필요)
+
+게임 크기에서는 견갑·토시·술·행전 같은 작은 장식이 뭉개지고, 장식이 많을수록 칸마다 어긋난다. 줄일지는 사용자가 정한다. 정하기 전까지는 확정 디자인 그대로 간다.
