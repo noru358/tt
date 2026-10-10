@@ -26,7 +26,7 @@ P = {
     "nose": (0.23, 0.37), "chin": (0.095, 0.41),
     "ear_tip": (-0.08, 0.008), "ear_front": (0.05, 0.23), "ear_back": (-0.057, 0.34),
     "far_ear_tip": (-0.01, 0.0), "ear_bulge_back": (-0.15, 0.2), "ear_bulge_front": (0.05, 0.14),
-    "collar": 0.43, "shoulder": (-0.027, 0.51), "upper_arm": 0.11, "forearm": 0.105,
+    "collar": 0.43, "shoulder": (-0.027, 0.51), "far_shoulder": (0.02, 0.50), "upper_arm": 0.11, "forearm": 0.105,
     "waist": 0.55, "coat_bottom": 0.80, "chest_w": 0.17, "hem_w": 0.24,
     "hip": (0.0, 0.70), "thigh": 0.15, "shin": 0.12, "foot": 0.14,
     "tail_root": (-0.08, 0.66), "tail_c": (-0.217, 0.74), "tail_r": (0.135, 0.19),
@@ -35,6 +35,7 @@ P = {
 
 NEAR, FAR, BODY, HEAD, TAIL = (226, 220, 210), (110, 114, 124), (160, 164, 176), (205, 200, 190), (185, 180, 172)
 LINE = (30, 30, 34)
+EAR_IN = (238, 214, 206)
 FAN = (40, 40, 44)
 
 
@@ -56,6 +57,16 @@ def capsule(d, pts, w, fill):
         for p in pts:
             r = width / 2
             d.ellipse((p[0] - r, p[1] - r, p[0] + r, p[1] + r), fill=col)
+
+
+def silhouette(im, draw, fill, line=5):
+    """Fill the union of the shapes drawn by draw(ImageDraw on a mask) with one outer outline."""
+    from PIL import ImageFilter
+    mask = Image.new("L", im.size, 0)
+    draw(ImageDraw.Draw(mask))
+    edge = mask.filter(ImageFilter.MaxFilter(2 * line + 1))
+    im.paste(LINE, (0, 0), edge)
+    im.paste(fill, (0, 0), mask)
 
 
 def poly(d, pts, fill):
@@ -96,7 +107,8 @@ def draw_pose(pose):
 
     def arm(side):
         sa, ea = pose[side + "_arm"]
-        s = (P["shoulder"][0] * H, P["shoulder"][1] * H)
+        key = "far_shoulder" if side == "far" else "shoulder"
+        s = (P[key][0] * H, P[key][1] * H)
         e, w = limb_points(s, sa, P["upper_arm"] * H, sa + ea, P["forearm"] * H)
         return [T(s, True), T(e, True), T(w, True)], sa + ea
 
@@ -127,19 +139,30 @@ def draw_pose(pose):
     poly(d, [T(p, True) for p in coat], BODY)
     d.line([T((-cw * 1.1, wa), True), T((cw * 1.05, wa), True)], fill=LINE, width=8)  # sash line
 
-    # far ear, head, near ear
-    poly(d, [U("ear_front"), U("far_ear_tip"), U("ear_back")], FAR)
+    # Head, snout and near ear are one silhouette so no inner outline reads as an extra ear.
+    # The far ear is the same leaf, smaller, a little forward and dark, behind the head.
     sc, sr = U("skull_c"), P["skull_r"] * H
-    d.ellipse((sc[0] - sr * 1.1, sc[1] - sr, sc[0] + sr * 1.1, sc[1] + sr), fill=HEAD, outline=LINE, width=4)
-    poly(d, [(sc[0] + sr * 0.3, sc[1] - sr * 0.5), U("nose"), U("chin")], HEAD)
-    def ear_pt(key):  # the near ear tilts back around its base by pose["ear"] degrees
+
+    def ear_pt(key, shift=(0.0, 0.0), scale=1.0):  # ears tilt back around their base by pose["ear"]
         b = P["ear_back"]
         v = rot((P[key][0] - b[0], P[key][1] - b[1]), -pose.get("ear", 0))
-        return T(((b[0] + v[0]) * H, (b[1] + v[1]) * H), True)
+        return T(((b[0] + v[0] * scale + shift[0]) * H, (b[1] + v[1] * scale + shift[1]) * H), True)
 
-    poly(d, [U("ear_front"), ear_pt("ear_bulge_front"), ear_pt("ear_tip"), ear_pt("ear_bulge_back"), U("ear_back")], NEAR)
-    eye = U("skull_c")
-    d.ellipse((eye[0] + sr * 0.35, eye[1] - 8, eye[0] + sr * 0.55, eye[1] + 8), fill=LINE)
+    leaf = ["ear_front", "ear_bulge_front", "ear_tip", "ear_bulge_back", "ear_back"]
+    far = [ear_pt(k, (0.09, 0.0), 0.9) for k in leaf]
+    silhouette(im, lambda m: m.polygon(far, fill=255), FAR)
+
+    def head(m):
+        m.ellipse((sc[0] - sr * 1.1, sc[1] - sr, sc[0] + sr * 1.1, sc[1] + sr), fill=255)
+        m.polygon([(sc[0], sc[1] - sr * 0.55), U("nose"), U("chin"), (sc[0], sc[1] + sr * 0.8)], fill=255)
+        m.polygon([ear_pt(k) for k in leaf], fill=255)
+
+    silhouette(im, head, HEAD)
+    d = ImageDraw.Draw(im)
+    d.polygon([ear_pt("ear_front", scale=1.0)] + [ear_pt(k, (0.0, 0.03), 0.75) for k in ("ear_bulge_front", "ear_tip", "ear_bulge_back")], fill=EAR_IN)
+    n = U("nose")
+    d.ellipse((n[0] - 7, n[1] - 6, n[0] + 5, n[1] + 6), fill=LINE)
+    d.ellipse((sc[0] + sr * 0.35, sc[1] - 8, sc[0] + sr * 0.55, sc[1] + 8), fill=LINE)
 
     # near arm with closed fan
     pts, _ = arm("near")
@@ -162,9 +185,9 @@ IDLE = dict(lean=0, near_leg=(8, 0), far_leg=(-8, 0), near_arm=(-8, 25), far_arm
 
 # Run: contact, passing, flight, then the same with legs swapped. Arms swing against the legs.
 RUN_STEP = [
-    dict(near_leg=(32, 15), far_leg=(-28, -70), near_arm=(-35, 70), far_arm=(30, 60), tail=10, ear=12, bob=0.0),
+    dict(near_leg=(32, 15), far_leg=(-28, -70), near_arm=(-55, 35), far_arm=(30, 60), tail=10, ear=12, bob=0.0),
     dict(near_leg=(0, -10), far_leg=(35, -40), near_arm=(0, 60), far_arm=(-5, 55), tail=0, ear=14, bob=0.02),
-    dict(near_leg=(-38, -55), far_leg=(45, 5), near_arm=(35, 60), far_arm=(-35, 65), tail=-10, ear=16, bob=0.05),
+    dict(near_leg=(-38, -55), far_leg=(45, 5), near_arm=(35, 60), far_arm=(-55, 35), tail=-10, ear=16, bob=0.05),
 ]
 
 
