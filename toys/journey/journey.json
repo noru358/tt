@@ -1,0 +1,51 @@
+{
+  "room": "journey_01.txt",
+  "camera_lead": 110,
+  "camera_lead_speed": 2.5,
+  "checkpoint_floor_time": 0.15,
+  "blend_tiles": 14,
+  "regions": [
+    {
+      "name": "잠긴 논",
+      "subtitle": "물이 빠지지 않은 계단 논",
+      "from_tile": 0,
+      "sky_top": "8fb6c9",
+      "sky_bottom": "f1dfbd",
+      "hill_far": "8aa9a6",
+      "hill_near": "61877a",
+      "ground": "4b5d50",
+      "grass": "93b07a",
+      "platform": "c4d2b4",
+      "water": "6f9fae",
+      "ambient": "glint"
+    },
+    {
+      "name": "사원 숲",
+      "subtitle": "뿌리가 기둥을 삼킨 곳",
+      "from_tile": 120,
+      "sky_top": "16302b",
+      "sky_bottom": "47704f",
+      "hill_far": "2a4a3b",
+      "hill_near": "1f362c",
+      "ground": "3b3429",
+      "grass": "5f8a45",
+      "platform": "8e9c6b",
+      "water": "2f4f45",
+      "ambient": "firefly"
+    },
+    {
+      "name": "바람 고개",
+      "subtitle": "넘어가면 바다가 보인다",
+      "from_tile": 250,
+      "sky_top": "35406f",
+      "sky_bottom": "f2a76c",
+      "hill_far": "735f83",
+      "hill_near": "4a3e5e",
+      "ground": "403548",
+      "grass": "c08f6a",
+      "platform": "d0ae8e",
+      "water": "5a4f73",
+      "ambient": "petal"
+    }
+  ]
+}
